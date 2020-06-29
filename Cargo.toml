@@ -1,0 +1,19 @@
+[package]
+name = "vec_rand"
+version = "0.1.0"
+authors = ["Tommaso Fontana <tommaso.fontana.96@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+
+[dependencies]
+cumsum_f32 = { path = "src/cumsum_f32" }
+cumsum_f64 = { path = "src/cumsum_f64" }
+xorshift = { path = "src/xorshift" }
+xorshiro256plus = { path = "src/xorshiro256plus" }
+
+[profile.release]
+opt-level = 3
+codgen-units=1
+lto = "fat"
