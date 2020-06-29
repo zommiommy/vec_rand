@@ -25,7 +25,7 @@ static mut GLOBAL_SEED: [u64; 4] = [
 ///
 /// # Examples
 /// ```
-/// use graph::random::random_u64;
+/// use vec_rand::random_u64;
 ///
 /// let rnd: u64 = random_u64();
 /// println!("The random value is: {}", rnd);
@@ -52,14 +52,14 @@ pub fn random_u64() -> u64 {
 ///
 /// The "simplest" is to multiply the value for the right exponent:alloc
 /// ```
-/// # use graph::random::random_u64;
+/// # use vec_rand::random_u64;
 /// let result: f64 = (random_u64() >> 11) as f64 * 2.0f64.powf(-53.0);
 /// ```
 ///
 /// There is also a second way that exploit type punning:
 ///
 /// ```
-/// # use graph::random::random_u64;
+/// # use vec_rand::random_u64;
 /// let v: u64 = (random_u64() >> 11) | (1023 << 52);
 /// let r: f64 = unsafe{f64::from_le_bytes(v.to_le_bytes())};
 /// let result: f64 = r - 1f64;
@@ -90,7 +90,7 @@ pub fn random_u64() -> u64 {
 ///
 /// # Examples
 /// ```
-/// use graph::random::random_f64;
+/// use vec_rand::random_f64;
 ///
 /// let frnd: f64 = random_f64();
 /// assert!(0.0 <= frnd && frnd <= 1.0);

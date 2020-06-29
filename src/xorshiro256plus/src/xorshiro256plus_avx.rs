@@ -1,5 +1,20 @@
 
-pub fn xorshiro256plus_avx(seed: & mut [u64; 20]) -> [u64; 4] {
+#[inline(always)]
+/// Generate 4 random u64 by running 4 parallel instances of xorshift256plus using avx instructions.
+/// 
+/// Example:
+/// 
+/// ```
+/// let mut seed: [u64; 16] = [
+///     6591408588322595484, 5451729388608518856, 8913376598984957243, 17912695770704705270,
+///     6591408588322595484, 5451729388608518856, 8913376598984957243, 17912695770704705270,
+///     6591408588322595484, 5451729388608518856, 8913376598984957243, 17912695770704705270,
+///     6591408588322595484, 5451729388608518856, 8913376598984957243, 17912695770704705270,
+/// ];
+/// let values = xorshiro256plus_avx(& mut seed);
+/// println!("{:?}", values);
+/// ```
+pub fn xorshiro256plus_avx(seed: & mut [u64; 16]) -> [u64; 4] {
     let mut result: [u64; 4] = [0; 4];
     unsafe {
         asm!(

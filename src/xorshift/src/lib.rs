@@ -12,5 +12,5 @@ pub use xorshift_avx_ss8::xorshift_avx_ss8;
 mod xorshift_plain;
 pub use xorshift_plain::xorshift_plain as xorshift;
 
-mod xorshift_sse_intrinsics;
-pub use xorshift_sse_intrinsics::xorshift_sse_intrinsics;
+mod xorshift_avx_intrinsics;
+pub use xorshift_avx_intrinsics::xorshift_avx_intrinsics;

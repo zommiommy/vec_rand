@@ -1,6 +1,25 @@
 
 
-// FASTEST
+#[inline(always)]
+/// Generate 16 random u64 by running 16 parallel xorshifts using avx.
+/// This method exploits both the SIMD instructions and the Out of Order Execution.
+/// 
+/// This is the method with the best throughtput because with saturate the Instruction
+/// Decoder which can only fetch 16 bytes per clock cycle and most of avx instruction
+/// are 4 bytes wide.
+/// 
+/// Example:
+/// 
+/// ```
+///  let mut seed: [u64; 16] = [
+///      0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef,
+///      0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef,
+///      0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef,
+///      0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef,
+///  ];
+/// let values = xorshift_avx_ss4(& mut seed);
+/// println!("{:?}", values);
+/// ```
 pub fn xorshift_avx_ss4(seed: & mut [u64; 16]) {
     unsafe {
         asm!(

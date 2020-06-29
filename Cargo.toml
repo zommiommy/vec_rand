@@ -8,6 +8,7 @@ edition = "2018"
 
 
 [dependencies]
+rand = "0.7.3"
 cumsum_f32 = { path = "src/cumsum_f32" }
 cumsum_f64 = { path = "src/cumsum_f64" }
 xorshift = { path = "src/xorshift" }

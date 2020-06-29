@@ -16,7 +16,23 @@ use core::arch::x86_64::{
 };
 
 #[inline(always)]
-pub fn xorshift_sse_intrinsics(seed: & mut [u64; 4]) -> [u64; 4] {
+/// Generate 4 random u64 by running 4 parallel xorshifts using avx.
+/// This version uses rust's intrinsics instead of directly asm, 
+/// and we observe that's several time slower.
+/// 
+/// Example:
+/// 
+/// ```
+///  let mut seed: [u64; 4] = [
+///      0xBAD5EEDdeadbeef,
+///      0xBAD5EEDdeadbeef,
+///      0xBAD5EEDdeadbeef,
+///      0xBAD5EEDdeadbeef,
+///  ];
+/// let values = xorshift_avx_intrinsics(& mut seed);
+/// println!("{:?}", values);
+/// ```
+pub fn xorshift_avx_intrinsics(seed: & mut [u64; 4]) -> [u64; 4] {
     let mut result: [u64; 4] = [1337, 0xdeadbeef, 0xc0febabe, 0xbad5eed];
     unsafe{
         let mut temp: __m256i;

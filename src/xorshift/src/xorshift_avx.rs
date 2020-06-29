@@ -1,4 +1,20 @@
 
+
+#[inline(always)]
+/// Generate 4 random u64 by running 4 parallel xorshifts using avx.
+/// 
+/// Example:
+/// 
+/// ```
+///  let mut seed: [u64; 4] = [
+///      0xBAD5EEDdeadbeef,
+///      0xBAD5EEDdeadbeef,
+///      0xBAD5EEDdeadbeef,
+///      0xBAD5EEDdeadbeef,
+///  ];
+/// let values = xorshift_avx(& mut seed);
+/// println!("{:?}", values);
+/// ```
 pub fn xorshift_avx(seed: & mut [u64; 4]) {
     unsafe {
         asm!(
