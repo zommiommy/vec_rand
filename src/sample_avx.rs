@@ -1,7 +1,7 @@
 
 use ::core::cmp::Ordering;
 use super::random_f64;
-use cumsum_f64::cumsum_f64;
+use cumsum_f64::cumsum_f64_sse_intrinsics;
 
 /// Given a vector of scores (non-zero positive values), convert it to a
 /// probability distribution and extract a random indices accodringly.`
@@ -12,7 +12,7 @@ pub fn sample_avx(weights: & Vec<f64>) -> usize {
         return 0;
     }
 
-    let cumsum = cumsum_f64(&weights);
+    let cumsum = cumsum_f64_sse_intrinsics(&weights);
 
     let rnd: f64 = random_f64() * cumsum[cumsum.len() - 1];
 
