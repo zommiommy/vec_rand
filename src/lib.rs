@@ -101,6 +101,7 @@ pub use random::*;
 
 mod gen_random_vec;
 pub use gen_random_vec::*;
+pub use gen_random_vec::gen_random_vec_4_1 as gen_random_vec;
 
 mod splitmix64;
 pub use splitmix64::*;

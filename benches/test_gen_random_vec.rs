@@ -3,11 +3,11 @@ extern crate test;
 use test::Bencher;
 use rand::Rng;
 
-const NUMBER: u64 = 10000;
+const NUMBER: u64 = 1_000_000;
 
 use vec_rand::xorshiro256plus::xorshiro256plus;
 use vec_rand::xorshift::xorshift;
-use vec_rand::gen_random_vec;
+use vec_rand::*;
 
 #[bench]
 fn test_gen_range_of_thread_rng(b: &mut Bencher) {
@@ -46,11 +46,45 @@ fn test_with_xorshift(b: &mut Bencher) {
 
 
 #[bench]
-fn test_gen_random_vec(b: &mut Bencher) {
+fn test_gen_random_vec_32_4_1(b: &mut Bencher) {
     let mut seed: u64 = 6591408588322595484;
 
     b.iter(|| {
-        let result = gen_random_vec(NUMBER as usize, seed);
+        let result = gen_random_vec_32_4_1(NUMBER as usize, seed);
+        seed = result[0];
+        result
+    });
+}
+
+#[bench]
+fn test_gen_random_vec_4_1(b: &mut Bencher) {
+    let mut seed: u64 = 6591408588322595484;
+
+    b.iter(|| {
+        let result = gen_random_vec_4_1(NUMBER as usize, seed);
+        seed = result[0];
+        result
+    });
+}
+
+#[bench]
+fn test_gen_random_vec_32_1(b: &mut Bencher) {
+    let mut seed: u64 = 6591408588322595484;
+
+    b.iter(|| {
+        let result = gen_random_vec_32_1(NUMBER as usize, seed);
+        seed = result[0];
+        result
+    });
+}
+
+
+#[bench]
+fn test_gen_random_vec_1(b: &mut Bencher) {
+    let mut seed: u64 = 6591408588322595484;
+
+    b.iter(|| {
+        let result = gen_random_vec_1(NUMBER as usize, seed);
         seed = result[0];
         result
     });

@@ -29,14 +29,14 @@ pub fn xorshift_avx_ss8(seed: & mut [u64; 32]) -> [u64; 32] {
         asm!(
         concat!(
             // Load the data
-            "vmovdqu ymm0, ymmword ptr [rdi]\n",
-            "vmovdqu ymm2, ymmword ptr [rdi + 32]\n",
-            "vmovdqu ymm4, ymmword ptr [rdi + 64]\n",
-            "vmovdqu ymm6, ymmword ptr [rdi + 96]\n",
-            "vmovdqu ymm8, ymmword ptr [rdi + 128]\n",
-            "vmovdqu ymm10, ymmword ptr [rdi + 160]\n",
-            "vmovdqu ymm12, ymmword ptr [rdi + 192]\n",
-            "vmovdqu ymm14, ymmword ptr [rdi + 224]\n",
+            "vmovdqu ymm0, ymmword ptr [rsi]\n",
+            "vmovdqu ymm2, ymmword ptr [rsi + 32]\n",
+            "vmovdqu ymm4, ymmword ptr [rsi + 64]\n",
+            "vmovdqu ymm6, ymmword ptr [rsi + 96]\n",
+            "vmovdqu ymm8, ymmword ptr [rsi + 128]\n",
+            "vmovdqu ymm10, ymmword ptr [rsi + 160]\n",
+            "vmovdqu ymm12, ymmword ptr [rsi + 192]\n",
+            "vmovdqu ymm14, ymmword ptr [rsi + 224]\n",
             // << 13
             "vpsllq ymm1, ymm0, 13\n",
             "vpsllq ymm3, ymm2, 13\n",
@@ -92,6 +92,15 @@ pub fn xorshift_avx_ss8(seed: & mut [u64; 32]) -> [u64; 32] {
             "vpxor ymm12, ymm13, ymm5\n",
             "vpxor ymm14, ymm15, ymm7\n",
             // Store the data
+            "vmovdqu ymmword ptr [rdi], ymm0\n",
+            "vmovdqu ymmword ptr [rdi + 32], ymm2\n",
+            "vmovdqu ymmword ptr [rdi + 64], ymm4\n",
+            "vmovdqu ymmword ptr [rdi + 96], ymm6\n",
+            "vmovdqu ymmword ptr [rdi + 128], ymm8\n",
+            "vmovdqu ymmword ptr [rdi + 160], ymm10\n",
+            "vmovdqu ymmword ptr [rdi + 192], ymm12\n",
+            "vmovdqu ymmword ptr [rdi + 224], ymm14\n",
+            // modify the seed
             "vmovdqu ymmword ptr [rsi], ymm0\n",
             "vmovdqu ymmword ptr [rsi + 32], ymm2\n",
             "vmovdqu ymmword ptr [rsi + 64], ymm4\n",
