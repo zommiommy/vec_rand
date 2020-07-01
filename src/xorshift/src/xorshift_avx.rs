@@ -35,7 +35,8 @@ pub fn xorshift_avx(seed: & mut [u64; 4]) -> [u64; 4] {
             // ^c
             "vpxor ymm0, ymm0, ymm1\n",
             // Store the data
-            "vmovdqu ymmword ptr [rdi], ymm0"
+            "vmovdqu ymmword ptr [rdi], ymm0\n",
+            "vmovdqu ymmword ptr [rsi], ymm0\n"
         ),
         inout("rsi") seed => _,
         inout("rdi") result.as_mut_ptr() => _,

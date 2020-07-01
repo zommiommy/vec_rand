@@ -98,3 +98,9 @@ pub use sample_avx::sample_avx;
 
 mod random;
 pub use random::*;
+
+mod gen_random_vec;
+pub use gen_random_vec::*;
+
+mod splitmix64;
+pub use splitmix64::*;
