@@ -23,7 +23,8 @@
 /// let values = xorshift_avx_ss8(& mut seed);
 /// println!("{:?}", values);
 /// ```
-pub fn xorshift_avx_ss8(seed: & mut [u64; 32]) {
+pub fn xorshift_avx_ss8(seed: & mut [u64; 32]) -> [u64; 32] {
+    let mut result: [u64; 32] = [0; 32];
     unsafe {
         asm!(
         concat!(
@@ -91,16 +92,18 @@ pub fn xorshift_avx_ss8(seed: & mut [u64; 32]) {
             "vpxor ymm12, ymm13, ymm5\n",
             "vpxor ymm14, ymm15, ymm7\n",
             // Store the data
-            "vmovdqu ymmword ptr [rdi], ymm0\n",
-            "vmovdqu ymmword ptr [rdi + 32], ymm2\n",
-            "vmovdqu ymmword ptr [rdi + 64], ymm4\n",
-            "vmovdqu ymmword ptr [rdi + 96], ymm6\n",
-            "vmovdqu ymmword ptr [rdi + 128], ymm8\n",
-            "vmovdqu ymmword ptr [rdi + 160], ymm10\n",
-            "vmovdqu ymmword ptr [rdi + 192], ymm12\n",
-            "vmovdqu ymmword ptr [rdi + 224], ymm14\n"
+            "vmovdqu ymmword ptr [rsi], ymm0\n",
+            "vmovdqu ymmword ptr [rsi + 32], ymm2\n",
+            "vmovdqu ymmword ptr [rsi + 64], ymm4\n",
+            "vmovdqu ymmword ptr [rsi + 96], ymm6\n",
+            "vmovdqu ymmword ptr [rsi + 128], ymm8\n",
+            "vmovdqu ymmword ptr [rsi + 160], ymm10\n",
+            "vmovdqu ymmword ptr [rsi + 192], ymm12\n",
+            "vmovdqu ymmword ptr [rsi + 224], ymm14\n"
         ),
-        inout("rdi") seed => _,
+        inout("rsi") seed => _,
+        inout("rdi") result.as_mut_ptr() => _,
         );
     }
+    result
 }

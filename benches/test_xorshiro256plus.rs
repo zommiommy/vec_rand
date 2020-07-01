@@ -5,11 +5,15 @@ use rand::Rng;
 
 use vec_rand::xorshiro256plus::*;
 
+const NUM: u64 = 1_000;
 
 #[bench]
 fn test_thread_rng(b: &mut Bencher) {
     let mut rng = rand::thread_rng();
     b.iter(|| {
+        for _ in 0..32 * NUM {
+            rng.gen_range(0, 10000);
+        }
         rng.gen_range(0, 10000)
     });
 }
@@ -24,8 +28,11 @@ fn test_xorshiro256plus(b: &mut Bencher) {
         17912695770704705270,
     ];
 
-    b.iter(|| {
-        xorshiro256plus(& mut seed)
+    b.iter(|| { 
+        for _ in 0..32 * NUM {
+            xorshiro256plus(& mut seed);
+        }
+        seed
     });
 }
 
@@ -39,7 +46,10 @@ fn test_xorshiro256plus_avx(b: &mut Bencher) {
     ];
 
     b.iter(|| {
-        xorshiro256plus_avx(& mut seed)
+        for _ in 0..8 * NUM {
+            xorshiro256plus_avx(& mut seed);
+        }
+        seed
     });
 }
 
@@ -65,6 +75,9 @@ fn test_xorshiro256plus_avx_ss4(b: &mut Bencher) {
     ];
 
     b.iter(|| {
-        xorshiro256plus_avx_ss4(& mut seed)
+        for _ in 0..2 * NUM {
+            xorshiro256plus_avx_ss4(& mut seed);
+        }
+        seed
     });
 }

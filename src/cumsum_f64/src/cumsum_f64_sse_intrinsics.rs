@@ -70,5 +70,22 @@ pub fn cumsum_f64_sse_intrinsics(random_vec: &Vec<f64>) -> Vec<f64> {
             offset = _mm_shuffle_pd(out, out, 3);
         }
     }
+
+    let n = random_vec.len() -  (random_vec.len() % 4);
+    match random_vec.len() % 4 {
+        1 => {
+            result[n] += result[n-1];
+        },
+        2 => {
+            result[n] += result[n-1];
+            result[n+1] += result[n];
+        },
+        3 => {
+            result[n] += result[n-1];
+            result[n+1] += result[n];
+            result[n+2] += result[n+1];
+        },
+        _ => {},
+    };
     result
 }

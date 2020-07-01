@@ -33,7 +33,7 @@ use core::arch::x86_64::{
 /// println!("{:?}", values);
 /// ```
 pub fn xorshift_avx_intrinsics(seed: & mut [u64; 4]) -> [u64; 4] {
-    let mut result: [u64; 4] = [1337, 0xdeadbeef, 0xc0febabe, 0xbad5eed];
+    let mut result: [u64; 4] = [0; 4];
     unsafe{
         let mut temp: __m256i;
         let mut seed: __m256i = _mm256_loadu_si256(seed.as_mut_ptr() as *mut __m256i);

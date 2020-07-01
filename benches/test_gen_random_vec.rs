@@ -9,7 +9,7 @@ use vec_rand::xorshiro256plus::xorshiro256plus;
 use vec_rand::xorshift::xorshift;
 
 #[bench]
-fn test_std(b: &mut Bencher) {
+fn test_gen_range_of_thread_rng(b: &mut Bencher) {
     let mut rng = rand::thread_rng();
     b.iter(|| {
         (0..NUMBER).map(|_| rng.gen_range(0, NUMBER)).collect::<Vec<u64>>()
@@ -36,6 +36,9 @@ fn test_with_xorshift(b: &mut Bencher) {
     let mut seed: u64 = 6591408588322595484;
 
     b.iter(|| {
-        (0..NUMBER).map(|_| xorshift(& mut seed) % NUMBER).collect::<Vec<u64>>()
+        (0..NUMBER).map(|_| {
+            seed = xorshift(seed);
+            seed % NUMBER
+        }).collect::<Vec<u64>>()
     });
 }

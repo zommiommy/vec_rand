@@ -15,12 +15,13 @@
 /// let values = xorshift_avx(& mut seed);
 /// println!("{:?}", values);
 /// ```
-pub fn xorshift_avx(seed: & mut [u64; 4]) {
+pub fn xorshift_avx(seed: & mut [u64; 4]) -> [u64; 4] {
+    let mut result: [u64; 4] = [0; 4];
     unsafe {
         asm!(
         concat!(
             // Load the data
-            "vmovdqu ymm0, ymmword ptr [rdi]\n",
+            "vmovdqu ymm0, ymmword ptr [rsi]\n",
             // << 13
             "vpsllq ymm1, ymm0, 13\n",
             // ^
@@ -36,7 +37,9 @@ pub fn xorshift_avx(seed: & mut [u64; 4]) {
             // Store the data
             "vmovdqu ymmword ptr [rdi], ymm0"
         ),
-        inout("rdi") seed => _,
+        inout("rsi") seed => _,
+        inout("rdi") result.as_mut_ptr() => _,
         );
     }
+    result
 }

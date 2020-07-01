@@ -5,13 +5,13 @@
 /// Example:
 /// 
 /// ```
-///  let mut seed: u64 = 0xBAD5EEDdeadbeef;
-/// let value = xorshift(& mut seed);
+/// let value = xorshift(0xBAD5EEDdeadbeef);
 /// println!("{:?}", value);
 /// ```
-pub fn xorshift_plain(seed: & mut u64) -> u64 {
-    *seed ^= *seed << 17;
-    *seed ^= *seed >> 7;
-    *seed ^= *seed << 13;
-    *seed
+pub fn xorshift_plain(seed: u64) -> u64 {
+    let mut s = seed;
+    s ^= s << 17;
+    s ^= s >> 7;
+    s ^= s << 13;
+    s
 }
