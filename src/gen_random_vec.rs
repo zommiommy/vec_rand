@@ -26,18 +26,10 @@ pub fn gen_random_vec(size: usize,mut seed: u64) -> Vec<u64>{
     // fill the remaining values
     let n = size -  (size % 4);
 
-    if size % 4 >= 1 {
+    for i in 0..(size % 4) {
         _seed[0] = xorshift(_seed[0]);
-        result[n] += _seed[0];
+        result[n + i] += _seed[0];
     }
-    if size % 4 >= 2 {
-        _seed[0] = xorshift(_seed[0]);
-        result[n + 1] += _seed[0];
-    }
-    if size % 4 == 3 {
-        _seed[0] = xorshift(_seed[0]);
-        result[n + 2] += _seed[0];
-    }
-
+    
     result
 }
