@@ -1,6 +1,9 @@
 
 use super::splitmix64;
-use super::xorshift::xorshift_avx;
+use super::xorshift::{
+    xorshift_avx,
+    xorshift
+};
 
 pub fn gen_random_vec(size: usize,mut seed: u64) -> Vec<u64>{
     let mut result = Vec::with_capacity(size);
@@ -22,21 +25,19 @@ pub fn gen_random_vec(size: usize,mut seed: u64) -> Vec<u64>{
 
     // fill the remaining values
     let n = size -  (size % 4);
-    match size % 4 {
-        1 => {
-            result[n] += result[n-1];
-        },
-        2 => {
-            result[n] += result[n-1];
-            result[n+1] += result[n];
-        },
-        3 => {
-            result[n] += result[n-1];
-            result[n+1] += result[n];
-            result[n+2] += result[n+1];
-        },
-        _ => {},
-    };
+
+    if size % 4 >= 1 {
+        _seed[0] = xorshift(_seed[0]);
+        result[n] += _seed[0];
+    }
+    if size % 4 >= 2 {
+        _seed[0] = xorshift(_seed[0]);
+        result[n + 1] += _seed[0];
+    }
+    if size % 4 == 3 {
+        _seed[0] = xorshift(_seed[0]);
+        result[n + 2] += _seed[0];
+    }
 
     result
 }
