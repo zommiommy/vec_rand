@@ -22,7 +22,7 @@ fn test_xorshift() -> u64{
         seed = vec_rand::xorshift::xorshift(seed);
     }
     let v = (rdtsc() - start) as f64 / SIZE as f64;
-    println!("mean cycles: {}: alg: xorshift", v);
+    println!("mean cycles: {}\talg: xorshift", v);
     seed
 }
 
@@ -35,7 +35,7 @@ fn test_xorshift_avx() -> [u64; 4]{
         vec_rand::xorshift::xorshift_avx(& mut seed);
     }
     let v = (rdtsc() - start) as f64 / SIZE as f64 / 4.0;
-    println!("mean cycles: {}: alg: xorshift_avx", v);
+    println!("mean cycles: {}\talg: xorshift_avx", v);
     seed
 }
 
@@ -51,7 +51,7 @@ fn test_xorshift_avx_ss4() -> [u64; 16] {
         vec_rand::xorshift::xorshift_avx_ss4(& mut seed);
     }
     let v = (rdtsc() - start) as f64 / SIZE as f64 / 16.0;
-    println!("mean cycles: {}: alg: xorshift_avx_ss4", v);
+    println!("mean cycles: {}\talg: xorshift_avx_ss4", v);
     seed
 }
 
@@ -71,7 +71,7 @@ fn test_xorshift_avx_ss8() -> [u64; 32] {
         vec_rand::xorshift::xorshift_avx_ss8(& mut seed);
     }
     let v = (rdtsc() - start) as f64 / SIZE as f64 / 32.0;
-    println!("mean cycles: {}: alg: xorshift_avx_ss8", v);
+    println!("mean cycles: {}\talg: xorshift_avx_ss8", v);
     seed
 }
 
@@ -84,7 +84,7 @@ fn test_xorshiro256plus() -> [u64; 4]{
         vec_rand::xorshiro256plus::xorshiro256plus(& mut seed);
     }
     let v = (rdtsc() - start) as f64 / SIZE as f64;
-    println!("mean cycles: {}: alg: xorshiro256plus", v);
+    println!("mean cycles: {}\talg: xorshiro256plus", v);
     seed
 }
 
@@ -101,7 +101,7 @@ fn test_xorshiro256plus_avx() -> [u64; 16]{
         vec_rand::xorshiro256plus::xorshiro256plus_avx(& mut seed);
     }
     let v = (rdtsc() - start) as f64 / SIZE as f64 / 4.0;
-    println!("mean cycles: {}: alg: xorshiro256plus_avx", v);
+    println!("mean cycles: {}\talg: xorshiro256plus_avx", v);
     seed
 }
 
@@ -130,7 +130,7 @@ fn test_xorshiro256plus_avx_ss4() -> [u64; 64]{
     }
     let v = (rdtsc() - start) as f64 / SIZE as f64 / 16.0;
 
-    println!("mean cycles: {}: alg: xorshiro256plus_avx_ss4 example: ", v);
+    println!("mean cycles: {}\talg: xorshiro256plus_avx_ss4", v);
     seed
 }
 
