@@ -10,7 +10,7 @@ The implementations are ment for `x86_64` processors with `avx2`.
 
 # Benchmarks
 
-To run the benchmakrs, (once you have rust nightly installed)[https://rustup.rs/](nightly is needed to use inline assembly), just clone the repo and run `cargo bench` .
+To run the benchmakrs, [once you have rust nightly installed](https://rustup.rs/) (nightly is needed to use inline assembly), just clone the repo and run `cargo bench` .
 
 On my `Intel(R) Core(TM) i7-8750H CPU @ 2.20GHz` I get the following timings:
 
