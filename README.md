@@ -82,3 +82,34 @@ test test_sample                ... bench:     107,844 ns/iter (+/- 18,400)
 test test_sample_avx            ... bench:      84,182 ns/iter (+/- 4,458)
 test test_weighted_index_sample ... bench:     244,001 ns/iter (+/- 34,833)
 ```
+
+# Throughtput analysis
+The results:
+```
+Measuring mean number of cycles per random u64
+
+
+xorshift
+
+mean cycles: 3.546104912: alg: xorshift
+mean cycles: 1.961271073: alg: xorshift_avx
+mean cycles: 1.3753319495: alg: xorshift_avx_ss4
+mean cycles: 0.6900948785: alg: xorshift_avx_ss8
+
+
+xorshiro256plus
+
+mean cycles: 1.684266216: alg: xorshiro256plus
+mean cycles: 1.6508679695: alg: test_xorshiro256plus_avx
+mean cycles: 1.440569095: alg: xorshiro256plus_avx_ss4 example: 
+```
+
+These measurements are made with:
+```rust
+let start: u64 = rdtsc();
+for _ in 0..SIZE {
+   algorithm(& mut seed);
+}
+let v = (rdtsc() - start) as f64 / SIZE as f64 / batch_size;
+```
+where `batch_size` is how may u64 the algorithm generate for each call.
