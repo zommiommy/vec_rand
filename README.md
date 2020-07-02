@@ -10,12 +10,12 @@ The implementations are ment for `x86_64` processors with `avx2`.
 
 # Benchmarks
 
-To run the benchmakrs, [once you have rust nightly installed](https://rustup.rs/) (nightly is needed to use inline assembly), just clone the repo and run `cargo bench` .
+To run the benchmakrs, [once you have rust nightly installed](https://rustup.rs/) (nightly is needed to use inline assembly), just clone the repo and run `cargo bench` 
 
 On my `Intel(R) Core(TM) i7-8750H CPU @ 2.20GHz` I get the following timings:
 
 ### xorshiro256plus
-The test is to generate 32000 random bytes. `thread_rng` is the default rust rand implementation.
+The test is to generate 32_000 random bytes. `thread_rng` is the default rust rand implementation.
 ```
 test test_thread_rng              ... bench:     390,214 ns/iter (+/- 9,748)
 test test_xorshiro256plus         ... bench:      23,801 ns/iter (+/- 2,429)
@@ -24,7 +24,7 @@ test test_xorshiro256plus_avx_ss4 ... bench:      15,732 ns/iter (+/- 1,247)
 ```
 
 ### xorshift
-The test is to generate 32000 random bytes. `thread_rng` is the default rust rand implementation.
+The test is to generate 32_000 random bytes. `thread_rng` is the default rust rand implementation.
 ```
 test test_thread_rng              ... bench:     387,832 ns/iter (+/- 19,789)
 test test_xorshift                ... bench:      49,761 ns/iter (+/- 5,952)
