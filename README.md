@@ -56,6 +56,19 @@ test test_with_xorshiro256plus    ... bench:   2,374,508 ns/iter (+/- 105,906)
 
 The tests with name `test_gen_random_vec(_\d+)` uses group by filling, meaning that `test_gen_random_vec_32_4_1` will first fill the vector with batches of 32 u64s using `xorshift_avx_ss8` then in the remaining values will be filled with batches of 4 u64s using `xorshift_avx`, finally, any remaining values will be filled singuarly with `xorshift`.
 
+The best time we have is `1,545,974ns` which can be translated to a throughput of:
+
+1,545,974[ns] / 1,000,000 = 1,545974 [ns/#u64]
+
+1,545974 [ns/#u64] / 8 [bytes/#u64] = 0,19324675[ns/bytes]
+
+1 / 0,19324675[ns/bytes] = 5,17473127[bytes/ ns]
+
+5,17473127[bytes/ ns] * 10^9 / (1024^3) = 4,819344049[Gib/s]
+
+So we have ~5Gib/s of throughput.
+
+
 ### cumulative sums for `f64`,
 The test is to compute the cumulative sum for 10_000 values.
 ```
@@ -84,7 +97,7 @@ test test_weighted_index_sample ... bench:     244,001 ns/iter (+/- 34,833)
 ```
 
 # Throughtput analysis
-The results:
+The results on my `Intel(R) Core(TM) i7-8750H CPU @ 2.20GHz`:
 ```
 
 Measuring mean number of cycles per random u64
