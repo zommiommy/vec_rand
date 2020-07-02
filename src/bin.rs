@@ -101,7 +101,7 @@ fn test_xorshiro256plus_avx() -> [u64; 16]{
         vec_rand::xorshiro256plus::xorshiro256plus_avx(& mut seed);
     }
     let v = (rdtsc() - start) as f64 / SIZE as f64 / 4.0;
-    println!("mean cycles: {}: alg: test_xorshiro256plus_avx", v);
+    println!("mean cycles: {}: alg: xorshiro256plus_avx", v);
     seed
 }
 
@@ -133,7 +133,6 @@ fn test_xorshiro256plus_avx_ss4() -> [u64; 64]{
     println!("mean cycles: {}: alg: xorshiro256plus_avx_ss4 example: ", v);
     seed
 }
-
 
 fn main() {
     println!("Measuring mean number of cycles per random u64\n");

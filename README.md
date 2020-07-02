@@ -91,17 +91,17 @@ Measuring mean number of cycles per random u64
 
 xorshift
 
-mean cycles: 3.546104912: alg: xorshift
-mean cycles: 1.961271073: alg: xorshift_avx
-mean cycles: 1.3753319495: alg: xorshift_avx_ss4
-mean cycles: 0.6900948785: alg: xorshift_avx_ss8
+mean cycles: 3.546104912  alg: xorshift
+mean cycles: 1.961271073  alg: xorshift_avx
+mean cycles: 1.3753319495 alg: xorshift_avx_ss4
+mean cycles: 0.6900948785 alg: xorshift_avx_ss8
 
 
 xorshiro256plus
 
-mean cycles: 1.684266216: alg: xorshiro256plus
-mean cycles: 1.6508679695: alg: test_xorshiro256plus_avx
-mean cycles: 1.440569095: alg: xorshiro256plus_avx_ss4 example: 
+mean cycles: 1.684266216  alg: xorshiro256plus
+mean cycles: 1.6508679695 alg: xorshiro256plus_avx
+mean cycles: 1.440569095  alg: xorshiro256plus_avx_ss4 example: 
 ```
 
 These measurements are made with:
