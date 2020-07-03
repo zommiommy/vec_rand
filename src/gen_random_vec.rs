@@ -53,13 +53,13 @@ pub fn gen_random_vec_32_4_1(size: usize,mut seed: u64) -> Vec<u64>{
     let mut _seed2: [u64; 4] = [0; 4];
     _seed2.copy_from_slice(&_seed[0..4]);
     // fill fast most of the vector
-    for _ in (0..size).step_by(4) {
+    for _ in (0..size%32 - size%4).step_by(4) {
         for v in &xorshift_avx(& mut _seed2) {
             result.push(*v);
         }
     }
 
-    for _ in (0..(size-size%4)).step_by(4) {
+    for _ in 0..size % 4{
         _seed[0] = xorshift(_seed[0]);
         result.push(_seed[0]);
     }
