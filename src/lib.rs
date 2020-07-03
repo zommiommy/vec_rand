@@ -101,8 +101,13 @@ pub use random::*;
 
 mod gen_random_vec;
 pub use gen_random_vec::*;
-// export the fastest implementation
-pub use gen_random_vec::gen_random_vec_4_1 as gen_random_vec;
 
 mod splitmix64;
 pub use splitmix64::*;
+
+mod gen_random_vec_f64;
+pub use gen_random_vec_f64::*;
+
+// export the fastest implementation
+pub use u64_to_f64::u64_to_f64_no_mul as u64_to_f64;
+pub use gen_random_vec::gen_random_vec_4_1 as gen_random_vec;

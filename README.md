@@ -15,7 +15,7 @@ To run the benchmakrs, [once you have rust nightly installed](https://rustup.rs/
 On my `Intel(R) Core(TM) i7-8750H CPU @ 2.20GHz` I get the following timings:
 
 ### xorshiro256plus
-The test is to generate 32_000 random bytes. `thread_rng` is the default rust rand implementation.
+The test is to generate 32_000 random u64. `thread_rng` is the default rust rand implementation.
 ```
 test test_thread_rng              ... bench:     390,214 ns/iter (+/- 9,748)
 test test_xorshiro256plus         ... bench:      23,801 ns/iter (+/- 2,429)
@@ -24,18 +24,21 @@ test test_xorshiro256plus_avx_ss4 ... bench:      15,732 ns/iter (+/- 1,247)
 ```
 
 ### xorshift
-The test is to generate 32_000 random bytes. `thread_rng` is the default rust rand implementation.
+The test is to generate 32_000 random u64. `thread_rng` is the default rust rand implementation.
 ```
-test test_thread_rng              ... bench:     387,832 ns/iter (+/- 19,789)
-test test_xorshift                ... bench:      49,761 ns/iter (+/- 5,952)
-test test_xorshift_avx            ... bench:      27,161 ns/iter (+/- 640)
-test test_xorshift_avx_intrinsics ... bench:     317,409 ns/iter (+/- 38,216)
-test test_xorshift_avx_ss4        ... bench:      30,703 ns/iter (+/- 2,655)
-test test_xorshift_avx_ss8        ... bench:      20,750 ns/iter (+/- 524)
+test test_thread_rng              ... bench:     386,575 ns/iter (+/- 18,322)
+test test_xorshift                ... bench:      51,366 ns/iter (+/- 2,220)
+test test_xorshift_avx            ... bench:      26,689 ns/iter (+/- 2,493)
+test test_xorshift_avx_intrinsics ... bench:     309,970 ns/iter (+/- 28,109)
+test test_xorshift_avx_ss4        ... bench:      19,482 ns/iter (+/- 1,006)
+test test_xorshift_avx_ss8        ... bench:       8,632 ns/iter (+/- 512)
 ```
 
+The best time is the one of `xorshif_avx_ss4` which achieves `8,632 ns` for ` 32_000 random bytes` which is equals to `~270ps` for each byte.
+This corrisponds to approximately to ~`27 Gib/s`. 
+
 ### splitmix64
-The test is to generate 32000 random bytes. `thread_rng` is the default rust rand implementation.
+The test is to generate 32000 random u64. `thread_rng` is the default rust rand implementation.
 ```
 test test_splitmix64 ... bench:     107,781 ns/iter (+/- 11,842)
 test test_thread_rng ... bench:     391,169 ns/iter (+/- 15,654)
@@ -55,19 +58,6 @@ test test_with_xorshiro256plus    ... bench:   2,374,508 ns/iter (+/- 105,906)
 ```
 
 The tests with name `test_gen_random_vec(_\d+)` uses group by filling, meaning that `test_gen_random_vec_32_4_1` will first fill the vector with batches of 32 u64s using `xorshift_avx_ss8` then in the remaining values will be filled with batches of 4 u64s using `xorshift_avx`, finally, any remaining values will be filled singuarly with `xorshift`.
-
-The best time we have is `1,545,974ns` which can be translated to a throughput of:
-
-1,545,974[ns] / 1,000,000 = 1,545974 [ns/#u64]
-
-1,545974 [ns/#u64] / 8 [bytes/#u64] = 0,19324675[ns/bytes]
-
-1 / 0,19324675[ns/bytes] = 5,17473127[bytes/ ns]
-
-5,17473127[bytes/ ns] * 10^9 / (1024^3) = 4,819344049[Gib/s]
-
-So we have ~5Gib/s of throughput.
-
 
 ### cumulative sums for `f64`
 The test is to compute the cumulative sum for 10_000 values.
@@ -99,23 +89,22 @@ test test_weighted_index_sample ... bench:     244,001 ns/iter (+/- 34,833)
 # Throughtput analysis
 The results on my `Intel(R) Core(TM) i7-8750H CPU @ 2.20GHz`:
 ```
-
 Measuring mean number of cycles per random u64
 
 
 xorshift
 
-mean cycles: 3.550807938        alg: xorshift
-mean cycles: 2.0723456375       alg: xorshift_avx
-mean cycles: 1.415009630875     alg: xorshift_avx_ss4
-mean cycles: 0.7008412839375    alg: xorshift_avx_ss8
+mean cycles: 4.443891164        alg: xorshift
+mean cycles: 2.5617648905       alg: xorshift_avx
+mean cycles: 1.702883781375     alg: xorshift_avx_ss4
+mean cycles: 0.935907395375     alg: xorshift_avx_ss8
 
 
 xorshiro256plus
 
-mean cycles: 1.777443266        alg: xorshiro256plus
-mean cycles: 1.771435623        alg: xorshiro256plus_avx
-mean cycles: 1.140973023        alg: xorshiro256plus_avx_ss4
+mean cycles: 2.249175442        alg: xorshiro256plus
+mean cycles: 2.2306521235       alg: xorshiro256plus_avx
+mean cycles: 1.834847551875     alg: xorshiro256plus_avx_ss4
 ```
 
 These measurements are made with:
