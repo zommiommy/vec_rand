@@ -69,7 +69,7 @@ The best time we have is `1,545,974ns` which can be translated to a throughput o
 So we have ~5Gib/s of throughput.
 
 
-### cumulative sums for `f64`,
+### cumulative sums for `f64`
 The test is to compute the cumulative sum for 10_000 values.
 ```
 test test_cumsum_f64                ... bench:      24,316 ns/iter (+/- 1,643)
@@ -79,7 +79,7 @@ test test_cumsum_f64_sse_intrinsics ... bench:       9,278 ns/iter (+/- 245)
 test test_cumsum_f64_unrolled       ... bench:      11,569 ns/iter (+/- 861)
 ```
 
-### cumulative sums for `f32`,
+### cumulative sums for `f32`
 The test is to compute the cumulative sum for 10_000 values.
 ```
 test test_cumsum_f32                ... bench:      24,086 ns/iter (+/- 787)
