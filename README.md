@@ -34,7 +34,7 @@ test test_xorshift_avx_ss4        ... bench:      19,482 ns/iter (+/- 1,006)
 test test_xorshift_avx_ss8        ... bench:       8,632 ns/iter (+/- 512)
 ```
 
-The best time is the one of `xorshif_avx_ss4` which achieves `8,632 ns` for ` 32_000 random bytes` which is equals to `~270ps` for each byte.
+The best time is the one of `xorshif_avx_ss4` which achieves `8,632 ns` for ` 32_000 random bytes` which is equals to `~270ps` for each u64.
 This corrisponds to approximately to ~`27 Gib/s`. 
 
 ### splitmix64
