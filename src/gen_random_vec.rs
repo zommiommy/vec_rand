@@ -17,7 +17,7 @@ pub fn gen_random_vec_4_1(size: usize,mut seed: u64) -> Vec<u64>{
     }
 
     // fill fast most of the vector
-    for _ in (0..size).step_by(4) {
+    for _ in (0..(size-size%4)).step_by(4) {
         for v in &xorshift_avx(& mut _seed) {
             result.push(*v);
         }
@@ -46,7 +46,7 @@ pub fn gen_random_vec_32_4_1(size: usize,mut seed: u64) -> Vec<u64>{
     }
 
     // fill fast most of the vector
-    for _ in (0..size).step_by(32) {
+    for _ in (0..(size-size%32)).step_by(32) {
         for v in &xorshift_avx_ss8(& mut _seed) {
             result.push(*v);
         }
@@ -61,7 +61,7 @@ pub fn gen_random_vec_32_4_1(size: usize,mut seed: u64) -> Vec<u64>{
         }
     }
 
-    for _ in 0..(size % 4) {
+    for _ in (0..(size-size%4)).step_by(4) {
         _seed[0] = xorshift(_seed[0]);
         result.push(_seed[0]);
     }
@@ -81,7 +81,7 @@ pub fn gen_random_vec_32_1(size: usize,mut seed: u64) -> Vec<u64>{
     }
 
     // fill fast most of the vector
-    for _ in (0..size).step_by(32) {
+    for _ in (0..(size-size%32)).step_by(32) {
         for v in &xorshift_avx_ss8(& mut _seed) {
             result.push(*v);
         }
