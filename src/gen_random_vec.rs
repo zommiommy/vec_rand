@@ -22,13 +22,11 @@ pub fn gen_random_vec_4_1(size: usize,mut seed: u64) -> Vec<u64>{
             result.push(*v);
         }
     }
-
     // fill the remaining values
-    let n = size -  (size % 4);
 
-    for i in 0..(size % 4) {
+    for _ in 0..(size % 4) {
         _seed[0] = xorshift(_seed[0]);
-        result[n + i] = _seed[0];
+        result.push(_seed[0]);
     }
 
     result
