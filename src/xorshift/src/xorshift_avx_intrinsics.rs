@@ -1,4 +1,5 @@
 
+#[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
 use core::arch::x86_64::{
     // info can be found at https://software.intel.com/sites/landingpage/IntrinsicsGuide
     __m256i,
@@ -15,10 +16,12 @@ use core::arch::x86_64::{
 
 };
 
+#[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
 #[inline(always)]
 /// Generate 4 random u64 by running 4 parallel xorshifts using avx.
 /// This version uses rust's intrinsics instead of directly asm, 
 /// and we observe that's several time slower.
+/// [This might be the reason why](https://software.intel.com/content/www/us/en/develop/articles/avoiding-avx-sse-transition-penalties.html)
 /// 
 /// Example:
 /// 

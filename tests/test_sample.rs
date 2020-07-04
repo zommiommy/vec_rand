@@ -14,6 +14,7 @@ fn test_sample() {
     }
 }
 
+#[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
 #[test]
 fn test_sample_avx() {
     for _ in 0..ITER {

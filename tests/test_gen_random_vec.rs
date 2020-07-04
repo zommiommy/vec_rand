@@ -14,10 +14,10 @@ fn test_gen_random_vec_f64() {
 
 
     // test reproducibility
-    let A = vec_rand::gen_random_vec_f64(1000, 0xBAD5EED);
-    let B = vec_rand::gen_random_vec_f64(1000, 0xBAD5EED);
+    let step_a = vec_rand::gen_random_vec_1(1000, 0xBAD5EED);
+    let step_b = vec_rand::gen_random_vec_1(1000, 0xBAD5EED);
 
-    for (a, b) in A.iter().zip(B.iter()) {
+    for (a, b) in step_a.iter().zip(step_b.iter()) {
         assert_eq!(a, b);
     }
 }
@@ -32,15 +32,16 @@ fn test_gen_random_vec() {
 
 
     // test reproducibility
-    let A = vec_rand::gen_random_vec(1000, 0xBAD5EED);
-    let B = vec_rand::gen_random_vec(1000, 0xBAD5EED);
+    let step_a = vec_rand::gen_random_vec_1(1000, 0xBAD5EED);
+    let step_b = vec_rand::gen_random_vec_1(1000, 0xBAD5EED);
 
-    for (a, b) in A.iter().zip(B.iter()) {
+    for (a, b) in step_a.iter().zip(step_b.iter()) {
         assert_eq!(a, b);
     }
 }
 
 
+#[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
 #[test]
 fn test_gen_random_vec_4_1() {
     // test correct len
@@ -51,14 +52,15 @@ fn test_gen_random_vec_4_1() {
 
 
     // test reproducibility
-    let A = vec_rand::gen_random_vec_4_1(1000, 0xBAD5EED);
-    let B = vec_rand::gen_random_vec_4_1(1000, 0xBAD5EED);
+    let step_a = vec_rand::gen_random_vec_1(1000, 0xBAD5EED);
+    let step_b = vec_rand::gen_random_vec_1(1000, 0xBAD5EED);
 
-    for (a, b) in A.iter().zip(B.iter()) {
+    for (a, b) in step_a.iter().zip(step_b.iter()) {
         assert_eq!(a, b);
     }
 }
 
+#[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
 #[test]
 fn test_gen_random_vec_32_1() {
     // test correct len
@@ -69,14 +71,15 @@ fn test_gen_random_vec_32_1() {
 
 
     // test reproducibility
-    let A = vec_rand::gen_random_vec_32_1(1000, 0xBAD5EED);
-    let B = vec_rand::gen_random_vec_32_1(1000, 0xBAD5EED);
+    let step_a = vec_rand::gen_random_vec_1(1000, 0xBAD5EED);
+    let step_b = vec_rand::gen_random_vec_1(1000, 0xBAD5EED);
 
-    for (a, b) in A.iter().zip(B.iter()) {
+    for (a, b) in step_a.iter().zip(step_b.iter()) {
         assert_eq!(a, b);
     }
 }
 
+#[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
 #[test]
 fn test_gen_random_vec_32_4_1() {
     // test correct len
@@ -87,14 +90,15 @@ fn test_gen_random_vec_32_4_1() {
 
 
     // test reproducibility
-    let A = vec_rand::gen_random_vec_32_4_1(1000, 0xBAD5EED);
-    let B = vec_rand::gen_random_vec_32_4_1(1000, 0xBAD5EED);
+    let step_a = vec_rand::gen_random_vec_1(1000, 0xBAD5EED);
+    let step_b = vec_rand::gen_random_vec_1(1000, 0xBAD5EED);
 
-    for (a, b) in A.iter().zip(B.iter()) {
+    for (a, b) in step_a.iter().zip(step_b.iter()) {
         assert_eq!(a, b);
     }
 }
 
+#[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
 #[test]
 fn test_gen_random_vec_1() {
     // test correct len
@@ -105,10 +109,10 @@ fn test_gen_random_vec_1() {
 
 
     // test reproducibility
-    let A = vec_rand::gen_random_vec_1(1000, 0xBAD5EED);
-    let B = vec_rand::gen_random_vec_1(1000, 0xBAD5EED);
+    let step_a = vec_rand::gen_random_vec_1(1000, 0xBAD5EED);
+    let step_b = vec_rand::gen_random_vec_1(1000, 0xBAD5EED);
 
-    for (a, b) in A.iter().zip(B.iter()) {
+    for (a, b) in step_a.iter().zip(step_b.iter()) {
         assert_eq!(a, b);
     }
 }

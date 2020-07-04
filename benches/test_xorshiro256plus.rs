@@ -36,6 +36,7 @@ fn test_xorshiro256plus(b: &mut Bencher) {
     });
 }
 
+#[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
 #[bench]
 fn test_xorshiro256plus_avx(b: &mut Bencher) {
     let mut seed: [u64; 16] = [
@@ -53,6 +54,7 @@ fn test_xorshiro256plus_avx(b: &mut Bencher) {
     });
 }
 
+#[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
 #[bench]
 fn test_xorshiro256plus_avx_ss4(b: &mut Bencher) {
     let mut seed: [u64; 64] = [

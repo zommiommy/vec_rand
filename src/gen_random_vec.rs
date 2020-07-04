@@ -1,11 +1,14 @@
 
 use super::splitmix64;
+use super::xorshift::xorshift;
+
+#[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
 use super::xorshift::{
     xorshift_avx_ss8,
-    xorshift_avx,
-    xorshift
+    xorshift_avx
 };
 
+#[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
 pub fn gen_random_vec_4_1(size: usize,mut seed: u64) -> Vec<u64>{
     let mut result = Vec::with_capacity(size);
 
@@ -33,6 +36,7 @@ pub fn gen_random_vec_4_1(size: usize,mut seed: u64) -> Vec<u64>{
 }
 
 
+#[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
 pub fn gen_random_vec_32_4_1(size: usize,mut seed: u64) -> Vec<u64>{
     let mut result = Vec::with_capacity(size);
 
@@ -68,6 +72,7 @@ pub fn gen_random_vec_32_4_1(size: usize,mut seed: u64) -> Vec<u64>{
 }
 
 
+#[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
 pub fn gen_random_vec_32_1(size: usize,mut seed: u64) -> Vec<u64>{
     let mut result = Vec::with_capacity(size);
 

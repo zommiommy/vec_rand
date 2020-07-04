@@ -4,8 +4,6 @@ version = "0.1.0"
 authors = ["Tommaso Fontana <tommaso.fontana.96@gmail.com>"]
 edition = "2018"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [lib]
 name = "vec_rand"
 path = "src/lib.rs"
@@ -21,6 +19,10 @@ cumsum_f32 = { path = "src/cumsum_f32" }
 cumsum_f64 = { path = "src/cumsum_f64" }
 xorshift = { path = "src/xorshift" }
 xorshiro256plus = { path = "src/xorshiro256plus" }
+
+
+[build]
+rustflags = "-C target-cpu=native"
 
 [profile.release]
 opt-level = 3

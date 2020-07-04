@@ -93,8 +93,6 @@ pub use u64_to_f64::*;
 mod sample;
 pub use sample::sample;
 
-mod sample_avx;
-pub use sample_avx::sample_avx;
 
 mod random;
 pub use random::*;
@@ -108,6 +106,16 @@ pub use splitmix64::*;
 mod gen_random_vec_f64;
 pub use gen_random_vec_f64::*;
 
+// cpu dependent modules
+#[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
+mod sample_avx;
+#[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
+pub use sample_avx::sample_avx;
+
 // export the fastest implementation
 pub use u64_to_f64::u64_to_f64_no_mul as u64_to_f64;
+
+#[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
 pub use gen_random_vec::gen_random_vec_4_1 as gen_random_vec;
+#[cfg(not(all(target_arch = "x86_64", target_feature = "avx2")))]
+pub use gen_random_vec::gen_random_vec_1 as gen_random_vec;

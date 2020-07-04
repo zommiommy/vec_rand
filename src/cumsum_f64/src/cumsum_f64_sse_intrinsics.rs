@@ -1,7 +1,5 @@
-#[cfg(all(
-    any(target_arch = "x86", target_arch = "x86_64"),
-    target_feature = "sse"
-))]
+
+#[cfg(all(target_arch = "x86_64", target_feature = "sse"))]
 use core::arch::x86_64::{
     // info can be found at https://software.intel.com/sites/landingpage/IntrinsicsGuide
     __m128d,
@@ -25,10 +23,8 @@ use core::arch::x86_64::{
     _mm_storeu_pd,
 };
 
-#[cfg(all(
-    any(target_arch = "x86", target_arch = "x86_64"),
-    target_feature = "sse"
-))]
+
+#[cfg(all(target_arch = "x86_64", target_feature = "sse"))]
 #[inline(always)]
 fn scan_sse(mut x: __m128d) -> __m128d {
     //
@@ -44,10 +40,8 @@ fn scan_sse(mut x: __m128d) -> __m128d {
     x
 }
 
-#[cfg(all(
-    any(target_arch = "x86", target_arch = "x86_64"),
-    target_feature = "sse"
-))]
+
+#[cfg(all(target_arch = "x86_64", target_feature = "sse"))]
 pub fn cumsum_f64_sse_intrinsics(random_vec: &Vec<f64>) -> Vec<f64> {
     let mut result = vec![0.0f64; random_vec.len()];
     unsafe {

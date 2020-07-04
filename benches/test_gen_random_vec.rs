@@ -45,6 +45,7 @@ fn test_with_xorshift(b: &mut Bencher) {
 }
 
 
+#[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
 #[bench]
 fn test_gen_random_vec_32_4_1(b: &mut Bencher) {
     let mut seed: u64 = 6591408588322595484;
@@ -56,6 +57,7 @@ fn test_gen_random_vec_32_4_1(b: &mut Bencher) {
     });
 }
 
+#[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
 #[bench]
 fn test_gen_random_vec_4_1(b: &mut Bencher) {
     let mut seed: u64 = 6591408588322595484;
@@ -67,6 +69,7 @@ fn test_gen_random_vec_4_1(b: &mut Bencher) {
     });
 }
 
+#[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
 #[bench]
 fn test_gen_random_vec_32_1(b: &mut Bencher) {
     let mut seed: u64 = 6591408588322595484;
@@ -79,6 +82,7 @@ fn test_gen_random_vec_32_1(b: &mut Bencher) {
 }
 
 
+#[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
 #[bench]
 fn test_gen_random_vec_1(b: &mut Bencher) {
     let mut seed: u64 = 6591408588322595484;

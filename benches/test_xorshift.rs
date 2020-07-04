@@ -31,6 +31,7 @@ fn test_xorshift(b: &mut Bencher) {
 }
 
 
+#[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
 #[bench]
 fn test_xorshift_avx(b: &mut Bencher) {
     let mut seed: [u64; 4] = [
@@ -48,6 +49,7 @@ fn test_xorshift_avx(b: &mut Bencher) {
 }
 
 
+#[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
 #[bench]
 fn test_xorshift_avx_intrinsics(b: &mut Bencher) {
     let mut seed: [u64; 4] = [
@@ -66,6 +68,7 @@ fn test_xorshift_avx_intrinsics(b: &mut Bencher) {
 
 
 
+#[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
 #[bench]
 fn test_xorshift_avx_ss4(b: &mut Bencher) {
     let mut seed: [u64; 16] = [
@@ -83,6 +86,7 @@ fn test_xorshift_avx_ss4(b: &mut Bencher) {
 }
 
 
+#[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
 #[bench]
 fn test_xorshift_avx_ss8(b: &mut Bencher) {
     let mut seed: [u64; 32] = [

@@ -31,6 +31,7 @@ fn test_sample(b: &mut Bencher) {
     });
 }
 
+#[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
 #[bench]
 fn test_sample_avx(b: &mut Bencher) {
     let random_vec = gen_random_f64_vec(NUMBER);

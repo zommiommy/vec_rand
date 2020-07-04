@@ -1,5 +1,6 @@
 
 
+#[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
 #[inline(always)]
 /// Generate 4 random u64 by running 4 parallel xorshifts using avx.
 /// 

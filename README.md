@@ -7,10 +7,21 @@ This repository will collect several implementations of various algorithm to exp
 
 The implementations are ment for `x86_64` processors with `avx2`.
 
+# Usage
+
+Since rust by default doesn't target the current system cpu features, we must enable them in order to exploit avx instructions. This can be done by setting the environment flag `RUSTFLAGS`.
+
+`export RUSTFLAGS='-C target-cpu=native'`
+
+or just prefixing the command with it:
+
+```RUSTFLAGS='-C target-cpu=native' cargo test```
+```RUSTFLAGS='-C target-cpu=native' cargo run --release```
+```RUSTFLAGS='-C target-cpu=native' cargo bench```
 
 # Benchmarks
 
-To run the benchmakrs, [once you have rust nightly installed](https://rustup.rs/) (nightly is needed to use inline assembly), just clone the repo and run `cargo bench` 
+To run the benchmakrs, [once you have rust nightly installed](https://rustup.rs/) (nightly is needed to use inline assembly), just clone the repo and run `RUSTFLAGS='-C target-cpu=native' cargo bench` 
 
 On my `Intel(R) Core(TM) i7-8750H CPU @ 2.20GHz` I get the following timings:
 

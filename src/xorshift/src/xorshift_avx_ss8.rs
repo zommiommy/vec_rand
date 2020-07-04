@@ -1,4 +1,5 @@
 
+#[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
 #[inline(always)]
 /// Generate 32 random u64 by running 32 parallel xorshifts using avx.
 /// This method exploits both the SIMD instructions and the Out of Order Execution.
