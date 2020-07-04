@@ -8,16 +8,28 @@ This repository will collect several implementations of various algorithm to exp
 The implementations are ment for `x86_64` processors with `avx2`.
 
 # Usage
+By default this repo targets the current cpu using `-C target-cpu=native`.
 
-Since rust by default doesn't target the current system cpu features, we must enable them in order to exploit avx instructions. This can be done by setting the environment flag `RUSTFLAGS`.
-
-`export RUSTFLAGS='-C target-cpu=native'`
+This can be changed by overriding the env_var:
+`export RUSTFLAGS='-C target-cpu=skylake'`
 
 or just prefixing the command with it:
 
-```RUSTFLAGS='-C target-cpu=native' cargo test```
-```RUSTFLAGS='-C target-cpu=native' cargo run --release```
-```RUSTFLAGS='-C target-cpu=native' cargo bench```
+```
+RUSTFLAGS='-C target-cpu=skylake' cargo test
+```
+```
+RUSTFLAGS='-C target-cpu=skylake' cargo run --release
+```
+```
+RUSTFLAGS='-C target-cpu=skylake' cargo bench
+```
+
+Or by changing the `.cargo/config` with:
+```
+[build]
+rustflags = ["-C", "target-cpu=skylake"]
+```
 
 # Benchmarks
 
