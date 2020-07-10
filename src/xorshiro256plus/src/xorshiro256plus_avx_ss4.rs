@@ -1,5 +1,5 @@
 
-#[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
+#[cfg(target_arch = "x86_64")]
 #[inline(always)]
 /// Generate 16 random u64 by running 16 parallel instances of xorshift256plus using avx instructions and exploiting OOO Execution (Out Of Order).
 /// 

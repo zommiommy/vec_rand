@@ -90,9 +90,6 @@ pub mod xorshiro256plus{
 mod u64_to_f64;
 pub use u64_to_f64::*;
 
-mod sample;
-pub use sample::sample;
-
 
 mod random;
 pub use random::*;
@@ -106,16 +103,35 @@ pub use splitmix64::*;
 mod gen_random_vec_f64;
 pub use gen_random_vec_f64::*;
 
-// cpu dependent modules
-#[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
-mod sample_avx;
-#[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
-pub use sample_avx::sample_avx;
-
 // export the fastest implementation
 pub use u64_to_f64::u64_to_f64_no_mul as u64_to_f64;
 
-#[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
-pub use gen_random_vec::gen_random_vec_4_1 as gen_random_vec;
-#[cfg(not(all(target_arch = "x86_64", target_feature = "avx2")))]
-pub use gen_random_vec::gen_random_vec_1 as gen_random_vec;
+mod sample_plain;
+pub use sample_plain::sample_plain;
+#[cfg(all(target_arch = "x86_64"))]
+mod sample_avx;
+#[cfg(all(target_arch = "x86_64"))]
+pub use sample_avx::sample_avx;
+
+pub fn sample(weights: & mut Vec<f64>) -> usize{
+    #[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
+    {
+        if is_x86_feature_detected!("avx2") {
+            return sample_avx(weights);
+        }
+    }
+    sample_plain(weights)
+}
+
+pub use gen_random_vec::gen_random_vec_4_1;
+pub use gen_random_vec::gen_random_vec_1;
+
+pub fn gen_random_vec(size: usize,mut seed: u64) -> Vec<u64>{
+    #[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
+    {
+        if is_x86_feature_detected!("avx2") {
+            return gen_random_vec::gen_random_vec_4_1(size, seed);
+        }
+    }
+    gen_random_vec::gen_random_vec_1(size, seed)
+}
