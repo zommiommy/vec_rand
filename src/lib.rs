@@ -106,6 +106,8 @@ pub use gen_random_vec_f64::*;
 // export the fastest implementation
 pub use u64_to_f64::u64_to_f64_no_mul as u64_to_f64;
 
+mod sample;
+pub use sample::sample;
 mod sample_plain;
 pub use sample_plain::sample_plain;
 #[cfg(all(target_arch = "x86_64"))]
@@ -113,20 +115,13 @@ mod sample_avx;
 #[cfg(all(target_arch = "x86_64"))]
 pub use sample_avx::sample_avx;
 
-pub fn sample(weights: & mut Vec<f64>) -> usize{
-    #[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
-    {
-        if is_x86_feature_detected!("avx2") {
-            return sample_avx(weights);
-        }
-    }
-    sample_plain(weights)
-}
+
+
 
 pub use gen_random_vec::gen_random_vec_4_1;
 pub use gen_random_vec::gen_random_vec_1;
 
-pub fn gen_random_vec(size: usize,mut seed: u64) -> Vec<u64>{
+pub fn gen_random_vec(size: usize,seed: u64) -> Vec<u64>{
     #[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
     {
         if is_x86_feature_detected!("avx2") {
