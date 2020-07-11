@@ -47,6 +47,6 @@ pub fn xorshift_avx_intrinsics(seed: & mut [u64; 4]) -> [u64; 4] {
         temp = _mm256_slli_epi64(seed, 17);
         seed = _mm256_xor_si256(seed, temp);
         _mm256_storeu_si256(result.as_mut_ptr() as *mut __m256i, seed);
+        result
     }
-    result
 }

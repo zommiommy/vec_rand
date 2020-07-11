@@ -93,3 +93,14 @@ fn test_gen_random_vec_1(b: &mut Bencher) {
         result
     });
 }
+
+#[bench]
+fn test_gen_random_vec(b: &mut Bencher) {
+    let mut seed: u64 = 6591408588322595484;
+
+    b.iter(|| {
+        let result = gen_random_vec(NUMBER as usize, seed);
+        seed = result[0];
+        result
+    });
+}

@@ -1,5 +1,5 @@
 
-#[cfg(all(target_arch = "x86_64", target_feature = "sse"))]
+#[cfg(target_arch = "x86_64")]
 use core::arch::x86_64::{
     // info can be found at https://software.intel.com/sites/landingpage/IntrinsicsGuide
     __m256d,
@@ -25,7 +25,7 @@ use core::arch::x86_64::{
 };
 
 
-#[cfg(all(target_arch = "x86_64", target_feature = "sse"))]
+#[cfg(target_arch = "x86_64")]
 #[inline(always)]
 fn scan_sse(mut x: __m256d) -> __m256d{
     // its "equivalent" to
@@ -51,7 +51,7 @@ fn scan_sse(mut x: __m256d) -> __m256d{
 }
 
 
-#[cfg(all(target_arch = "x86_64", target_feature = "sse"))]
+#[cfg(target_arch = "x86_64")]
 pub fn cumsum_f64_avx_intrinsics(random_vec: &Vec<f64>) -> Vec<f64> {
     // TODO WIP to fix
     let mut result = vec![0.0f64; random_vec.len()];

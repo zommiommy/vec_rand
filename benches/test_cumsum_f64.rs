@@ -18,6 +18,14 @@ fn test_cumsum_f64(b: &mut Bencher) {
 }
 
 #[bench]
+fn test_cumsum_f64_plain(b: &mut Bencher) {
+    let random_vec = gen_random_f64_vec(NUMBER);
+    b.iter(|| {
+        cumsum_f64_plain(&random_vec)
+    });
+}
+
+#[bench]
 fn test_cumsum_f64_scan(b: &mut Bencher) {
     let random_vec = gen_random_f64_vec(NUMBER);
     b.iter(|| {

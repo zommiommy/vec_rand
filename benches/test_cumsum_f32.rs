@@ -18,6 +18,14 @@ fn test_cumsum_f32(b: &mut Bencher) {
 }
 
 #[bench]
+fn test_cumsum_f32_plain(b: &mut Bencher) {
+    let random_vec = gen_random_f32_vec(NUMBER);
+    b.iter(|| {
+        cumsum_f32_plain(&random_vec)
+    });
+}
+
+#[bench]
 fn test_cumsum_f32_scan(b: &mut Bencher) {
     let random_vec = gen_random_f32_vec(NUMBER);
     b.iter(|| {

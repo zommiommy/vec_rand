@@ -42,7 +42,7 @@ fn test_xorshift_avx(b: &mut Bencher) {
     ];
     b.iter(|| {
         for _ in 0..(8 * NUM) {
-            xorshift_avx(& mut seed);
+            seed = xorshift_avx(& mut seed);
         }
         seed
     });
@@ -60,7 +60,7 @@ fn test_xorshift_avx_intrinsics(b: &mut Bencher) {
     ];
     b.iter(|| {
         for _ in 0..(8 * NUM) {
-            xorshift_avx_intrinsics(& mut seed);
+            seed = xorshift_avx_intrinsics(& mut seed);
         }
         seed
     });
@@ -79,7 +79,7 @@ fn test_xorshift_avx_ss4(b: &mut Bencher) {
     ];
     b.iter(|| {
         for _ in 0..(2 * NUM) {
-            xorshift_avx_ss4(& mut seed);
+            seed = xorshift_avx_ss4(& mut seed);
         }
         seed
     });
@@ -101,7 +101,7 @@ fn test_xorshift_avx_ss8(b: &mut Bencher) {
     ];
     b.iter(|| {
         for _ in 0..(1 * NUM) {
-            xorshift_avx_ss8(& mut seed);
+            seed = xorshift_avx_ss8(& mut seed);
         }
         seed
     });
