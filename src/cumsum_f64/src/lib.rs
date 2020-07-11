@@ -37,9 +37,9 @@ pub fn cumsum_f64(random_vec: &Vec<f64>) -> Vec<f64>{
         //if is_x86_feature_detected!("avx2") {
         //    return cumsum_f64_avx_intrinsics(random_vec);
         //}
-        if is_x86_feature_detected!("sse") {
-            return cumsum_f64_sse_intrinsics(random_vec);
-        }
+        //if is_x86_feature_detected!("sse") {
+        //    return cumsum_f64_sse_intrinsics(random_vec);
+        //}
     }
     cumsum_f64_unrolled(random_vec)
 }
