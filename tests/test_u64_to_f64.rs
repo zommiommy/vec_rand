@@ -1,6 +1,6 @@
 extern crate vec_rand;
 
-const SIZE: usize = 10_000;
+const SIZE: usize = 10_069;
 
 #[test]
 fn test_u64_to_f64_mul() {

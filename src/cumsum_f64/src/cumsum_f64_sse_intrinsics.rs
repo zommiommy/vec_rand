@@ -44,9 +44,10 @@ fn scan_sse(mut x: __m128d) -> __m128d {
 #[cfg(target_arch = "x86_64")]
 pub fn cumsum_f64_sse_intrinsics(random_vec: &Vec<f64>) -> Vec<f64> {
     let mut result = vec![0.0f64; random_vec.len()];
+    let max = (random_vec.len() >> 1) << 1;
     unsafe {
         let mut offset: __m128d = _mm_setzero_pd();
-        for i in (0..random_vec.len()).step_by(2) {
+        for i in (0..max).step_by(2) {
             // it should be __mm_load_ps but if the values are not aligned it
             // raises a seg-fault so we use the slower _mm_loadu_ps until we figure
             // out how to ensure the alignmenet of the vector
@@ -65,9 +66,8 @@ pub fn cumsum_f64_sse_intrinsics(random_vec: &Vec<f64>) -> Vec<f64> {
         }
     }
 
-    let n = random_vec.len() -  (random_vec.len() % 2);
     if random_vec.len() % 2 == 1 {
-            result[n] += result[n-1];
+            result[max] = random_vec[max] + result[max-1];
     };
     result
 }

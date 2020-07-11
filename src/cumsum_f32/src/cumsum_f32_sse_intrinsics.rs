@@ -82,16 +82,16 @@ pub fn cumsum_f32_sse_intrinsics(random_vec: &Vec<f32>) -> Vec<f32> {
     let n = random_vec.len() -  (random_vec.len() % 4);
     match random_vec.len() % 4 {
         1 => {
-            result[n] += result[n-1];
+            result[n] = random_vec[n] + result[n - 1];
         },
         2 => {
-            result[n] += result[n-1];
-            result[n+1] += result[n];
+            result[n] = random_vec[n] + result[n - 1];
+            result[n+1] = random_vec[n+1] + result[n];
         },
         3 => {
-            result[n] += result[n-1];
-            result[n+1] += result[n];
-            result[n+2] += result[n+1];
+            result[n] = random_vec[n] + result[n - 1];
+            result[n+1] = random_vec[n+1] + result[n];
+            result[n+2] = random_vec[n+2] + result[n + 1];
         },
         _ => {},
     };

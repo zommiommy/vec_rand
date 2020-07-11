@@ -1,9 +1,10 @@
 
 pub fn cumsum_f64_unrolled(random_vec: &Vec<f64>) -> Vec<f64> {
-    let mut result = vec![0.0f64; 4 * ( random_vec.len() as f64 / 4.0).ceil() as usize];
+    let mut result = vec![0.0f64; random_vec.len()];
     let mut offset = 0.0f64;
 
-    for i in (0..random_vec.len()).step_by(4){
+    let max = if random_vec.len() > 4 {random_vec.len() - 4} else {0};
+    for i in (0..max).step_by(4){
         let mut a = random_vec[i];
         let mut b = random_vec[i+1];
         let mut c = random_vec[i+2];
@@ -22,9 +23,22 @@ pub fn cumsum_f64_unrolled(random_vec: &Vec<f64>) -> Vec<f64> {
         offset = d;
     }
 
-    for _ in 0..(random_vec.len() % 4){
-        result.pop();
-    }
-
+    let n = random_vec.len() -  (random_vec.len() % 4);
+    match random_vec.len() % 4 {
+        1 => {
+            result[n] = random_vec[n] + result[n - 1];
+        },
+        2 => {
+            result[n] = random_vec[n] + result[n - 1];
+            result[n+1] = random_vec[n+1] + result[n];
+        },
+        3 => {
+            result[n] = random_vec[n] + result[n - 1];
+            result[n+1] = random_vec[n+1] + result[n];
+            result[n+2] = random_vec[n+2] + result[n + 1];
+        },
+        _ => {},
+    };
+    
     result
 }

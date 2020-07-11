@@ -1,6 +1,6 @@
 extern crate vec_rand;
 
-const SIZE: usize = 1000;
+const SIZE: usize = 1031;
 const ITER: usize = 1000;
 
 #[test]
@@ -10,8 +10,6 @@ fn test_cumsum_f32() {
 
         let truth = vec_rand::cumsum_f32::cumsum_f32_plain(&weights);
         let tested = vec_rand::cumsum_f32::cumsum_f32(&weights);
-        println!("{:?}", truth);
-        println!("{:?}", tested);
         for (a, b) in truth.iter().zip(tested.iter()) {
             assert!((a - b).abs() < 0.001);
         }

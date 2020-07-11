@@ -1,6 +1,6 @@
 extern crate vec_rand;
 
-const SIZE: usize = 10_000;
+const SIZE: usize = 10_069;
 const ITER: usize = 1_000;
 
 

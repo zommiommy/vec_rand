@@ -1,7 +1,7 @@
 extern crate vec_rand;
 
 const START: usize = 1;
-const END: usize = 10000;
+const END: usize = 10069;
 
 
 #[test]
