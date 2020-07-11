@@ -1,4 +1,4 @@
-# vec_rand
+# vec_rand ![](https://api.travis-ci.org/zommiommy/vec_rand.svg?branch=master&status=started) ![](https://img.shields.io/badge/platform-linux--64%20%7C%20osx--64%20%7C%20win--64-lightgrey)
 Rust crate where we implement vectorized versions of fast pseudo-random number generators.
 
 These implementations are in no way ment to be Cryptographically safe, Their intended porpouse is to do MonteCarlo simulations and Random-Walks on graphs.
