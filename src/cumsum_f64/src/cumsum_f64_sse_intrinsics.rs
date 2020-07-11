@@ -65,21 +65,9 @@ pub fn cumsum_f64_sse_intrinsics(random_vec: &Vec<f64>) -> Vec<f64> {
         }
     }
 
-    let n = random_vec.len() -  (random_vec.len() % 4);
-    match random_vec.len() % 4 {
-        1 => {
+    let n = random_vec.len() -  (random_vec.len() % 2);
+    if random_vec.len() % 2 == 1 {
             result[n] += result[n-1];
-        },
-        2 => {
-            result[n] += result[n-1];
-            result[n+1] += result[n];
-        },
-        3 => {
-            result[n] += result[n-1];
-            result[n+1] += result[n];
-            result[n+2] += result[n+1];
-        },
-        _ => {},
     };
     result
 }
