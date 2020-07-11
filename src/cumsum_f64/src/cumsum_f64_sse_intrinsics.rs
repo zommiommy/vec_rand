@@ -43,6 +43,12 @@ fn scan_sse(mut x: __m128d) -> __m128d {
 
 #[cfg(target_arch = "x86_64")]
 pub fn cumsum_f64_sse_intrinsics(random_vec: &Vec<f64>) -> Vec<f64> {
+    if random_vec.len() == 0{
+        return vec![];
+    }
+    if random_vec.len() == 1{
+        return random_vec.clone();
+    }
     let mut result = vec![0.0f64; random_vec.len()];
     let max = (random_vec.len() >> 1) << 1;
     unsafe {
