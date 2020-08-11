@@ -8,7 +8,7 @@ const ITER: usize = 1_000;
 fn test_sample() {
     for _ in 0..ITER {
         let mut weights = vec_rand::gen_random_vec_f64(SIZE, 0xBAD5eed);
-        let i = vec_rand::sample(& mut weights);
+        let i = vec_rand::sample(& mut weights,0xBAD5eed);
         assert!(i < weights.len());
     }
 }
@@ -17,7 +17,7 @@ fn test_sample() {
 fn test_sample_plain() {
     for _ in 0..ITER {
         let mut weights = vec_rand::gen_random_vec_f64(SIZE, 0xBAD5eed);
-        let i = vec_rand::sample_plain(& mut weights);
+        let i = vec_rand::sample_plain(& mut weights, 0xBAD5eed);
         assert!(i < weights.len());
     }
 }
@@ -27,7 +27,7 @@ fn test_sample_plain() {
 fn test_sample_avx() {
     for _ in 0..ITER {
         let mut weights = vec_rand::gen_random_vec_f64(SIZE, 0xBAD5eed);
-        let i = vec_rand::sample_avx(& mut weights);
+        let i = vec_rand::sample_avx(& mut weights, 0xBAD5eed);
         assert!(i < weights.len());
     }
 }

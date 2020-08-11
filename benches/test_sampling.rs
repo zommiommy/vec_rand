@@ -27,7 +27,7 @@ fn test_weighted_index_sample(b: &mut Bencher) {
 fn test_sample(b: &mut Bencher) {
     let mut random_vec = gen_random_f64_vec(NUMBER);
     b.iter(|| {
-        sample(&mut random_vec)
+        sample(&mut random_vec, 0xBad53eed)
     });
 }
 
@@ -35,7 +35,7 @@ fn test_sample(b: &mut Bencher) {
 fn test_sample_plain(b: &mut Bencher) {
     let mut random_vec = gen_random_f64_vec(NUMBER);
     b.iter(|| {
-        sample_plain(&mut random_vec)
+        sample_plain(&mut random_vec, 0xBad53eed)
     });
 }
 
@@ -44,7 +44,7 @@ fn test_sample_plain(b: &mut Bencher) {
 fn test_sample_avx(b: &mut Bencher) {
     let random_vec = gen_random_f64_vec(NUMBER);
     b.iter(|| {
-        sample_avx(&random_vec)
+        sample_avx(&random_vec, 0xBad53eed)
     });
 }
 
@@ -54,6 +54,6 @@ fn test_sample_avx(b: &mut Bencher) {
 fn test_sample_modifing(b: &mut Bencher) {
     let mut random_vec = gen_random_f64_vec(NUMBER);
     b.iter(|| {
-        sample_modifing(& mut random_vec)
+        sample_modifing(& mut random_vec, 0xBad53eed)
     });
 }

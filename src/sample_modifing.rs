@@ -10,14 +10,14 @@ use cumsum_f64::cumsum_f64_sse_modifing;
 /// probability distribution and extract a random indices accodringly.`
 ///
 /// It useses cumsum_f64
-pub fn sample_modifing(weights: &mut Vec<f64>) -> usize {
+pub fn sample_modifing(weights: &mut Vec<f64>, seed: u64) -> usize {
     if weights.len() == 1 {
         return 0;
     }
 
     cumsum_f64_sse_modifing(weights);
 
-    let rnd: f64 = random_f64() * weights[weights.len() - 1];
+    let rnd: f64 = random_f64(seed) * weights[weights.len() - 1];
 
     // Find the first item which has a weight *higher* than the chosen weight.
     match weights.binary_search_by(|w| {

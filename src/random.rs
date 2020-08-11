@@ -1,6 +1,6 @@
 
 use xorshiro256plus::xorshiro256plus;
-
+use xorshift::xorshift;
 
 static mut GLOBAL_SEED: [u64; 4] = [
     6591408588322595484,
@@ -92,12 +92,12 @@ pub fn random_u64() -> u64 {
 /// ```
 /// use vec_rand::random_f64;
 ///
-/// let frnd: f64 = random_f64();
+/// let frnd: f64 = random_f64(0x5eed);
 /// assert!(0.0 <= frnd && frnd <= 1.0);
 /// println!("The random value is: {}", frnd);
 /// ```
-pub fn random_f64() -> f64 {
-    let v: u64 = (random_u64() >> 11) | (1023 << 52);
+pub fn random_f64(seed: u64) -> f64 {
+    let v: u64 = (xorshift(seed ^ 0xBAD5EED1337) >> 11) | (1023 << 52);
     let r: f64 = f64::from_le_bytes(v.to_le_bytes());
     r - 1f64
 }
