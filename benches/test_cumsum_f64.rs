@@ -11,9 +11,9 @@ const NUMBER: u64 = 10000;
 
 #[bench]
 fn test_cumsum_f64(b: &mut Bencher) {
-    let random_vec = gen_random_f64_vec(NUMBER);
+    let mut random_vec = gen_random_f64_vec(NUMBER);
     b.iter(|| {
-        cumsum_f64(&random_vec)
+        cumsum_f64(&mut random_vec)
     });
 }
 
@@ -52,8 +52,8 @@ fn test_cumsum_f64_avx_intrinsics(b: &mut Bencher) {
 
 #[bench]
 fn test_cumsum_f64_unrolled(b: &mut Bencher) {
-    let random_vec = gen_random_f64_vec(NUMBER);
+    let mut random_vec = gen_random_f64_vec(NUMBER);
     b.iter(|| {
-        cumsum_f64_unrolled(&random_vec)
+        cumsum_f64_unrolled(&mut random_vec)
     });
 }

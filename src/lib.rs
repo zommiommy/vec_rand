@@ -114,6 +114,9 @@ pub use sample_plain::sample_plain;
 mod sample_avx;
 #[cfg(all(target_arch = "x86_64"))]
 pub use sample_avx::sample_avx;
+mod sample_modifing;
+#[cfg(all(target_arch = "x86_64"))]
+pub use sample_modifing::sample_modifing;
 
 mod sample_uniform_biased;
 pub use sample_uniform_biased::sample_uniform_biased as sample_uniform;

@@ -3,24 +3,24 @@ use ::core::cmp::Ordering;
 use super::random_f64;
 
 #[cfg(target_arch = "x86_64")]
-use cumsum_f64::cumsum_f64_sse_intrinsics;
+use cumsum_f64::cumsum_f64_sse_modifing;
 
 #[cfg(target_arch = "x86_64")]
 /// Given a vector of scores (non-zero positive values), convert it to a
 /// probability distribution and extract a random indices accodringly.`
 ///
 /// It useses cumsum_f64
-pub fn sample_avx(weights: &Vec<f64>) -> usize {
+pub fn sample_modifing(weights: &mut Vec<f64>) -> usize {
     if weights.len() == 1 {
         return 0;
     }
 
-    let cumsum = cumsum_f64_sse_intrinsics(weights);
+    cumsum_f64_sse_modifing(weights);
 
-    let rnd: f64 = random_f64() * cumsum[cumsum.len() - 1];
+    let rnd: f64 = random_f64() * weights[weights.len() - 1];
 
     // Find the first item which has a weight *higher* than the chosen weight.
-    match cumsum.binary_search_by(|w| {
+    match weights.binary_search_by(|w| {
         if *w <= rnd {
             Ordering::Less
         } else {
