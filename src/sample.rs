@@ -15,7 +15,7 @@ pub fn sample(weights: &mut Vec<f64>, seed: u64) -> usize {
     cumsum_f64(weights);
 
     let rnd: f64 = random_f64(seed) * weights[weights.len() - 1];
-
+    println!("{}", rnd);
     // Find the first item which has a weight *higher* than the chosen weight.
     match weights.binary_search_by(|w| {
         if *w <= rnd {
