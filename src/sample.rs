@@ -27,6 +27,14 @@ pub fn sample(weights: &mut Vec<f64>, seed: u64) -> usize {
         // the value could exactly match one of the cumulative sums
         // and therefore return Ok.
         Ok(g) => g,
-        Err(g) => g,
+        Err(g) => {
+            // Due to float errors, the value of rnd might be slightly bigger 
+            // than the max. This would means that the returned value will be
+            // weights.len(). But this is out of bounds so we want to cap it to
+            // weights.len() - 1. The following code does this in a brenchless 
+            // way to reduce the brench missprediction penality
+            let cond = g > weights.len() - 1;
+            return (1 - cond as usize) * g + (cond as usize * (weights.len() - 1)) ;
+            }
     }
 }

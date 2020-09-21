@@ -1,7 +1,8 @@
 #![feature(test)]
 extern crate test;
 use test::Bencher;
-use rand::Rng;
+use rand::{Rng, SeedableRng};
+use rand::rngs::StdRng;
 
 use vec_rand::xorshift::*;
 
@@ -10,6 +11,17 @@ const NUM: u64 = 1_000;
 #[bench]
 fn test_thread_rng(b: &mut Bencher) {
     let mut rng = rand::thread_rng();
+    b.iter(|| {
+        for _ in 0..(32 * NUM) {
+            rng.gen_range(0, 10000);
+        }
+        rng.gen_range(0, 10000)
+    });
+}
+
+#[bench]
+fn test_stdrng(b: &mut Bencher) {
+    let mut rng: StdRng = SeedableRng::seed_from_u64(0xBAD5EEDdeadbeef);
     b.iter(|| {
         for _ in 0..(32 * NUM) {
             rng.gen_range(0, 10000);

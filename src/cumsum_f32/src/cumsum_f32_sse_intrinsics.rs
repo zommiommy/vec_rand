@@ -1,4 +1,5 @@
 
+
 #[cfg(all(target_arch = "x86_64", target_feature = "sse"))]
 use core::arch::x86_64::{
     // info can be found at https://software.intel.com/sites/landingpage/IntrinsicsGuide
@@ -22,33 +23,6 @@ use core::arch::x86_64::{
     // Vec -> Memory but slower
     _mm_storeu_ps,
 };
-
-
-#[cfg(all(target_arch = "x86_64", target_feature = "sse"))]
-#[inline(always)]
-fn scan_sse(mut x: __m128) -> __m128 {
-    // its "equivalent" to
-    // x += x << (4 * 8);
-    // x += x << (8 * 8);
-    //
-    // first pass:
-    //      f4,      f3,      f2, f1 +
-    //      f3,      f2,      f1,  0 =
-    //     f43,     f32,     f21, f1
-    //
-    // second pass
-    // f43, f32, f21, f1 +
-    // f21,  f1,   0,  0 =
-    // f4321, f321, f21, f1
-    //
-    // -> Fast cumulative sum using 2 adds and 2 shifts instead of (3 + 2 + 1) = 6 adds
-    unsafe {
-        x = _mm_add_ps(x, _mm_castsi128_ps(_mm_slli_si128(_mm_castps_si128(x), 4)));
-        x = _mm_add_ps(x, _mm_castsi128_ps(_mm_slli_si128(_mm_castps_si128(x), 8)));
-    }
-    x
-}
-
 
 #[cfg(all(target_arch = "x86_64", target_feature = "sse"))]
 pub fn cumsum_f32_sse_intrinsics(random_vec: &Vec<f32>) -> Vec<f32> {
@@ -78,9 +52,10 @@ pub fn cumsum_f32_sse_intrinsics(random_vec: &Vec<f32>) -> Vec<f32> {
             // raises a seg-fault so we use the slower _mm_loadu_ps until we figure
             // out how to ensure the alignmenet of the vector
             // loat the 4 values
-            let x: __m128 = _mm_loadu_ps(random_vec.as_ptr().wrapping_offset(i as isize));
+            let mut x: __m128 = _mm_loadu_ps(random_vec.as_ptr().wrapping_offset(i as isize));
             // compute the local cumulative sum
-            let mut out: __m128 = scan_sse(x);
+            x = _mm_add_ps(x, _mm_castsi128_ps(_mm_slli_si128(_mm_castps_si128(x), 4)));
+            let mut out = _mm_add_ps(x, _mm_castsi128_ps(_mm_slli_si128(_mm_castps_si128(x), 8)));
             // add the local cumulative sum to the current offset
             out = _mm_add_ps(out, offset);
             // get the internal floats array of the result vec

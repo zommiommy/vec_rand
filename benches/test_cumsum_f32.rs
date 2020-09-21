@@ -42,6 +42,14 @@ fn test_cumsum_f32_sse_intrinsics(b: &mut Bencher) {
 }
 
 #[bench]
+fn test_cumsum_f32_sse(b: &mut Bencher) {
+    let random_vec = gen_random_f32_vec(NUMBER);
+    b.iter(|| {
+        cumsum_f32_sse(&random_vec)
+    });
+}
+
+#[bench]
 fn test_cumsum_f32_unrolled(b: &mut Bencher) {
     let random_vec = gen_random_f32_vec(NUMBER);
     b.iter(|| {
