@@ -3,6 +3,7 @@ extern crate vec_rand;
 const SIZE: usize = 10_069;
 const ITER: usize = 1_000;
 
+const SMALL_VALUE : f64 = 0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005;
 
 #[test]
 fn test_sample() {
@@ -17,6 +18,13 @@ fn test_sample() {
     let m = values.iter().min().unwrap();
     println!("max {}, min{}", M, m);
     assert!((M - m) < 10);
+}
+
+#[test]
+fn test_sample_small_values() {
+    let mut weights = vec![SMALL_VALUE; SIZE];
+    let i = vec_rand::sample(& mut weights,0xBAD5eed);
+    assert!(i < weights.len());
 }
 
 #[test]
