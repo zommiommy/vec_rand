@@ -10,8 +10,8 @@
 /// ```
 pub fn xorshift_plain(seed: u64) -> u64 {
     let mut s = seed;
-    s ^= s << 17;
-    s ^= s >> 7;
     s ^= s << 13;
+    s ^= s >> 7;
+    s ^= s << 17;
     s
 }
