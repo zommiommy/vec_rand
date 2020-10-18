@@ -119,7 +119,11 @@ mod sample_modifing;
 pub use sample_modifing::sample_modifing;
 
 mod sample_uniform_biased;
-pub use sample_uniform_biased::sample_uniform_biased as sample_uniform;
+pub use sample_uniform_biased::sample_uniform_biased;
+mod sample_uniform_unbiased;
+pub use sample_uniform_unbiased::sample_uniform_unbiased_nearly_divisionless;
+pub use sample_uniform_unbiased::sample_uniform_unbiased_simple;
+pub use sample_uniform_unbiased::sample_uniform_unbiased_simple as sample_uniform;
 
 
 

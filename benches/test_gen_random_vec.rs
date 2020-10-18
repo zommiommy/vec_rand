@@ -13,7 +13,7 @@ use vec_rand::*;
 fn test_gen_range_of_thread_rng(b: &mut Bencher) {
     let mut rng = rand::thread_rng();
     b.iter(|| {
-        (0..NUMBER).map(|_| rng.gen_range(0, NUMBER)).collect::<Vec<u64>>()
+        (0..NUMBER).map(|_| rng.gen_range(0..NUMBER)).collect::<Vec<u64>>()
     });
 }
 

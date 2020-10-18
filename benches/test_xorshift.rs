@@ -13,9 +13,9 @@ fn test_thread_rng(b: &mut Bencher) {
     let mut rng = rand::thread_rng();
     b.iter(|| {
         for _ in 0..(32 * NUM) {
-            rng.gen_range(0, 10000);
+            rng.gen_range(0..10000);
         }
-        rng.gen_range(0, 10000)
+        rng.gen_range(0..10000)
     });
 }
 
@@ -24,9 +24,9 @@ fn test_stdrng(b: &mut Bencher) {
     let mut rng: StdRng = SeedableRng::seed_from_u64(0xBAD5EEDdeadbeef);
     b.iter(|| {
         for _ in 0..(32 * NUM) {
-            rng.gen_range(0, 10000);
+            rng.gen_range(0..10000);
         }
-        rng.gen_range(0, 10000)
+        rng.gen_range(0..10000)
     });
 }
 

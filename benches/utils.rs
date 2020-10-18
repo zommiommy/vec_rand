@@ -2,7 +2,7 @@ use rand::Rng;
 
 pub fn gen_random_u64_vec(num: u64) -> Vec<u64> {
     let mut rng = rand::thread_rng();
-    let vals: Vec<u64> = (0..num).map(|_| rng.gen_range(0, num)).collect();
+    let vals: Vec<u64> = (0..num).map(|_| rng.gen_range(0..num)).collect();
     vals
 }
 
@@ -25,7 +25,7 @@ pub fn gen_random_f32_vec(num: u64) -> Vec<f32> {
 pub fn gen_random_usize_vec(num: usize, max: usize) -> Vec<usize> {
     // TODO! substitute with xorshiro
     let mut rng = rand::thread_rng();
-    let vals: Vec<usize> = (0..num).map(|_| rng.gen_range(0, max)).collect();
+    let vals: Vec<usize> = (0..num).map(|_| rng.gen_range(0..max)).collect();
     vals
 }
 
