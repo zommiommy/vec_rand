@@ -4,7 +4,6 @@ const START: usize = 0;
 const END: usize = 21;
 const ITER: usize = 1000;
 
-
 #[test]
 fn test_cumsum_f64_scan() {
     for _ in 0..ITER {

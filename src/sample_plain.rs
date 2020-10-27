@@ -1,6 +1,5 @@
-
-use ::core::cmp::Ordering;
 use super::random_f64;
+use ::core::cmp::Ordering;
 
 /// Given a vector of scores (non-zero positive values), convert it to a
 /// probability distribution and extract a random indices accodringly.`

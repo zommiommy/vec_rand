@@ -1,6 +1,5 @@
-
-use xorshiro256plus::xorshiro256plus;
 use xorshift::xorshift;
+use xorshiro256plus::xorshiro256plus;
 
 static mut GLOBAL_SEED: [u64; 4] = [
     6591408588322595484,
@@ -8,7 +7,6 @@ static mut GLOBAL_SEED: [u64; 4] = [
     8913376598984957243,
     17912695770704705270,
 ];
-
 
 #[inline(always)]
 /// Return a random u64.
@@ -31,9 +29,7 @@ static mut GLOBAL_SEED: [u64; 4] = [
 /// println!("The random value is: {}", rnd);
 /// ```
 pub fn random_u64() -> u64 {
-    unsafe{
-        xorshiro256plus(& mut GLOBAL_SEED)
-    }
+    unsafe { xorshiro256plus(&mut GLOBAL_SEED) }
 }
 
 #[inline(always)]

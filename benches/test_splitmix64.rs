@@ -1,7 +1,7 @@
 #![feature(test)]
 extern crate test;
-use test::Bencher;
 use rand::Rng;
+use test::Bencher;
 
 use vec_rand::splitmix64;
 
@@ -17,7 +17,6 @@ fn test_thread_rng(b: &mut Bencher) {
         rng.gen_range(0..10000)
     });
 }
-
 
 #[bench]
 fn test_splitmix64(b: &mut Bencher) {

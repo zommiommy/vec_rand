@@ -10,7 +10,7 @@ fn test_sample() {
     let mut values = vec![0; SIZE];
     for j in 0..ITER {
         let mut weights = vec_rand::gen_random_vec_f64(SIZE, 0xBAD5eed);
-        let i = vec_rand::sample(& mut weights,0xBAD5eed + j as u64);
+        let i = vec_rand::sample(&mut weights, 0xBAD5eed + j as u64);
         assert!(i < weights.len());
         values[i] += 1;
     }
@@ -23,7 +23,7 @@ fn test_sample() {
 #[test]
 fn test_sample_small_values() {
     let mut weights = vec![SMALL_VALUE; SIZE];
-    let i = vec_rand::sample(& mut weights,0xBAD5eed);
+    let i = vec_rand::sample(&mut weights, 0xBAD5eed);
     assert!(i < weights.len());
 }
 
@@ -32,7 +32,7 @@ fn test_sample_plain() {
     let mut values = vec![0; SIZE];
     for j in 0..ITER {
         let mut weights = vec_rand::gen_random_vec_f64(SIZE, 0xBAD5eed);
-        let i = vec_rand::sample_plain(& mut weights,0xBAD5eed + j as u64);
+        let i = vec_rand::sample_plain(&mut weights, 0xBAD5eed + j as u64);
         assert!(i < weights.len());
         values[i] += 1;
     }
@@ -48,7 +48,7 @@ fn test_sample_avx() {
     let mut values = vec![0; SIZE];
     for j in 0..ITER {
         let mut weights = vec_rand::gen_random_vec_f64(SIZE, 0xBAD5eed);
-        let i = vec_rand::sample_avx(& mut weights, 0xBAD5eed + j as u64);
+        let i = vec_rand::sample_avx(&mut weights, 0xBAD5eed + j as u64);
         assert!(i < weights.len());
         values[i] += 1;
     }

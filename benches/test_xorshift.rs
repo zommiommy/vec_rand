@@ -1,8 +1,8 @@
 #![feature(test)]
 extern crate test;
-use test::Bencher;
-use rand::{Rng, SeedableRng};
 use rand::rngs::StdRng;
+use rand::{Rng, SeedableRng};
+use test::Bencher;
 
 use vec_rand::xorshift::*;
 
@@ -30,7 +30,6 @@ fn test_stdrng(b: &mut Bencher) {
     });
 }
 
-
 #[bench]
 fn test_xorshift(b: &mut Bencher) {
     let mut seed: u64 = 0xBAD5EEDdeadbeef;
@@ -41,7 +40,6 @@ fn test_xorshift(b: &mut Bencher) {
         seed
     });
 }
-
 
 #[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
 #[bench]
@@ -54,12 +52,11 @@ fn test_xorshift_avx(b: &mut Bencher) {
     ];
     b.iter(|| {
         for _ in 0..(8 * NUM) {
-            seed = xorshift_avx(& mut seed);
+            seed = xorshift_avx(&mut seed);
         }
         seed
     });
 }
-
 
 #[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
 #[bench]
@@ -72,48 +69,81 @@ fn test_xorshift_avx_intrinsics(b: &mut Bencher) {
     ];
     b.iter(|| {
         for _ in 0..(8 * NUM) {
-            seed = xorshift_avx_intrinsics(& mut seed);
+            seed = xorshift_avx_intrinsics(&mut seed);
         }
         seed
     });
 }
-
-
 
 #[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
 #[bench]
 fn test_xorshift_avx_ss4(b: &mut Bencher) {
     let mut seed: [u64; 16] = [
-        0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef,
-        0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef,
-        0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef,
-        0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
     ];
     b.iter(|| {
         for _ in 0..(2 * NUM) {
-            seed = xorshift_avx_ss4(& mut seed);
+            seed = xorshift_avx_ss4(&mut seed);
         }
         seed
     });
 }
 
-
 #[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
 #[bench]
 fn test_xorshift_avx_ss8(b: &mut Bencher) {
     let mut seed: [u64; 32] = [
-        0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef,
-        0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef,
-        0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef,
-        0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef,
-        0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef,
-        0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef,
-        0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef,
-        0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
+        0xBAD5EEDdeadbeef,
     ];
     b.iter(|| {
         for _ in 0..(1 * NUM) {
-            seed = xorshift_avx_ss8(& mut seed);
+            seed = xorshift_avx_ss8(&mut seed);
         }
         seed
     });
