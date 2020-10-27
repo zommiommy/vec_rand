@@ -24,6 +24,9 @@ pub fn sample_uniform_unbiased_nearly_divisionless(number: u64,mut seed: u64) ->
 /// Sample a random number in the range [0, number)
 /// 
 pub fn sample_uniform_unbiased_simple(number: u64, mut seed: u64) -> usize {
+    if number == 1 {
+        return 0;
+    }
     let limit = u64::MAX - (u64::MAX % number);
     loop {
         seed = xorshift(seed);
