@@ -93,7 +93,7 @@ pub fn random_u64() -> u64 {
 /// println!("The random value is: {}", frnd);
 /// ```
 pub fn random_f64(seed: u64) -> f64 {
-    let rnd = xorshift(seed);
+    let rnd = xorshift(xorshift(seed ^ 10) ^ 1337);
     let v: u64 = (rnd >> 11) | (1023 << 52);
     let r: f64 = f64::from_le_bytes(v.to_le_bytes());
     r - 1f64
@@ -111,7 +111,7 @@ pub fn random_f64(seed: u64) -> f64 {
 /// println!("The random value is: {}", frnd);
 /// ```
 pub fn random_f32(seed: u64) -> f32 {
-    let rnd = xorshift(seed);
+    let rnd = xorshift(xorshift(seed ^ 10) ^ 1337);
     let v: u32 = (((rnd >> 8) | (127 << 23)) & 0xffffffff) as u32;
     let r: f32 = f32::from_le_bytes(v.to_le_bytes());
     r - 1f32
