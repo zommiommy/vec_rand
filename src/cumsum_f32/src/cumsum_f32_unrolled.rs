@@ -1,13 +1,9 @@
 
-pub fn cumsum_f32_unrolled(random_vec: &Vec<f32>) -> Vec<f32> {
-    if random_vec.len() == 0{
-        return vec![];
-    }
-    if random_vec.len() == 1{
-        return random_vec.clone();
+pub fn cumsum_f32_unrolled(random_vec: &mut Vec<f32>) {
+    if random_vec.len() <= 0{
+        return;
     }
 
-    let mut result = vec![0.0f32; random_vec.len()];
     let mut offset = 0.0f32;
 
     let max = if random_vec.len() >= 4 {
@@ -30,10 +26,10 @@ pub fn cumsum_f32_unrolled(random_vec: &Vec<f32>) -> Vec<f32> {
         b += a + offset;
         a += offset;
 
-        result[i] = a;
-        result[i+1] = b;
-        result[i+2] = c;
-        result[i+3] = d;
+        random_vec[i] = a;
+        random_vec[i+1] = b;
+        random_vec[i+2] = c;
+        random_vec[i+3] = d;
 
         offset = d;
     }
@@ -41,19 +37,17 @@ pub fn cumsum_f32_unrolled(random_vec: &Vec<f32>) -> Vec<f32> {
     let n = random_vec.len() -  (random_vec.len() % 4);
     match random_vec.len() % 4 {
         1 => {
-            result[n] = random_vec[n] + offset;
+            random_vec[n] = random_vec[n] + offset;
         },
         2 => {
-            result[n] = random_vec[n] + offset;
-            result[n+1] = random_vec[n+1] + result[n];
+            random_vec[n] = random_vec[n] + offset;
+            random_vec[n+1] = random_vec[n+1] + random_vec[n];
         },
         3 => {
-            result[n] = random_vec[n] + offset;
-            result[n+1] = random_vec[n+1] + result[n];
-            result[n+2] = random_vec[n+2] + result[n + 1];
+            random_vec[n] = random_vec[n] + offset;
+            random_vec[n+1] = random_vec[n+1] + random_vec[n];
+            random_vec[n+2] = random_vec[n+2] + random_vec[n + 1];
         },
         _ => {},
     };
-    
-    result
 }

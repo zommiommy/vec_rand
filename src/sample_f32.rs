@@ -1,22 +1,20 @@
-use super::random_f64;
+use super::random_f32;
 use ::core::cmp::Ordering;
 
-#[cfg(target_arch = "x86_64")]
-use cumsum_f64::cumsum_f64_sse_intrinsics;
+use super::cumsum_f32::cumsum_f32;
 
-#[cfg(target_arch = "x86_64")]
 /// Given a vector of scores (non-zero positive values), convert it to a
 /// probability distribution and extract a random indices accodringly.`
 ///
 /// It useses cumsum_f64
-pub fn sample_avx(weights: &mut Vec<f64>, seed: u64) -> usize {
+pub fn sample_f32(weights: &mut Vec<f32>, seed: u64) -> usize {
     if weights.len() == 1 {
         return 0;
     }
 
-    cumsum_f64_sse_intrinsics(weights);
+    cumsum_f32(weights);
 
-    let rnd: f64 = random_f64(seed) * weights[weights.len() - 1];
+    let rnd: f32 = random_f32(seed) * weights[weights.len() - 1];
 
     // Find the first item which has a weight *higher* than the chosen weight.
     match weights.binary_search_by(|w| {

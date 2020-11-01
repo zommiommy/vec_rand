@@ -42,14 +42,10 @@ fn scan_sse(mut x: __m128d) -> __m128d {
 
 
 #[cfg(target_arch = "x86_64")]
-pub fn cumsum_f64_sse_intrinsics(random_vec: &Vec<f64>) -> Vec<f64> {
-    if random_vec.len() == 0{
-        return vec![];
+pub fn cumsum_f64_sse_intrinsics(random_vec: &mut Vec<f64>) {
+    if random_vec.len() <= 1{
+        return;
     }
-    if random_vec.len() == 1{
-        return random_vec.clone();
-    }
-    let mut result = vec![0.0f64; random_vec.len()];
     let max = (random_vec.len() >> 1) << 1;
     unsafe {
         let mut offset: __m128d = _mm_setzero_pd();
@@ -64,7 +60,7 @@ pub fn cumsum_f64_sse_intrinsics(random_vec: &Vec<f64>) -> Vec<f64> {
             // add the local cumulative sum to the current offset
             out = _mm_add_pd(out, offset);
             // get the internal floats array of the result vec
-            let ptr: *mut f64 = result.as_mut_ptr();
+            let ptr: *mut f64 = random_vec.as_mut_ptr();
             // store the value in the vector
             _mm_storeu_pd(ptr.offset(i as isize), out);
             // Update the current offset (aka the last value of out)
@@ -73,7 +69,6 @@ pub fn cumsum_f64_sse_intrinsics(random_vec: &Vec<f64>) -> Vec<f64> {
     }
 
     if random_vec.len() % 2 == 1 {
-            result[max] = random_vec[max] + result[max-1];
+            random_vec[max] = random_vec[max] + random_vec[max-1];
     };
-    result
 }

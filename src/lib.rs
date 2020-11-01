@@ -117,6 +117,9 @@ mod sample_modifing;
 #[cfg(all(target_arch = "x86_64"))]
 pub use sample_modifing::sample_modifing;
 
+mod sample_f32;
+pub use sample_f32::sample_f32;
+
 mod sample_uniform_biased;
 pub use sample_uniform_biased::sample_uniform_biased;
 mod sample_uniform_unbiased;

@@ -40,12 +40,14 @@ pub fn cumsum_f64(random_vec: &mut Vec<f64>){
     #[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
     {
         // to debug
-        //if is_x86_feature_detected!("avx2") {
-        //    return cumsum_f64_avx_intrinsics(random_vec);
-        //}
-        //if is_x86_feature_detected!("sse") {
-        //    return cumsum_f64_sse_intrinsics(random_vec);
-        //}
+        // if is_x86_feature_detected!("avx2") {
+        //     cumsum_f64_avx_intrinsics(random_vec);
+        //     return;
+        // }
+        if is_x86_feature_detected!("sse") {
+            cumsum_f64_sse_intrinsics(random_vec);
+            return;
+        }
     }
     cumsum_f64_unrolled(random_vec)
 }

@@ -23,6 +23,12 @@ fn test_weighted_index_sample(b: &mut Bencher) {
 }
 
 #[bench]
+fn test_sample_f32(b: &mut Bencher) {
+    let mut random_vec = gen_random_f64_vec(NUMBER).iter().map(|x| *x as f32).collect::<Vec<f32>>();
+    b.iter(|| sample_f32(&mut random_vec, 0xBad53eed));
+}
+
+#[bench]
 fn test_sample(b: &mut Bencher) {
     let mut random_vec = gen_random_f64_vec(NUMBER);
     b.iter(|| sample(&mut random_vec, 0xBad53eed));
@@ -37,8 +43,8 @@ fn test_sample_plain(b: &mut Bencher) {
 #[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
 #[bench]
 fn test_sample_avx(b: &mut Bencher) {
-    let random_vec = gen_random_f64_vec(NUMBER);
-    b.iter(|| sample_avx(&random_vec, 0xBad53eed));
+    let mut random_vec = gen_random_f64_vec(NUMBER);
+    b.iter(|| sample_avx(&mut random_vec, 0xBad53eed));
 }
 
 #[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]

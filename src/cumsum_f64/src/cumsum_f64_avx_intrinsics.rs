@@ -52,9 +52,11 @@ fn scan_sse(mut x: __m256d) -> __m256d{
 
 // TODO! debug
 #[cfg(target_arch = "x86_64")]
-pub fn cumsum_f64_avx_intrinsics(random_vec: &Vec<f64>) -> Vec<f64> {
+pub fn cumsum_f64_avx_intrinsics(random_vec: &mut Vec<f64>) {
+    if random_vec.len() <= 1 {
+        return;
+    }
     // TODO WIP to fix
-    let mut result = vec![0.0f64; random_vec.len()];
         unsafe{
             let mut offset: __m256d = _mm256_setzero_pd();
             for i in (0..random_vec.len()).step_by(4) {
@@ -68,7 +70,7 @@ pub fn cumsum_f64_avx_intrinsics(random_vec: &Vec<f64>) -> Vec<f64> {
                 // add the local cumulative sum to the current offset
                 out = _mm256_add_pd(out, offset);
                 // get the internal floats array of the result vec
-                let ptr: *mut f64= result.as_mut_ptr();
+                let ptr: *mut f64= random_vec.as_mut_ptr();
                 // store the value in the vector
                 _mm256_storeu_pd(ptr.offset(i as isize), out);
                 // Update the current offset (aka the last value of out)
@@ -77,22 +79,27 @@ pub fn cumsum_f64_avx_intrinsics(random_vec: &Vec<f64>) -> Vec<f64> {
             }
         }
 
+    // fix the last values if the array's length is not a multiple of 4
     let n = random_vec.len() -  (random_vec.len() % 4);
+    let offset = if n == 0 {
+        0.0
+    } else {
+        random_vec[n - 1]
+    };
     match random_vec.len() % 4 {
         1 => {
-            result[n] = random_vec[n] + result[n - 1];
+            random_vec[n] = random_vec[n] + offset;
         },
         2 => {
-            result[n] = random_vec[n] + result[n - 1];
-            result[n+1] = random_vec[n+1] + result[n];
+            random_vec[n] = random_vec[n] + offset;
+            random_vec[n+1] = random_vec[n+1] + random_vec[n];
         },
         3 => {
-            result[n] = random_vec[n] + result[n - 1];
-            result[n+1] = random_vec[n+1] + result[n];
-            result[n+2] = random_vec[n+2] + result[n + 1];
+            random_vec[n] = random_vec[n] + offset;
+            random_vec[n+1] = random_vec[n+1] + random_vec[n];
+            random_vec[n+2] = random_vec[n+2] + random_vec[n + 1];
         },
         _ => {},
     };
-    result
 }
 

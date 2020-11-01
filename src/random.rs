@@ -93,8 +93,26 @@ pub fn random_u64() -> u64 {
 /// println!("The random value is: {}", frnd);
 /// ```
 pub fn random_f64(seed: u64) -> f64 {
-    let rnd = xorshift(xorshift((seed ^ 0xBAD5EED1337).wrapping_mul(1377)));
+    let rnd = xorshift(seed);
     let v: u64 = (rnd >> 11) | (1023 << 52);
     let r: f64 = f64::from_le_bytes(v.to_le_bytes());
     r - 1f64
+}
+
+#[inline(always)]
+/// Return a random f32 between 0 and 1.
+///
+/// # Examples
+/// ```
+/// use vec_rand::random_f32;
+///
+/// let frnd: f32 = random_f32(0x5eed);
+/// assert!(0.0 <= frnd && frnd <= 1.0);
+/// println!("The random value is: {}", frnd);
+/// ```
+pub fn random_f32(seed: u64) -> f32 {
+    let rnd = xorshift(seed);
+    let v: u32 = (((rnd >> 8) | (127 << 23)) & 0xffffffff) as u32;
+    let r: f32 = f32::from_le_bytes(v.to_le_bytes());
+    r - 1f32
 }

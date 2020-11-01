@@ -40,12 +40,12 @@ fn test_cumsum_f64_unrolled() {
 fn test_cumsum_f64_sse_intrinsics() {
     for _ in 0..ITER {
         for size in START..END {
-            let weights = vec_rand::gen_random_vec_f64(size, 0xBAD5eed);
+            let mut weights = vec_rand::gen_random_vec_f64(size, 0xBAD5eed);
 
             let truth = vec_rand::cumsum_f64::cumsum_f64_plain(&weights);
-            let tested = vec_rand::cumsum_f64::cumsum_f64_sse_intrinsics(&weights);
+            vec_rand::cumsum_f64::cumsum_f64_sse_intrinsics(&mut weights);
 
-            for (a, b) in truth.iter().zip(tested.iter()) {
+            for (a, b) in truth.iter().zip(weights.iter()) {
                 assert!((a - b).abs() < 0.0001);
             }
         }
@@ -60,6 +60,7 @@ fn test_cumsum_f64() {
 
             let truth = vec_rand::cumsum_f64::cumsum_f64_plain(&weights);
             vec_rand::cumsum_f64::cumsum_f64(&mut weights);
+
             for (a, b) in truth.iter().zip(weights.iter()) {
                 assert!((a - b).abs() < 0.001);
             }
