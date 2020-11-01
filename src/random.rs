@@ -107,12 +107,13 @@ pub fn random_f64(seed: u64) -> f64 {
 /// use vec_rand::random_f32;
 ///
 /// let frnd: f32 = random_f32(0x5eed);
-/// assert!(0.0 <= frnd && frnd <= 1.0);
 /// println!("The random value is: {}", frnd);
+/// assert!(0.0 <= frnd && frnd <= 1.0);
 /// ```
 pub fn random_f32(seed: u64) -> f32 {
     let rnd = xorshift(xorshift(seed ^ 10) ^ 1337);
-    let v: u32 = (((rnd >> 8) | (127 << 23)) & 0xffffffff) as u32;
+    println!("VALORE: {}", rnd);
+    let v: u32 = (((rnd >> 8) & 0xffffff) | (127 << 23)) as u32;
     let r: f32 = f32::from_le_bytes(v.to_le_bytes());
     r - 1f32
 }
