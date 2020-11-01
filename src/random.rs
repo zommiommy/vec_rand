@@ -112,7 +112,6 @@ pub fn random_f64(seed: u64) -> f64 {
 /// ```
 pub fn random_f32(seed: u64) -> f32 {
     let rnd = xorshift(xorshift(seed ^ 10) ^ 1337);
-    println!("VALORE: {}", rnd);
     let v: u32 = (((rnd >> 8) & 0xffffff) | (127 << 23)) as u32;
     let r: f32 = f32::from_le_bytes(v.to_le_bytes());
     r - 1f32
