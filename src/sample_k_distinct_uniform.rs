@@ -21,7 +21,7 @@ pub fn sample_k_distinct_uniform(min_value: u64, max_value: u64, quantity: u64, 
     }
     if aligned {
         seed = xorshift::xorshift(seed);
-        let last_offset = quantity - aligned as u64;
+        let last_offset = step*(quantity-1);
         extracted.push(
             last_offset + seed % (max_value - last_offset)
         );
