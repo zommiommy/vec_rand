@@ -17,6 +17,7 @@ fn test_sample_k_distinct_uniform() {
                 (size + 1) as u64,
                 seed as u64 ^ 0xBAD5EED,
             );
+            assert_eq!(sampled.len(), size + 1);
             assert_eq!(sampled.len(), sampled.iter().unique().count());
             assert!((*sampled.first().unwrap() as usize) >= START);
             assert!((*sampled.last().unwrap() as usize) < END * 5);
