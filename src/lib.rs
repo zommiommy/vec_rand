@@ -127,8 +127,13 @@ pub use sample_uniform_unbiased::sample_uniform_unbiased_nearly_divisionless;
 pub use sample_uniform_unbiased::sample_uniform_unbiased_simple;
 pub use sample_uniform_unbiased::sample_uniform_unbiased_simple as sample_uniform;
 
+mod sample_k_distinct_uniform;
+pub use sample_k_distinct_uniform::*;
+
+
 pub use gen_random_vec::gen_random_vec_1;
 pub use gen_random_vec::gen_random_vec_4_1;
+
 
 pub fn gen_random_vec(size: usize, seed: u64) -> Vec<u64> {
     #[cfg(any(target_arch = "x86", target_arch = "x86_64"))]

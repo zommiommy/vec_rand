@@ -13,7 +13,7 @@ name = "measure_cycles"
 path = "src/bin.rs"
 
 [dependencies]
-rand = {git="https://github.com/rust-random/rand.git"} 
+rand = {version = "0.7", features = ["small_rng"]}
 log = "0.4"
 cumsum_f32 = { path = "src/cumsum_f32" }
 cumsum_f64 = { path = "src/cumsum_f64" }
