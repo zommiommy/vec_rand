@@ -14,18 +14,12 @@ use utils::*;
 use vec_rand::*;
 
 #[bench]
-fn test_sample_k_distinct_uniform(b: &mut Bencher) {
+fn test_sample_k_distinct_uniform_plain(b: &mut Bencher) {
     let seed = black_box(0xdeadbeefc0febabe);
-    b.iter(|| sample_k_distinct_uniform(0, MAX, QUANTITY, seed));
+    b.iter(|| sample_k_distinct_uniform_plain(0, MAX, QUANTITY, seed));
 }
-
 #[bench]
-fn test_sorting(b: &mut Bencher) {
-    let seed = black_box(0xdeadbeefc0febabeu64);
-    b.iter(|| {
-        let mut rnd = SmallRng::seed_from_u64((seed) as u64);
-        let mut indices = (0..MAX).collect::<Vec<u64>>();
-        indices.shuffle(&mut rnd);
-        indices[0..QUANTITY as usize].to_vec()
-    });
+fn test_sample_k_distinct_uniform_naive(b: &mut Bencher) {
+    let seed = black_box(0xdeadbeefc0febabe);
+    b.iter(|| sample_k_distinct_uniform_naive(0, MAX, QUANTITY, seed));
 }
