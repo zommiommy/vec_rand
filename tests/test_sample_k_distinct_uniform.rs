@@ -10,17 +10,18 @@ const ITER: usize = 1000;
 #[test]
 fn test_sample_k_distinct_uniform() {
     for seed in 1..ITER {
-        for size in START..END {
+        for size in 1..(END - START + 1) {
             let sampled = vec_rand::sample_k_distinct_uniform(
                 START as u64,
-                (END * 5) as u64,
-                (size + 1) as u64,
+                END as u64,
+                size as u64,
                 seed as u64 ^ 0xBAD5EED,
-            );
-            assert_eq!(sampled.len(), size + 1);
+            )
+            .unwrap();
+            assert_eq!(sampled.len(), size);
             assert_eq!(sampled.len(), sampled.iter().unique().count());
             assert!((*sampled.first().unwrap() as usize) >= START);
-            assert!((*sampled.last().unwrap() as usize) < END * 5);
+            assert!((*sampled.last().unwrap() as usize) < END);
             assert!(sampled.is_sorted());
         }
     }

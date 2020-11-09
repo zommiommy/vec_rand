@@ -5,9 +5,15 @@ pub fn sample_k_distinct_uniform(
     max_value: u64,
     quantity: u64,
     mut seed: u64,
-) -> Vec<u64> {
+) -> Result<Vec<u64>, String> {
     let mut extracted = Vec::with_capacity(quantity as usize);
     let delta = max_value - min_value;
+    if quantity > delta {
+        return Err(format!(
+            "Required quantity {} is greater than given range size {}.",
+            quantity, delta
+        ));
+    }
     let step = delta / quantity;
     seed = xorshift::xorshift(seed);
     let rnd = seed % step;
@@ -20,11 +26,11 @@ pub fn sample_k_distinct_uniform(
         seed = xorshift::xorshift(seed);
         extracted.push(min_value + rnd + step * i + seed % step);
     }
-    if aligned {
+    if aligned && quantity > 1 {
         seed = xorshift::xorshift(seed);
         let last_offset = rnd + step * (quantity - 1);
         extracted.push(min_value + last_offset + seed % (delta - last_offset));
     }
 
-    extracted
+    Ok(extracted)
 }
