@@ -6,7 +6,11 @@
 #include <stdint.h>
 #include <math.h>
 
-#include <x86intrin.h>
+#if _WIN32
+	#include <immintrin.h>
+#else
+    #include <x86intrin.h>
+#endif
 
 /*
 	The palignr instruction works just fine on vectors of floats, but the
@@ -23,7 +27,7 @@
 	That is, it does not change the bits in the regesters at all, only the
 	compiler's attitude towards those bits.
 */
-#define _mm_alignr_ps(xmm1, xmm2, imm) ( (__m128) _mm_alignr_epi8( (__m128i)(xmm1), (__m128i)(xmm2), (imm)))
+#define _mm_alignr_ps(xmm1, xmm2, imm) ( _mm_castsi128_ps(_mm_alignr_epi8( _mm_castps_si128(xmm1),_mm_castps_si128(xmm2), (imm))))
 
 extern void cumsum_super_scaler_simd(float *a, int n)
 {
