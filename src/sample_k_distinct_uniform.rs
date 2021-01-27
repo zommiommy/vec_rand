@@ -16,14 +16,14 @@ pub fn sample_k_distinct_uniform_plain(
     indices[0..quantity as usize].to_vec()
 }
 
-/// Set the column_number of the nodes.
+/// Return the sampled vector.
 ///
 /// # Arguments
 ///
-/// * min_value: u64,
-/// * max_value: u64,
-/// * quantity: u64,
-/// * mut seed: u64,
+/// * min_value: u64 - Minimum value of the sampling range.
+/// * max_value: u64 - Maximum value of the sampling range.
+/// * quantity: u64 - Number of values to be sampled.
+/// * mut seed: u64 - Seed to reproduce the sampling.
 ///
 pub fn sorted_unique_sub_sampling(
     min_value: u64,
