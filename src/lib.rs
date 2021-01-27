@@ -129,7 +129,7 @@ pub use sample_uniform_unbiased::sample_uniform_unbiased_simple as sample_unifor
 
 mod sample_k_distinct_uniform;
 pub use sample_k_distinct_uniform::*;
-pub use sample_k_distinct_uniform::sample_k_distinct_uniform_naive as sample_k_distinct_uniform;
+pub use sample_k_distinct_uniform::sorted_unique_sub_sampling as sorted_unique_sub_sampling;
 
 
 pub use gen_random_vec::gen_random_vec_1;

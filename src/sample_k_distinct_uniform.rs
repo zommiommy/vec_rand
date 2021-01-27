@@ -16,14 +16,21 @@ pub fn sample_k_distinct_uniform_plain(
     indices[0..quantity as usize].to_vec()
 }
 
-
-pub fn sample_k_distinct_uniform_naive(
+/// Set the column_number of the nodes.
+///
+/// # Arguments
+///
+/// * min_value: u64,
+/// * max_value: u64,
+/// * quantity: u64,
+/// * mut seed: u64,
+///
+pub fn sorted_unique_sub_sampling(
     min_value: u64,
     max_value: u64,
     quantity: u64,
     mut seed: u64,
 ) -> Result<Vec<u64>, String> {
-    let mut extracted = Vec::with_capacity(quantity as usize);
     let delta = max_value - min_value;
     if quantity > delta {
         return Err(format!(
@@ -31,23 +38,12 @@ pub fn sample_k_distinct_uniform_naive(
             quantity, delta
         ));
     }
+    let mut extracted = Vec::with_capacity(quantity as usize);
     let step = delta / quantity;
-    seed = xorshift::xorshift(seed);
-    let rnd = seed % step;
-    let aligned = rnd != 0;
-    if aligned {
+    for i in 0..quantity - 1 {
         seed = xorshift::xorshift(seed);
-        extracted.push(min_value + seed % rnd);
+        extracted.push(min_value + step * i + seed % step);
     }
-    for i in aligned as u64..quantity - aligned as u64 {
-        seed = xorshift::xorshift(seed);
-        extracted.push(min_value + rnd + step * i + seed % step);
-    }
-    if aligned && quantity > 1 {
-        seed = xorshift::xorshift(seed);
-        let last_offset = rnd + step * (quantity - 1);
-        extracted.push(min_value + last_offset + seed % (delta - last_offset));
-    }
-
+    extracted.push(max_value - seed % (delta - step * (quantity - 1)) - 1);
     Ok(extracted)
 }

@@ -11,7 +11,7 @@ const ITER: usize = 1000;
 fn test_sample_k_distinct_uniform() {
     for seed in 1..ITER {
         for size in 1..(END - START + 1) {
-            let sampled = vec_rand::sample_k_distinct_uniform(
+            let sampled = vec_rand::sorted_unique_sub_sampling(
                 START as u64,
                 END as u64,
                 size as u64,
