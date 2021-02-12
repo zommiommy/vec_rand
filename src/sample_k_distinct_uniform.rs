@@ -2,6 +2,7 @@ use super::*;
 use rand::rngs::SmallRng;
 use rand::seq::SliceRandom;
 use rand::SeedableRng;
+use std::collections::BTreeSet;
 
 pub fn sample_k_distinct_uniform_plain(
     min_value: u64,
@@ -15,6 +16,69 @@ pub fn sample_k_distinct_uniform_plain(
 
     indices[0..quantity as usize].to_vec()
 }
+
+
+pub fn sample_k_not_distinct_uniform_naive(
+    min_value: u64,
+    max_value: u64,
+    quantity: u64,
+    mut seed: u64,
+) -> Vec<u64> {
+    let delta = max_value - min_value;
+    let mut result = Vec::with_capacity(quantity as usize);
+    for _ in 0..quantity {
+        seed = xorshift::xorshift(seed);
+        let rnd = min_value + seed % delta;
+        result.push(rnd);
+    }
+    result.sort();
+    result
+}
+
+pub fn sample_k_distinct_uniform_naive(
+    min_value: u64,
+    max_value: u64,
+    quantity: u64,
+    mut seed: u64,
+) -> Vec<u64> {
+    let delta = max_value - min_value;
+    let mut result = Vec::with_capacity(quantity as usize);
+    for _ in 0..quantity {
+        'inner: loop {
+            seed = xorshift::xorshift(seed);
+            let rnd = min_value + seed % delta;
+            if !result.iter().any(|&i| i==rnd) {
+                result.push(rnd);
+                break 'inner;
+            }
+        }
+    }
+    result.sort();
+    result
+}
+
+
+pub fn sample_k_distinct_uniform_btreeset(
+    min_value: u64,
+    max_value: u64,
+    quantity: u64,
+    mut seed: u64,
+) -> Vec<u64> {
+    let delta = max_value - min_value;
+    let mut result = BTreeSet::new();
+    for _ in 0..quantity {
+        'inner: loop {
+            seed = xorshift::xorshift(seed);
+            let rnd = min_value + seed % delta;
+            if result.get(&rnd).is_none() {
+                result.insert(rnd);
+                break 'inner;
+            }
+        }
+    }
+    result.iter().cloned().collect::<Vec<u64>>()
+}
+
 
 /// Returns a sampled vector of `quantity` sorted unique integer values 
 /// in [`min_value`, `max_value`).
