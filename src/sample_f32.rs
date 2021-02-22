@@ -8,13 +8,16 @@ use super::cumsum_f32::cumsum_f32;
 ///
 /// It useses cumsum_f64
 pub fn sample_f32(weights: &mut Vec<f32>, seed: u64) -> usize {
+    if weights.len() == 0 {
+        panic!("Called sample_f32 on a empty vector!!!");
+    }
     if weights.len() == 1 {
         return 0;
     }
 
     cumsum_f32(weights);
 
-    let rnd: f32 = random_f32(seed) * weights[weights.len() - 1];
+    let rnd: f32 = random_f32(seed) * weights[weights.len().saturating_sub(1)];
 
     // Find the first item which has a weight *higher* than the chosen weight.
     match weights.binary_search_by(|w| {
