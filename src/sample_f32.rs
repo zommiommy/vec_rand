@@ -31,6 +31,6 @@ pub fn sample_f32(weights: &mut Vec<f32>, seed: u64) -> usize {
         // the value could exactly match one of the cumulative sums
         // and therefore return Ok.
         Ok(g) => g,
-        Err(g) => std::cmp::min(g, weights.len()),
+        Err(g) => std::cmp::min(g, weights.len() - 1),
     }
 }
