@@ -1,5 +1,6 @@
 use super::random_f32;
 use ::core::cmp::Ordering;
+use std::intrinsics::unlikely;
 
 use super::cumsum_f32::cumsum_f32;
 
@@ -8,10 +9,10 @@ use super::cumsum_f32::cumsum_f32;
 ///
 /// It useses cumsum_f64
 pub fn sample_f32(weights: &mut Vec<f32>, seed: u64) -> usize {
-    if weights.len() == 0 {
+    if unlikely(weights.len() == 0) {
         panic!("Called sample_f32 on a empty vector!!!");
     }
-    if weights.len() == 1 {
+    if unlikely(weights.len() == 1) {
         return 0;
     }
 

@@ -1,3 +1,4 @@
+#![feature(core_intrinsics)]
 //! Crate with various implementation of Pseudo-Random Number Generators.
 //!
 //! These implementations are in no way ment to be Cryptographically safe, Their
