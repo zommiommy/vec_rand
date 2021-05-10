@@ -22,7 +22,7 @@ pub fn xorshift_avx(seed: & mut [u64; 4]) -> [u64; 4] {
         asm!(
         concat!(
             // Load the data
-            "vmovdqu ymm0, ymmword ptr [rsi]\n",
+            "vmovdqu ymm0, ymmword ptr [{0}]\n",
             // << 13
             "vpsllq ymm1, ymm0, 13\n",
             // ^
@@ -36,11 +36,13 @@ pub fn xorshift_avx(seed: & mut [u64; 4]) -> [u64; 4] {
             // ^c
             "vpxor ymm0, ymm0, ymm1\n",
             // Store the data
-            "vmovdqu ymmword ptr [rdi], ymm0\n",
-            "vmovdqu ymmword ptr [rsi], ymm0\n"
+            "vmovdqu ymmword ptr [{0}], ymm0\n",
+            "vmovdqu ymmword ptr [{1}], ymm0\n"
         ),
-        inout("rsi") seed => _,
-        inout("rdi") result.as_mut_ptr() => _,
+        inout(reg) seed => _,
+        inout(reg) result.as_mut_ptr() => _,
+        out("ymm0") _,
+        out("ymm1") _,
         );
     }
     result

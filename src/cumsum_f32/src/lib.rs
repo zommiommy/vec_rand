@@ -10,13 +10,6 @@ mod cumsum_f32_unrolled;
 pub use cumsum_f32_unrolled::cumsum_f32_unrolled;
 
 
-
-
-#[cfg(target_arch = "x86_64")]
-mod cumsum_f32_sse;
-#[cfg(target_arch = "x86_64")]
-pub use cumsum_f32_sse::cumsum_f32_sse;
-
 #[cfg(target_arch = "x86_64")]
 mod cumsum_f32_sse_intrinsics;
 #[cfg(target_arch = "x86_64")]

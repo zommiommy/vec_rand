@@ -55,6 +55,7 @@ pub fn cumsum_f32_sse_intrinsics(random_vec: &Vec<f32>) -> Vec<f32> {
             let mut x: __m128 = _mm_loadu_ps(random_vec.as_ptr().wrapping_offset(i as isize));
             // compute the local cumulative sum
             x = _mm_add_ps(x, _mm_castsi128_ps(_mm_slli_si128(_mm_castps_si128(x), 4)));
+            // TODO! ccheck tyhis line because slli_si128 must have values between 0 and 7 and we pass it 8
             let mut out = _mm_add_ps(x, _mm_castsi128_ps(_mm_slli_si128(_mm_castps_si128(x), 8)));
             // add the local cumulative sum to the current offset
             out = _mm_add_ps(out, offset);
@@ -69,7 +70,7 @@ pub fn cumsum_f32_sse_intrinsics(random_vec: &Vec<f32>) -> Vec<f32> {
             // and since we want 3, 3, 3, 3, it's 8 bits set to 1 so
             // 2**9 - 1 = 511
             // Update the current offset (aka the last value of out)
-            offset = _mm_shuffle_ps(out, out, 511);
+            offset = _mm_shuffle_ps(out, out, 255); 
         }
         _mm_storeu_ps(_final_offset.as_mut_ptr(), offset);
     }

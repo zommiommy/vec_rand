@@ -75,7 +75,7 @@ pub fn cumsum_f64_avx_intrinsics(random_vec: &mut Vec<f64>) {
                 _mm256_storeu_pd(ptr.offset(i as isize), out);
                 // Update the current offset (aka the last value of out)
                 let t0: __m256d = _mm256_permute2f128_pd(out, out, 0x11);
-                offset = _mm256_permute_pd(t0, 0xff);
+                offset = _mm256_permute_pd(t0, 0x0f);
             }
         }
 

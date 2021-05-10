@@ -27,10 +27,10 @@ pub fn xorshift_avx_ss4(seed: &[u64; 16]) -> [u64; 16]{
         asm!(
         concat!(
             // Load the data
-            "vmovdqu ymm0, ymmword ptr [rdi]\n",
-            "vmovdqu ymm2, ymmword ptr [rdi + 32]\n",
-            "vmovdqu ymm4, ymmword ptr [rdi + 64]\n",
-            "vmovdqu ymm6, ymmword ptr [rdi + 96]\n",
+            "vmovdqu ymm0, ymmword ptr [{0}]\n",
+            "vmovdqu ymm2, ymmword ptr [{0} + 32]\n",
+            "vmovdqu ymm4, ymmword ptr [{0} + 64]\n",
+            "vmovdqu ymm6, ymmword ptr [{0} + 96]\n",
             // tmp = seed << 13
             "vpsllq ymm1, ymm0, 13\n",
             "vpsllq ymm3, ymm2, 13\n",
@@ -62,13 +62,21 @@ pub fn xorshift_avx_ss4(seed: &[u64; 16]) -> [u64; 16]{
             "vpxor ymm4, ymm4, ymm5\n",
             "vpxor ymm6, ymm6, ymm7\n",
             // Store the data
-            "vmovdqu ymmword ptr [rsi], ymm0\n",
-            "vmovdqu ymmword ptr [rsi + 32], ymm2\n",
-            "vmovdqu ymmword ptr [rsi + 64], ymm4\n",
-            "vmovdqu ymmword ptr [rsi + 96], ymm6\n"
+            "vmovdqu ymmword ptr [{1}], ymm0\n",
+            "vmovdqu ymmword ptr [{1} + 32], ymm2\n",
+            "vmovdqu ymmword ptr [{1} + 64], ymm4\n",
+            "vmovdqu ymmword ptr [{1} + 96], ymm6\n"
         ),
-        inout("rsi") seed => _,
-        inout("rdi") result.as_mut_ptr() => _,
+        inout(reg) seed => _,
+        inout(reg) result.as_mut_ptr() => _,
+        out("ymm0") _,
+        out("ymm1") _,
+        out("ymm2") _,
+        out("ymm3") _,
+        out("ymm4") _,
+        out("ymm5") _,
+        out("ymm6") _,
+        out("ymm7") _,
         );
     }
     result

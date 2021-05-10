@@ -2,7 +2,7 @@ use super::random_f64;
 use ::core::cmp::Ordering;
 
 #[cfg(target_arch = "x86_64")]
-use cumsum_f64::cumsum_f64_sse_intrinsics;
+use cumsum_f64::cumsum_f64;
 
 #[cfg(target_arch = "x86_64")]
 /// Given a vector of scores (non-zero positive values), convert it to a
@@ -14,7 +14,7 @@ pub fn sample_avx(weights: &mut Vec<f64>, seed: u64) -> usize {
         return 0;
     }
 
-    cumsum_f64_sse_intrinsics(weights);
+    cumsum_f64(weights);
 
     let rnd: f64 = random_f64(seed) * weights[weights.len() - 1];
 
