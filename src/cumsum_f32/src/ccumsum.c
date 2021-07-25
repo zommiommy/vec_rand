@@ -43,14 +43,6 @@ extern void cumsum_super_scaler_simd(float *a, int n)
 	z = _mm_setzero_ps();
 	t = z;
 
-	while(((uint64_t)a & 15) && n > 0)
-	{
-		a0 = _mm_load_ss(a);
-		t = _mm_add_ps(t, a0);
-		_mm_store_ss(a, t);
-		a++;
-		n--;
-	}
 	while(n >= 24)
 	{
 		//load values

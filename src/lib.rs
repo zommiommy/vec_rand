@@ -121,6 +121,9 @@ pub use sample_modifing::sample_modifing;
 mod sample_f32;
 pub use sample_f32::sample_f32;
 
+mod sample_f32_adapt;
+pub use sample_f32_adapt::sample_f32_adapt;
+
 mod sample_uniform_biased;
 pub use sample_uniform_biased::sample_uniform_biased;
 mod sample_uniform_unbiased;
@@ -134,6 +137,8 @@ pub use sample_k_distinct_uniform::sorted_unique_sub_sampling as sorted_unique_s
 
 
 pub use gen_random_vec::gen_random_vec_1;
+
+#[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
 pub use gen_random_vec::gen_random_vec_4_1;
 
 

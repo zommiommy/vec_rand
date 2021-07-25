@@ -28,3 +28,17 @@ pub fn gen_random_usize_vec(num: usize, max: usize) -> Vec<usize> {
     let vals: Vec<usize> = (0..num).map(|_| rng.gen_range(0, max)).collect();
     vals
 }
+
+pub fn gen_random_f32_vec_random_len(max: u64) -> Vec<f32> {
+    let mut rng = rand::thread_rng();
+    let vals: Vec<u64> = gen_random_u64_vec(rng.gen_range(0, max));
+    let total: f32 = vals.iter().sum::<u64>() as f32;
+    let weights = vals.iter().map(|x| *x as f32 / total).collect::<Vec<f32>>();
+    weights
+}
+
+pub fn gen_random_u64_vec_random_len(max: u64) -> Vec<u64> {
+    let mut rng = rand::thread_rng();
+    let vals: Vec<u64> = (0..rng.gen_range(0, max)).map(|_| rng.gen_range(0, max)).collect();
+    vals
+}
