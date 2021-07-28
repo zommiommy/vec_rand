@@ -6,13 +6,14 @@ use test::Bencher;
 
 use vec_rand::xorshift::*;
 
-const NUM: u64 = 1_000;
+const NUMBER: u64 = 1_000;
 
 #[bench]
 fn test_thread_rng(b: &mut Bencher) {
     let mut rng = rand::thread_rng();
+    b.bytes = NUMBER * (std::mem::size_of::<u64>() as u64);
     b.iter(|| {
-        for _ in 0..(32 * NUM) {
+        for _ in 0..(32 * NUMBER) {
             rng.gen_range(0, 10000);
         }
         rng.gen_range(0, 10000)
@@ -22,8 +23,9 @@ fn test_thread_rng(b: &mut Bencher) {
 #[bench]
 fn test_stdrng(b: &mut Bencher) {
     let mut rng: StdRng = SeedableRng::seed_from_u64(0xBAD5EEDdeadbeef);
+    b.bytes = NUMBER * (std::mem::size_of::<u64>() as u64);
     b.iter(|| {
-        for _ in 0..(32 * NUM) {
+        for _ in 0..(32 * NUMBER) {
             rng.gen_range(0, 10000);
         }
         rng.gen_range(0, 10000)
@@ -33,8 +35,9 @@ fn test_stdrng(b: &mut Bencher) {
 #[bench]
 fn test_xorshift(b: &mut Bencher) {
     let mut seed: u64 = 0xBAD5EEDdeadbeef;
+    b.bytes = NUMBER * (std::mem::size_of::<u64>() as u64);
     b.iter(|| {
-        for _ in 0..(32 * NUM) {
+        for _ in 0..(32 * NUMBER) {
             seed = xorshift(seed);
         }
         seed
@@ -50,8 +53,9 @@ fn test_xorshift_avx(b: &mut Bencher) {
         0xBAD5EEDdeadbeef,
         0xBAD5EEDdeadbeef,
     ];
+    b.bytes = NUMBER * (std::mem::size_of::<u64>() as u64);
     b.iter(|| {
-        for _ in 0..(8 * NUM) {
+        for _ in 0..(8 * NUMBER) {
             seed = xorshift_avx(&mut seed);
         }
         seed
@@ -67,8 +71,9 @@ fn test_xorshift_avx_intrinsics(b: &mut Bencher) {
         0xBAD5EEDdeadbeef,
         0xBAD5EEDdeadbeef,
     ];
+    b.bytes = NUMBER * (std::mem::size_of::<u64>() as u64);
     b.iter(|| {
-        for _ in 0..(8 * NUM) {
+        for _ in 0..(8 * NUMBER) {
             seed = xorshift_avx_intrinsics(&mut seed);
         }
         seed
@@ -96,8 +101,9 @@ fn test_xorshift_avx_ss4(b: &mut Bencher) {
         0xBAD5EEDdeadbeef,
         0xBAD5EEDdeadbeef,
     ];
+    b.bytes = NUMBER * (std::mem::size_of::<u64>() as u64);
     b.iter(|| {
-        for _ in 0..(2 * NUM) {
+        for _ in 0..(2 * NUMBER) {
             seed = xorshift_avx_ss4(&mut seed);
         }
         seed
@@ -141,8 +147,9 @@ fn test_xorshift_avx_ss8(b: &mut Bencher) {
         0xBAD5EEDdeadbeef,
         0xBAD5EEDdeadbeef,
     ];
+    b.bytes = NUMBER * (std::mem::size_of::<u64>() as u64);
     b.iter(|| {
-        for _ in 0..(1 * NUM) {
+        for _ in 0..(1 * NUMBER) {
             seed = xorshift_avx_ss8(&mut seed);
         }
         seed

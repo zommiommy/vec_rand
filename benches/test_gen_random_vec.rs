@@ -12,6 +12,7 @@ use vec_rand::*;
 #[bench]
 fn test_gen_range_of_thread_rng(b: &mut Bencher) {
     let mut rng = rand::thread_rng();
+    b.bytes = NUMBER * (std::mem::size_of::<u64>() as u64);
     b.iter(|| {
         (0..NUMBER)
             .map(|_| rng.gen_range(0, NUMBER))
@@ -28,6 +29,7 @@ fn test_with_xorshiro256plus(b: &mut Bencher) {
         17912695770704705270,
     ];
 
+    b.bytes = NUMBER * (std::mem::size_of::<u64>() as u64);
     b.iter(|| {
         (0..NUMBER)
             .map(|_| xorshiro256plus(&mut seed) % NUMBER)
@@ -39,6 +41,7 @@ fn test_with_xorshiro256plus(b: &mut Bencher) {
 fn test_with_xorshift(b: &mut Bencher) {
     let mut seed: u64 = 6591408588322595484;
 
+    b.bytes = NUMBER * (std::mem::size_of::<u64>() as u64);
     b.iter(|| {
         (0..NUMBER)
             .map(|_| {
@@ -54,6 +57,7 @@ fn test_with_xorshift(b: &mut Bencher) {
 fn test_gen_random_vec_32_4_1(b: &mut Bencher) {
     let mut seed: u64 = 6591408588322595484;
 
+    b.bytes = NUMBER * (std::mem::size_of::<u64>() as u64);
     b.iter(|| {
         let result = gen_random_vec_32_4_1(NUMBER as usize, seed);
         seed = result[0];
@@ -66,6 +70,7 @@ fn test_gen_random_vec_32_4_1(b: &mut Bencher) {
 fn test_gen_random_vec_4_1(b: &mut Bencher) {
     let mut seed: u64 = 6591408588322595484;
 
+    b.bytes = NUMBER * (std::mem::size_of::<u64>() as u64);
     b.iter(|| {
         let result = gen_random_vec_4_1(NUMBER as usize, seed);
         seed = result[0];
@@ -78,6 +83,7 @@ fn test_gen_random_vec_4_1(b: &mut Bencher) {
 fn test_gen_random_vec_32_1(b: &mut Bencher) {
     let mut seed: u64 = 6591408588322595484;
 
+    b.bytes = NUMBER * (std::mem::size_of::<u64>() as u64);
     b.iter(|| {
         let result = gen_random_vec_32_1(NUMBER as usize, seed);
         seed = result[0];
@@ -90,6 +96,7 @@ fn test_gen_random_vec_32_1(b: &mut Bencher) {
 fn test_gen_random_vec_1(b: &mut Bencher) {
     let mut seed: u64 = 6591408588322595484;
 
+    b.bytes = NUMBER * (std::mem::size_of::<u64>() as u64);
     b.iter(|| {
         let result = gen_random_vec_1(NUMBER as usize, seed);
         seed = result[0];
@@ -101,6 +108,7 @@ fn test_gen_random_vec_1(b: &mut Bencher) {
 fn test_gen_random_vec(b: &mut Bencher) {
     let mut seed: u64 = 6591408588322595484;
 
+    b.bytes = NUMBER * (std::mem::size_of::<u64>() as u64);
     b.iter(|| {
         let result = gen_random_vec(NUMBER as usize, seed);
         seed = result[0];

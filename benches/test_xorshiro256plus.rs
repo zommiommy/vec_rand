@@ -5,13 +5,14 @@ use test::Bencher;
 
 use vec_rand::xorshiro256plus::*;
 
-const NUM: u64 = 1_000;
+const NUMBER: u64 = 1_000;
 
 #[bench]
 fn test_thread_rng(b: &mut Bencher) {
     let mut rng = rand::thread_rng();
+    b.bytes = NUMBER * (std::mem::size_of::<u64>() as u64);
     b.iter(|| {
-        for _ in 0..32 * NUM {
+        for _ in 0..32 * NUMBER {
             rng.gen_range(0, 10000);
         }
         rng.gen_range(0, 10000)
@@ -26,9 +27,9 @@ fn test_xorshiro256plus(b: &mut Bencher) {
         8913376598984957243,
         17912695770704705270,
     ];
-
+    b.bytes = NUMBER * (std::mem::size_of::<u64>() as u64);
     b.iter(|| {
-        for _ in 0..32 * NUM {
+        for _ in 0..32 * NUMBER {
             xorshiro256plus(&mut seed);
         }
         seed
@@ -56,9 +57,9 @@ fn test_xorshiro256plus_avx(b: &mut Bencher) {
         8913376598984957243,
         17912695770704705270,
     ];
-
+    b.bytes = NUMBER * (std::mem::size_of::<u64>() as u64);
     b.iter(|| {
-        for _ in 0..8 * NUM {
+        for _ in 0..8 * NUMBER {
             xorshiro256plus_avx(&mut seed);
         }
         seed
@@ -134,9 +135,9 @@ fn test_xorshiro256plus_avx_ss4(b: &mut Bencher) {
         8913376598984957243,
         17912695770704705270,
     ];
-
+    b.bytes = NUMBER * (std::mem::size_of::<u64>() as u64);
     b.iter(|| {
-        for _ in 0..2 * NUM {
+        for _ in 0..2 * NUMBER {
             xorshiro256plus_avx_ss4(&mut seed);
         }
         seed
