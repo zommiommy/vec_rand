@@ -50,7 +50,7 @@ pub fn the_stackoverflow_thingy_256(array: &mut [f32], len: usize) {
 pub fn cumsum_f32(random_vec: &mut Vec<f32>) {
     #[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
     {
-        if is_x86_feature_detected!("sse") {
+        if is_x86_feature_detected!("avx2") {
             let l = random_vec.len();
             ccumsum(random_vec, l);
             return;
