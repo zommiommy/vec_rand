@@ -38,10 +38,10 @@ fn test_cumsum_f32_sse_intrinsics(b: &mut Bencher) {
 }
 
 #[bench]
-fn test_ccumsum(b: &mut Bencher) {
+fn test_cumsum_super_scaler_simd(b: &mut Bencher) {
     let mut random_vec = gen_random_f32_vec(NUMBER);
     b.bytes = NUMBER * (std::mem::size_of::<f32>() as u64);
-    b.iter(|| ccumsum(&mut random_vec, NUMBER as usize));
+    b.iter(|| cumsum_super_scaler_simd(&mut random_vec));
 }
 
 #[bench]
