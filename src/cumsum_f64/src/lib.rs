@@ -1,5 +1,3 @@
-#![feature(asm)]
-
 mod cumsum_f64_plain;
 pub use cumsum_f64_plain::cumsum_f64_plain;
 

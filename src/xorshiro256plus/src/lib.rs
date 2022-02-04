@@ -1,5 +1,3 @@
-#![feature(asm)]
-
 mod xorshiro256plus_plain;
 pub use xorshiro256plus_plain::xorshiro256plus_plain as xorshiro256plus;
 

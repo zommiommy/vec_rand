@@ -1,4 +1,3 @@
-#![feature(asm)]
 #![feature(stdarch)]
 
 mod cumsum_f32_plain;

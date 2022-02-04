@@ -1,5 +1,3 @@
-#![feature(asm)]
-
 mod xorshift_plain;
 pub use xorshift_plain::xorshift_plain as xorshift;
 

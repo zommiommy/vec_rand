@@ -1,3 +1,4 @@
+use core::arch::asm;
 
 #[cfg(target_arch = "x86_64")]
 #[inline(always)]
