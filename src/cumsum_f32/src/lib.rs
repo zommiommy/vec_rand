@@ -1,5 +1,3 @@
-#![feature(stdarch)]
-
 mod cumsum_f32_plain;
 pub use cumsum_f32_plain::cumsum_f32_plain;
 
@@ -35,7 +33,6 @@ pub fn cumsum_f32(random_vec: &mut Vec<f32>) {
     #[cfg(all(target_arch = "x86_64", target_feature = "sse"))]
     {
         if is_x86_feature_detected!("sse") {
-            let l = random_vec.len();
             cumsum_super_scaler_simd(random_vec);
             return;
         }

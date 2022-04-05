@@ -9,7 +9,7 @@ macro_rules! _mm_alignr_ps {
 
 pub fn cumsum_super_scaler_simd(random_vec: &mut Vec<f32>){
     unsafe {
-        const SHUFFLE_MASK: i32 = _MM_SHUFFLE(3,0,0,14);
+        const SHUFFLE_MASK: i32 = 206; //_MM_SHUFFLE(3,0,0,14);
         let zero = _mm_setzero_ps();
         let mut total = _mm_setzero_ps();
 

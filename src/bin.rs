@@ -1,5 +1,3 @@
-#![feature(asm)]
-
 #[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
 mod cycle_test {
     use core::arch::x86_64::{__rdtscp, _rdtsc};
