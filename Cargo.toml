@@ -8,25 +8,14 @@ edition = "2018"
 name = "vec_rand"
 path = "src/lib.rs"
 
-[[bin]]
-name = "measure_cycles"
-path = "src/bin.rs"
-
 [dependencies]
-rand = {version = "0.7", features = ["small_rng"]}
-log = "0.4"
-cumsum_f32 = { path = "src/cumsum_f32" }
-cumsum_f64 = { path = "src/cumsum_f64" }
-xorshift = { path = "src/xorshift" }
-xorshiro256plus = { path = "src/xorshiro256plus" }
 
-[dev-dependencies]
-itertools = "0.9.0"
-
-[build]
-rustflags = "-C target-cpu=native"
+[features]
+alloc = []
+std = ["alloc"]
+default = ["std"]
 
 [profile.release]
 opt-level = 3
-codgen-units=1
+codegen-units=1
 lto = "fat"

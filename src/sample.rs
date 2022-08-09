@@ -1,12 +1,13 @@
 use super::random_f64;
+use super::cumsum_f64;
+use core::result::Result::*;
 use ::core::cmp::Ordering;
-use cumsum_f64::cumsum_f64;
 
 /// Given a vector of scores (non-zero positive values), convert it to a
 /// probability distribution and extract a random indices accodringly.`
 ///
 /// It useses cumsum_f64
-pub fn sample(weights: &mut Vec<f64>, seed: u64) -> usize {
+pub fn sample(weights: &mut [f64], seed: u64) -> usize {
     if weights.len() == 1 {
         return 0;
     }

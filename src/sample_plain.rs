@@ -1,5 +1,6 @@
 use super::random_f64;
 use ::core::cmp::Ordering;
+use core::result::Result::*;
 
 /// Given a vector of scores (non-zero positive values), convert it to a
 /// probability distribution and extract a random indices accodringly.`
@@ -13,7 +14,7 @@ use ::core::cmp::Ordering;
 ///
 /// The AVX / SSE implementation for the cumulative sum are faster for large arrays
 /// But on small vectors the naife implementations is faster.
-pub fn sample_plain(weights: &mut Vec<f64>, seed: u64) -> usize {
+pub fn sample_plain(weights: &mut [f64], seed: u64) -> usize {
     if weights.len() == 1 {
         return 0;
     }

@@ -1,4 +1,3 @@
-#![feature(core_intrinsics)]
 //! Crate with various implementation of Pseudo-Random Number Generators.
 //!
 //! These implementations are in no way ment to be Cryptographically safe, Their
@@ -74,19 +73,23 @@
 //! It's worth noticing that the """fastest""" prng is the xorshift_avx_ss4 that's generate
 //! 16 u64 in 4 ns which means 250ps per u64 and 31.125ps per byte.
 //!
-//!
-pub mod cumsum_f32 {
-    pub use cumsum_f32::*;
-}
-pub mod cumsum_f64 {
-    pub use cumsum_f64::*;
-}
-pub mod xorshift {
-    pub use xorshift::*;
-}
-pub mod xorshiro256plus {
-    pub use xorshiro256plus::*;
-}
+#![feature(core_intrinsics)]
+#![cfg_attr(not(feature = "std"), no_std)]
+
+#![cfg(feature="alloc")]
+extern crate alloc;
+
+pub mod cumsum_f32;
+pub use cumsum_f32::*;
+
+pub mod cumsum_f64;
+pub use cumsum_f64::*;
+
+pub mod xorshift;
+pub use xorshift::*;
+
+pub mod xorshiro256plus;
+pub use xorshiro256plus::*;
 
 mod u64_to_f64;
 pub use u64_to_f64::*;
@@ -133,16 +136,20 @@ pub use sample_uniform_unbiased::sample_uniform_unbiased_simple as sample_unifor
 
 mod sample_k_distinct_uniform;
 pub use sample_k_distinct_uniform::*;
+#[cfg(feature="alloc")]
 pub use sample_k_distinct_uniform::sorted_unique_sub_sampling as sorted_unique_sub_sampling;
 
 
+#[cfg(feature="alloc")]
 pub use gen_random_vec::gen_random_vec_1;
 
+#[cfg(feature="alloc")]
 #[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
 pub use gen_random_vec::gen_random_vec_4_1;
 
 
-pub fn gen_random_vec(size: usize, seed: u64) -> Vec<u64> {
+#[cfg(feature="alloc")]
+pub fn gen_random_vec(size: usize, seed: u64) -> alloc::vec::Vec<u64> {
     #[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
     {
         if is_x86_feature_detected!("avx2") {

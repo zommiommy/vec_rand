@@ -13,13 +13,10 @@ pub fn splitmix64(x: u64) -> u64 {
 /// starting from a 64-bit seed, as research has shown that initialization
 /// must be performed with a generator radically different in nature from
 /// the one initialized to avoid correlation on similar seeds.
-pub fn initialize_seed(start_seed: u64, size: usize) -> Vec<u64> {
-    let mut result = Vec::with_capacity(size);
+pub fn initialize_seed(start_seed: u64, seeds_slice: &mut [u64]) {
     let mut se = start_seed;
-    for _ in 0..size {
-        result.push(splitmix64(se));
+    for value in seeds_slice.iter_mut() {
+        *value = splitmix64(se);
         se = se.wrapping_add(0x9e3779b97f4a7c15);
     }
-
-    result
 }

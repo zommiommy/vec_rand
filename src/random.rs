@@ -1,5 +1,5 @@
-use xorshift::xorshift;
-use xorshiro256plus::xorshiro256plus;
+use super::xorshift;
+use super::xorshiro256plus;
 
 static mut GLOBAL_SEED: [u64; 4] = [
     6591408588322595484,

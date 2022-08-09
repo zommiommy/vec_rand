@@ -7,7 +7,7 @@ use cumsum_f64::cumsum_f64;
 /// probability distribution and extract a random indices accodringly.`
 ///
 /// It useses cumsum_f64
-pub fn sample_cumsum(weights: &mut Vec<f64>, seed: u64) -> usize {
+pub fn sample_cumsum(weights: &mut [f64], seed: u64) -> usize {
     if weights.len() == 1 {
         return 0;
     }

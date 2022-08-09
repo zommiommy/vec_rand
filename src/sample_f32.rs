@@ -1,6 +1,8 @@
 use super::random_f32;
 use ::core::cmp::Ordering;
-use std::intrinsics::unlikely;
+use core::intrinsics::unlikely;
+use core::result::Result::*;
+use core::panic;
 
 use super::cumsum_f32::cumsum_f32;
 
@@ -8,7 +10,7 @@ use super::cumsum_f32::cumsum_f32;
 /// probability distribution and extract a random indices accodringly.`
 ///
 /// It useses cumsum_f64
-pub fn sample_f32(weights: &mut Vec<f32>, seed: u64) -> usize {
+pub fn sample_f32(weights: &mut [f32], seed: u64) -> usize {
     if unlikely(weights.len() == 0) {
         panic!("Called sample_f32 on a empty vector!!!");
     }
@@ -32,6 +34,6 @@ pub fn sample_f32(weights: &mut Vec<f32>, seed: u64) -> usize {
         // the value could exactly match one of the cumulative sums
         // and therefore return Ok.
         Ok(g) => g,
-        Err(g) => std::cmp::min(g, weights.len() - 1),
+        Err(g) => core::cmp::min(g, weights.len() - 1),
     }
 }

@@ -1,13 +1,17 @@
-use super::splitmix64;
 use super::xorshift::xorshift;
+
+#[cfg(feature="alloc")]
+use alloc::vec::Vec;
 
 #[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
 use super::xorshift::{xorshift_avx, xorshift_avx_ss8};
 
+#[cfg(feature="alloc")]
 #[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
 pub fn gen_random_vec_4_1(size: usize, mut seed: u64) -> Vec<u64> {
     let mut result = Vec::with_capacity(size);
 
+    use super::splitmix64;
     // initialize the seed
     let mut _seed: [u64; 4] = [0; 4];
     for i in 0..4 {
@@ -31,10 +35,12 @@ pub fn gen_random_vec_4_1(size: usize, mut seed: u64) -> Vec<u64> {
     result
 }
 
+#[cfg(feature="alloc")]
 #[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
 pub fn gen_random_vec_32_4_1(size: usize, mut seed: u64) -> Vec<u64> {
     let mut result = Vec::with_capacity(size);
 
+    use super::splitmix64;
     // initialize the seed
     let mut _seed: [u64; 32] = [0; 32];
     for i in 0..32 {
@@ -66,10 +72,12 @@ pub fn gen_random_vec_32_4_1(size: usize, mut seed: u64) -> Vec<u64> {
     result
 }
 
+#[cfg(feature="alloc")]
 #[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
 pub fn gen_random_vec_32_1(size: usize, mut seed: u64) -> Vec<u64> {
     let mut result = Vec::with_capacity(size);
 
+    use super::splitmix64;
     // initialize the seed
     let mut _seed: [u64; 32] = [0; 32];
     for i in 0..32 {
@@ -92,6 +100,7 @@ pub fn gen_random_vec_32_1(size: usize, mut seed: u64) -> Vec<u64> {
     result
 }
 
+#[cfg(feature="alloc")]
 pub fn gen_random_vec_1(size: usize, mut seed: u64) -> Vec<u64> {
     let mut result = Vec::with_capacity(size);
 
