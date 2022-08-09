@@ -1,3 +1,5 @@
+#![feature(core_intrinsics)]
+#![no_std]
 //! Crate with various implementation of Pseudo-Random Number Generators.
 //!
 //! These implementations are in no way ment to be Cryptographically safe, Their
@@ -73,10 +75,8 @@
 //! It's worth noticing that the """fastest""" prng is the xorshift_avx_ss4 that's generate
 //! 16 u64 in 4 ns which means 250ps per u64 and 31.125ps per byte.
 //!
-#![feature(core_intrinsics)]
-#![no_std]
 
-#![cfg(feature="alloc")]
+#[cfg(feature="alloc")]
 extern crate alloc;
 
 pub mod cumsum_f32;
@@ -148,6 +148,15 @@ pub use gen_random_vec::gen_random_vec_1;
 pub use gen_random_vec::gen_random_vec_4_1;
 
 
+#[cfg(feature="std")]
 pub fn gen_random_vec(size: usize, seed: u64) -> alloc::vec::Vec<u64> {
+    extern crate std;
+
+    #[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
+    {
+        if std::is_x86_feature_detected!("avx2") {
+            return gen_random_vec::gen_random_vec_4_1(size, seed);
+        }
+    }
     gen_random_vec::gen_random_vec_1(size, seed)
 }
