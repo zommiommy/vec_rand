@@ -1,4 +1,10 @@
 
+#[cfg(feature="alloc")]
+use ::alloc::vec::Vec;
+
+#[cfg(feature="alloc")]
+use ::alloc::*;
+
 
 #[cfg(all(target_arch = "x86_64", target_feature = "sse"))]
 use core::arch::x86_64::{
@@ -28,7 +34,7 @@ use core::arch::x86_64::{
 #[cfg(all(target_arch = "x86_64", target_feature = "sse"))]
 pub fn cumsum_f32_sse_intrinsics(random_vec: &[f32]) -> Vec<f32> {
     if random_vec.len() == 0{
-        return vec![];
+        return Vec::new();
     }
     if random_vec.len() == 1{
         return random_vec.to_vec();

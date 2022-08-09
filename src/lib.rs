@@ -74,7 +74,7 @@
 //! 16 u64 in 4 ns which means 250ps per u64 and 31.125ps per byte.
 //!
 #![feature(core_intrinsics)]
-#![cfg_attr(not(feature = "std"), no_std)]
+#![no_std]
 
 #![cfg(feature="alloc")]
 extern crate alloc;
@@ -148,13 +148,6 @@ pub use gen_random_vec::gen_random_vec_1;
 pub use gen_random_vec::gen_random_vec_4_1;
 
 
-#[cfg(feature="alloc")]
 pub fn gen_random_vec(size: usize, seed: u64) -> alloc::vec::Vec<u64> {
-    #[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
-    {
-        if is_x86_feature_detected!("avx2") {
-            return gen_random_vec::gen_random_vec_4_1(size, seed);
-        }
-    }
     gen_random_vec::gen_random_vec_1(size, seed)
 }
