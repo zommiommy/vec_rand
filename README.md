@@ -5,7 +5,7 @@ These implementations are in no way ment to be Cryptographically safe, Their int
 
 This repository will collect several implementations of various algorithm to explore in a systematic way which method is faster.
 
-The implementations are ment for `x86_64` processors with `avx2`.
+The implementations are meant for `x86_64` processors with `avx2`.
 
 The main prng in this repo are the vectorized versions of Xorshift such as:
 ```rust
