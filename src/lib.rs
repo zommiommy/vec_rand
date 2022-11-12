@@ -126,6 +126,7 @@ pub use sample_modifing::sample_modifing;
 
 mod sample_f32;
 pub use sample_f32::sample_f32;
+pub use sample_f32::sample_f32_from_cumsum;
 
 mod sample_f32_adapt;
 pub use sample_f32_adapt::sample_f32_adapt;
