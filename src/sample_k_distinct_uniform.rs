@@ -7,6 +7,7 @@ use core::result::Result::*;
 use alloc::{vec::Vec, collections::BTreeSet, format};
 
 #[cfg(feature="alloc")]
+#[inline]
 pub fn sample_k_not_distinct_uniform_naive(
     min_value: u64,
     max_value: u64,
@@ -25,6 +26,7 @@ pub fn sample_k_not_distinct_uniform_naive(
 }
 
 #[cfg(feature="alloc")]
+#[inline]
 pub fn sample_k_distinct_uniform_naive(
     min_value: u64,
     max_value: u64,
@@ -49,6 +51,7 @@ pub fn sample_k_distinct_uniform_naive(
 
 
 #[cfg(feature="alloc")]
+#[inline]
 pub fn sample_k_distinct_uniform_btreeset(
     min_value: u64,
     max_value: u64,
@@ -100,6 +103,7 @@ pub fn sample_k_distinct_uniform_btreeset(
 /// * mut seed: u64 - Seed to reproduce the sampling.
 ///
 #[cfg(feature="alloc")]
+#[inline]
 pub fn sorted_unique_sub_sampling(
     min_value: u64,
     max_value: u64,

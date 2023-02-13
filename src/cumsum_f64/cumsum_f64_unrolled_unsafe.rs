@@ -1,5 +1,6 @@
 use core::iter::Iterator;
 
+#[inline]
 pub fn cumsum_f64_unrolled_unsafe(random_vec: &mut [f64]){
     if random_vec.len() <= 1{
         return;

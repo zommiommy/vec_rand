@@ -5,6 +5,7 @@ use super::xorshift::xorshift;
 /// # Arguments
 /// * number, the upperlimit of the values
 /// * seed, the seed to use to generate the number
+#[inline]
 pub fn sample_uniform_biased(number: u64, seed: u64) -> usize {
     (xorshift(seed) % number) as usize
 }

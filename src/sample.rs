@@ -7,6 +7,7 @@ use ::core::cmp::Ordering;
 /// probability distribution and extract a random indices accodringly.`
 ///
 /// It useses cumsum_f64
+#[inline]
 pub fn sample(weights: &mut [f64], seed: u64) -> usize {
     if weights.len() == 1 {
         return 0;

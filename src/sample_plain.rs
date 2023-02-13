@@ -14,6 +14,7 @@ use core::result::Result::*;
 ///
 /// The AVX / SSE implementation for the cumulative sum are faster for large arrays
 /// But on small vectors the naife implementations is faster.
+#[inline]
 pub fn sample_plain(weights: &mut [f64], seed: u64) -> usize {
     if weights.len() == 1 {
         return 0;

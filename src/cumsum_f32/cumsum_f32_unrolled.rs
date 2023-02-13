@@ -1,5 +1,6 @@
 use core::iter::Iterator;
 
+#[inline]
 pub fn cumsum_f32_unrolled(random_vec: &mut [f32]) {
     if random_vec.len() <= 0{
         return;

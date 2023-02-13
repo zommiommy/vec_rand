@@ -32,6 +32,7 @@ use core::arch::x86_64::{
 
 #[cfg(feature="alloc")]
 #[cfg(all(target_arch = "x86_64", target_feature = "sse"))]
+#[inline]
 pub fn cumsum_f32_sse_intrinsics(random_vec: &[f32]) -> Vec<f32> {
     if random_vec.len() == 0{
         return Vec::new();

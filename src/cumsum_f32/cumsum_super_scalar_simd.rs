@@ -7,6 +7,7 @@ macro_rules! _mm_alignr_ps {
     };
 }
 
+#[inline]
 pub fn cumsum_super_scaler_simd(random_vec: &mut [f32]){
     unsafe {
         const SHUFFLE_MASK: i32 = 206; //_MM_SHUFFLE(3,0,0,14);

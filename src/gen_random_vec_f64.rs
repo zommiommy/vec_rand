@@ -5,6 +5,7 @@ use core::iter::Iterator;
 use alloc::vec::Vec;
 
 #[cfg(feature="alloc")]
+#[inline]
 pub fn gen_random_vec_f64(size: usize, seed: u64) -> Vec<f64> {
     gen_random_vec(size, seed)
         .iter()
@@ -13,6 +14,7 @@ pub fn gen_random_vec_f64(size: usize, seed: u64) -> Vec<f64> {
 }
 
 #[cfg(feature="alloc")]
+#[inline]
 pub fn gen_random_vec_f32(size: usize, seed: u64) -> Vec<f32> {
     gen_random_vec(size, seed)
         .iter()

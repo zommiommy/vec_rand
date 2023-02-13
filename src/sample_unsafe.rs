@@ -14,6 +14,7 @@ use super::random_f64;
 ///
 /// The AVX / SSE implementation for the cumulative sum are faster for large arrays
 /// But on small vectors the naife implementations is faster.
+#[inline]
 pub fn sample_unsafe(weights: &mut Vec<f64>, seed: u64) -> usize {
     if weights.len() == 1 {
         return 0;

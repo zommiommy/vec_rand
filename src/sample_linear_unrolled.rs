@@ -5,6 +5,7 @@ use super::random_f64;
 /// probability distribution and extract a random indices accodringly.`
 ///
 /// It useses cumsum_f64
+#[inline]
 pub fn sample_linear_unrolled(weights: &[f64], seed: u64) -> usize {
     if weights.len() == 1 {
         return 0;

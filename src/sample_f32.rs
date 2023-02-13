@@ -10,6 +10,7 @@ use super::cumsum_f32::cumsum_f32;
 /// probability distribution and extract a random indices accodringly.`
 ///
 /// It useses cumsum_f64
+#[inline]
 pub fn sample_f32(weights: &mut [f32], seed: u64) -> usize {
     if unlikely(weights.len() == 0) {
         panic!("Called sample_f32 on a empty vector!!!");
@@ -24,6 +25,7 @@ pub fn sample_f32(weights: &mut [f32], seed: u64) -> usize {
 }
 
 /// Given a comulative sum of vector of scores (non-zero positive values), extracts a random indices accodringly.`
+#[inline]
 pub fn sample_f32_from_cumsum(comulative_sum: &[f32], seed: u64) -> usize {
     if unlikely(comulative_sum.len() == 0) {
         panic!("Called sample_f32 on a empty vector!!!");

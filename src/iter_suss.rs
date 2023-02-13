@@ -10,6 +10,7 @@ pub struct IterSuss<I> {
 impl<T, I: Iterator<Item=T>> Iterator for IterSuss<I> {
     type Item = T;
 
+    #[inline]
     fn next(&mut self) -> Option<T> {
         if self.len == 0 {
             return None;
@@ -34,6 +35,7 @@ impl<T, I: Iterator<Item=T>> Iterator for IterSuss<I> {
 } 
 
 pub trait IteratorSuss<T>: Iterator<Item=T> + Sized {
+    #[inline]
     fn suss(self, number_of_samples: usize, seed: u64, len: Option<usize>) -> IterSuss<Self> {
         let seed = xorshift(seed); 
         let (min, max) = self.size_hint();

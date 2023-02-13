@@ -8,6 +8,7 @@ use super::xorshift::{xorshift_avx, xorshift_avx_ss8};
 
 #[cfg(feature="alloc")]
 #[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
+#[inline]
 pub fn gen_random_vec_4_1(size: usize, mut seed: u64) -> Vec<u64> {
     let mut result = Vec::with_capacity(size);
 
@@ -37,6 +38,7 @@ pub fn gen_random_vec_4_1(size: usize, mut seed: u64) -> Vec<u64> {
 
 #[cfg(feature="alloc")]
 #[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
+#[inline]
 pub fn gen_random_vec_32_4_1(size: usize, mut seed: u64) -> Vec<u64> {
     let mut result = Vec::with_capacity(size);
 
@@ -74,6 +76,7 @@ pub fn gen_random_vec_32_4_1(size: usize, mut seed: u64) -> Vec<u64> {
 
 #[cfg(feature="alloc")]
 #[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
+#[inline]
 pub fn gen_random_vec_32_1(size: usize, mut seed: u64) -> Vec<u64> {
     let mut result = Vec::with_capacity(size);
 
@@ -101,6 +104,7 @@ pub fn gen_random_vec_32_1(size: usize, mut seed: u64) -> Vec<u64> {
 }
 
 #[cfg(feature="alloc")]
+#[inline]
 pub fn gen_random_vec_1(size: usize, mut seed: u64) -> Vec<u64> {
     let mut result = Vec::with_capacity(size);
 

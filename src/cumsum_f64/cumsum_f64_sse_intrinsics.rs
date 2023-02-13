@@ -42,6 +42,7 @@ fn scan_sse(mut x: __m128d) -> __m128d {
 
 
 #[cfg(target_arch = "x86_64")]
+#[inline]
 pub fn cumsum_f64_sse_intrinsics(random_vec: &mut [f64]) {
     if random_vec.len() <= 1{
         return;
