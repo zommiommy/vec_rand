@@ -3,10 +3,11 @@ use core::arch::asm;
 #[cfg(target_arch = "x86_64")]
 #[inline(always)]
 /// Generate 4 random u64 by running 4 parallel xorshifts using avx.
-/// 
+///
 /// Example:
-/// 
+///
 /// ```
+/// use vec_rand::*;
 ///  let mut seed: [u64; 4] = [
 ///      0xBAD5EEDdeadbeef,
 ///      0xBAD5EEDdeadbeef,
@@ -16,7 +17,7 @@ use core::arch::asm;
 /// let values = xorshift_avx(& mut seed);
 /// println!("{:?}", values);
 /// ```
-pub fn xorshift_avx(seed: & mut [u64; 4]) -> [u64; 4] {
+pub fn xorshift_avx(seed: &mut [u64; 4]) -> [u64; 4] {
     let mut result: [u64; 4] = [0; 4];
     unsafe {
         asm!(

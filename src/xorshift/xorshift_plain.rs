@@ -1,10 +1,10 @@
-
 #[inline(always)]
 /// Generate a random u64 using the by-the-book implementation
-/// 
+///
 /// Example:
-/// 
+///
 /// ```
+/// use vec_rand::*;
 /// let value = xorshift(0xBAD5EEDdeadbeef);
 /// println!("{:?}", value);
 /// ```

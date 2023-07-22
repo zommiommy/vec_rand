@@ -7,3 +7,8 @@ pub fn u64_to_f64_no_mul(x: u64) -> f64 {
     let r: f64 = f64::from_le_bytes(v.to_le_bytes());
     r - 1f64
 }
+
+#[inline(always)]
+pub fn u64_to_f64_mul(x: u64) -> f64 {
+    x as f64 / u64::MAX as f64
+}

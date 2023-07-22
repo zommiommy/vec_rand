@@ -4,14 +4,15 @@ use core::arch::asm;
 #[inline(always)]
 /// Generate 32 random u64 by running 32 parallel xorshifts using avx.
 /// This method exploits both the SIMD instructions and the Out of Order Execution.
-/// 
+///
 /// This is the method has a lower throughtput than the `xorshift_avx_ss4` because the
 /// Decoder which can only fetch 16 bytes per clock cycle and most of avx instruction
-/// are 4 bytes wide. 
-/// 
+/// are 4 bytes wide.
+///
 /// Example:
-/// 
+///
 /// ```
+/// use vec_rand::*;
 ///  let mut seed: [u64; 32] = [
 ///      0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef,
 ///      0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef,
@@ -25,7 +26,7 @@ use core::arch::asm;
 /// let values = xorshift_avx_ss8(& mut seed);
 /// println!("{:?}", values);
 /// ```
-pub fn xorshift_avx_ss8(seed: & mut [u64; 32]) -> [u64; 32] {
+pub fn xorshift_avx_ss8(seed: &mut [u64; 32]) -> [u64; 32] {
     let mut result: [u64; 32] = [0; 32];
     unsafe {
         asm!(

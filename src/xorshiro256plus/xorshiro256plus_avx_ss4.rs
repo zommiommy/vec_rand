@@ -3,10 +3,11 @@ use core::arch::asm;
 #[cfg(target_arch = "x86_64")]
 #[inline(always)]
 /// Generate 16 random u64 by running 16 parallel instances of xorshift256plus using avx instructions and exploiting OOO Execution (Out Of Order).
-/// 
+///
 /// Example:
-/// 
+///
 /// ```
+/// use vec_rand::*;
 /// let mut seed: [u64; 64] = [
 ///     6591408588322595484, 5451729388608518856, 8913376598984957243, 17912695770704705270,
 ///     6591408588322595484, 5451729388608518856, 8913376598984957243, 17912695770704705270,
@@ -28,7 +29,7 @@ use core::arch::asm;
 /// let values = xorshiro256plus_avx_ss4(& mut seed);
 /// println!("{:?}", values);
 /// ```
-pub fn xorshiro256plus_avx_ss4(seed: & mut [u64; 64]) -> [u64; 16] {
+pub fn xorshiro256plus_avx_ss4(seed: &mut [u64; 64]) -> [u64; 16] {
     let mut result: [u64; 16] = [0; 16];
     // for info about the scheduling of registers / operation
     //I made https://docs.google.com/spreadsheets/d/1tOgA91OVw9GBKVIXVDeAsQKar3IMXAZXBn3aZwdeDug/edit?usp=sharing

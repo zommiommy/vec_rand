@@ -4,14 +4,15 @@ use core::arch::asm;
 #[inline(always)]
 /// Generate 16 random u64 by running 16 parallel xorshifts using avx.
 /// This method exploits both the SIMD instructions and the Out of Order Execution.
-/// 
+///
 /// This is the method with the best throughtput because with saturate the Instruction
 /// Decoder which can only fetch 16 bytes per clock cycle and most of avx instruction
 /// are 4 bytes wide.
-/// 
+///
 /// Example:
-/// 
+///
 /// ```
+/// use vec_rand::*;
 ///  let mut seed: [u64; 16] = [
 ///      0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef,
 ///      0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef, 0xBAD5EEDdeadbeef,
@@ -21,7 +22,7 @@ use core::arch::asm;
 /// let values = xorshift_avx_ss4(& mut seed);
 /// println!("{:?}", values);
 /// ```
-pub fn xorshift_avx_ss4(seed: &[u64; 16]) -> [u64; 16]{
+pub fn xorshift_avx_ss4(seed: &[u64; 16]) -> [u64; 16] {
     let mut result: [u64; 16] = [0; 16];
     unsafe {
         asm!(
