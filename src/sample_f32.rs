@@ -21,12 +21,76 @@ pub fn sample_f32(weights: &mut [f32], seed: u64) -> usize {
 
     cumsum_f32(weights);
 
-    sample_f32_from_cumsum(&weights, seed)
+    sample_from_cumsum(&weights, seed)
+}
+
+pub trait Primitive<T> {
+    fn to(self) -> T;
+}
+
+impl Primitive<f32> for f32 {
+    fn to(self) -> f32 {
+        self
+    }
+}
+
+impl Primitive<f64> for f32 {
+    fn to(self) -> f64 {
+        self as f64
+    }
+}
+
+impl Primitive<u32> for f32 {
+    fn to(self) -> u32 {
+        self as u32
+    }
+}
+
+impl Primitive<u64> for f32 {
+    fn to(self) -> u64 {
+        self as u64
+    }
+}
+
+impl Primitive<i32> for f32 {
+    fn to(self) -> i32 {
+        self as i32
+    }
+}
+
+impl Primitive<i64> for f32 {
+    fn to(self) -> i64 {
+        self as i64
+    }
+}
+
+impl Primitive<usize> for f32 {
+    fn to(self) -> usize {
+        self as usize
+    }
+}
+
+impl Primitive<isize> for f32 {
+    fn to(self) -> isize {
+        self as isize
+    }
+}
+
+impl Primitive<f32> for u32 {
+    fn to(self) -> f32 {
+        self as f32
+    }
 }
 
 /// Given a comulative sum of vector of scores (non-zero positive values), extracts a random indices accodringly.`
 #[inline]
-pub fn sample_f32_from_cumsum(comulative_sum: &[f32], seed: u64) -> usize {
+pub fn sample_from_cumsum<F: PartialOrd<F> + Primitive<f32> + Copy>(
+    comulative_sum: &[F],
+    seed: u64,
+) -> usize
+where
+    f32: Primitive<F>,
+{
     if unlikely(comulative_sum.len() == 0) {
         panic!("Called sample_f32 on a empty vector!!!");
     }
@@ -34,7 +98,8 @@ pub fn sample_f32_from_cumsum(comulative_sum: &[f32], seed: u64) -> usize {
         return 0;
     }
 
-    let rnd: f32 = random_f32(seed) * comulative_sum[comulative_sum.len().saturating_sub(1)];
+    let rnd: F =
+        (random_f32(seed) * comulative_sum[comulative_sum.len().saturating_sub(1)].to()).to();
 
     // Find the first item which has a weight *higher* than the chosen weight.
     match comulative_sum.binary_search_by(|w| {

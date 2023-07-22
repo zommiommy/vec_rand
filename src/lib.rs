@@ -126,7 +126,7 @@ pub use sample_modifing::sample_modifing;
 
 mod sample_f32;
 pub use sample_f32::sample_f32;
-pub use sample_f32::sample_f32_from_cumsum;
+pub use sample_f32::sample_from_cumsum;
 
 mod sample_f32_adapt;
 pub use sample_f32_adapt::sample_f32_adapt;
@@ -140,9 +140,6 @@ pub use sample_uniform_unbiased::sample_uniform_unbiased_simple as sample_unifor
 
 mod sample_k_distinct_uniform;
 pub use sample_k_distinct_uniform::*;
-#[cfg(feature="alloc")]
-pub use sample_k_distinct_uniform::sorted_unique_sub_sampling as sorted_unique_sub_sampling;
-
 
 #[cfg(feature="alloc")]
 pub use gen_random_vec::gen_random_vec_1;
