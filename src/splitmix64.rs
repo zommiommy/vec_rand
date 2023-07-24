@@ -1,5 +1,10 @@
 /// the suggested method to initialize the seed of xorshiro
 /// http://prng.di.unimi.it/splitmix64.c
+///
+/// while this works, THIS IS WRONG, because the seed should be incremented,
+/// and only the returned value should be scrambled.
+/// This still passes BigCrunch on a couple of seeds, but be advised that this
+/// is not the original splitmix64.
 #[inline(always)]
 pub fn splitmix64(x: u64) -> u64 {
     let mut z: u64 = x.wrapping_add(0x9e3779b97f4a7c15);
