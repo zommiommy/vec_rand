@@ -7,7 +7,7 @@ pub struct IterSuss<I> {
     pub len: usize,
 }
 
-impl<T, I: Iterator<Item=T>> Iterator for IterSuss<I> {
+impl<T, I: Iterator<Item = T>> Iterator for IterSuss<I> {
     type Item = T;
 
     #[inline]
@@ -32,15 +32,15 @@ impl<T, I: Iterator<Item=T>> Iterator for IterSuss<I> {
         self.len -= bucket_size;
         result
     }
-} 
+}
 
-pub trait IteratorSuss<T>: Iterator<Item=T> + Sized {
+pub trait IteratorSuss<T>: Iterator<Item = T> + Sized {
     #[inline]
     fn suss(self, number_of_samples: usize, seed: u64, len: Option<usize>) -> IterSuss<Self> {
-        let seed = xorshift(seed); 
+        let seed = xorshift(seed);
         let (min, max) = self.size_hint();
         let len = len.or(max).unwrap_or(min);
-        IterSuss{
+        IterSuss {
             seed,
             father: self,
             bucket_size: (len as f32 / number_of_samples as f32).ceil() as usize,
@@ -49,4 +49,4 @@ pub trait IteratorSuss<T>: Iterator<Item=T> + Sized {
     }
 }
 
-impl<T, I: Iterator<Item=T>> IteratorSuss<T> for I {}
+impl<T, I: Iterator<Item = T>> IteratorSuss<T> for I {}

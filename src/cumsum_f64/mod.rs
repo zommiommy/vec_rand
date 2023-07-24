@@ -1,9 +1,9 @@
 mod cumsum_f64_plain;
-#[cfg(feature="alloc")]
+#[cfg(feature = "alloc")]
 pub use cumsum_f64_plain::cumsum_f64_plain;
 
 mod cumsum_f64_scan;
-#[cfg(feature="alloc")]
+#[cfg(feature = "alloc")]
 pub use cumsum_f64_scan::cumsum_f64_scan;
 
 mod cumsum_f64_unrolled;
@@ -18,14 +18,12 @@ mod cumsum_f64_sse_modifing;
 #[cfg(target_arch = "x86_64")]
 pub use cumsum_f64_sse_modifing::cumsum_f64_sse_modifing;
 
-
 #[cfg(target_arch = "x86_64")]
 mod cumsum_f64_avx_intrinsics;
 #[cfg(target_arch = "x86_64")]
 pub use cumsum_f64_avx_intrinsics::cumsum_f64_avx_intrinsics;
 
-
-pub fn cumsum_f64(random_vec: &mut [f64]){
+pub fn cumsum_f64(random_vec: &mut [f64]) {
     #[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
     {
         // to debug

@@ -1,3 +1,5 @@
+use common_traits::To;
+
 use crate::cumsum;
 
 use super::random_f32;
@@ -12,7 +14,7 @@ use core::result::Result::*;
 /// It useses cumsum_f64
 #[inline]
 pub fn sample_f32(weights: &mut [f32], seed: u64) -> usize {
-    if unlikely(weights.len() == 0) {
+    if unlikely(weights.is_empty()) {
         panic!("Called sample_f32 on a empty vector!!!");
     }
     if unlikely(weights.len() == 1) {
@@ -21,77 +23,19 @@ pub fn sample_f32(weights: &mut [f32], seed: u64) -> usize {
 
     cumsum(weights);
 
-    sample_from_cumsum(&weights, seed)
-}
-
-pub trait Primitive<T> {
-    fn to(self) -> T;
-}
-
-impl Primitive<f32> for f32 {
-    fn to(self) -> f32 {
-        self
-    }
-}
-
-impl Primitive<f64> for f32 {
-    fn to(self) -> f64 {
-        self as f64
-    }
-}
-
-impl Primitive<u32> for f32 {
-    fn to(self) -> u32 {
-        self as u32
-    }
-}
-
-impl Primitive<u64> for f32 {
-    fn to(self) -> u64 {
-        self as u64
-    }
-}
-
-impl Primitive<i32> for f32 {
-    fn to(self) -> i32 {
-        self as i32
-    }
-}
-
-impl Primitive<i64> for f32 {
-    fn to(self) -> i64 {
-        self as i64
-    }
-}
-
-impl Primitive<usize> for f32 {
-    fn to(self) -> usize {
-        self as usize
-    }
-}
-
-impl Primitive<isize> for f32 {
-    fn to(self) -> isize {
-        self as isize
-    }
-}
-
-impl Primitive<f32> for u32 {
-    fn to(self) -> f32 {
-        self as f32
-    }
+    sample_from_cumsum(weights, seed)
 }
 
 /// Given a comulative sum of vector of scores (non-zero positive values), extracts a random indices accodringly.
 #[inline]
-pub fn sample_from_cumsum<F: PartialOrd<F> + Primitive<f32> + Copy>(
+pub fn sample_from_cumsum<F: PartialOrd<F> + To<f32> + Copy>(
     comulative_sum: &[F],
     seed: u64,
 ) -> usize
 where
-    f32: Primitive<F>,
+    f32: To<F>,
 {
-    if unlikely(comulative_sum.len() == 0) {
+    if unlikely(comulative_sum.is_empty()) {
         panic!("Called sample_f32 on a empty vector!!!");
     }
     if unlikely(comulative_sum.len() == 1) {

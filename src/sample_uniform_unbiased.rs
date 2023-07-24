@@ -18,7 +18,7 @@ pub fn sample_uniform_unbiased_nearly_divisionless(number: u64, mut seed: u64) -
         }
     }
 
-    return (m >> 64) as usize;
+    (m >> 64) as usize
 }
 
 /// Sample a random number in the range [0, number)

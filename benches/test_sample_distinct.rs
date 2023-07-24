@@ -1,9 +1,9 @@
 #![feature(test, asm)]
 extern crate test;
-use test::{Bencher, black_box};
 use rand::rngs::SmallRng;
 use rand::seq::SliceRandom;
 use rand::SeedableRng;
+use test::{black_box, Bencher};
 
 const MAX: u64 = 2_000_000;
 const QUANTITY: u64 = 10_000;

@@ -27,7 +27,10 @@ fn test_weighted_index_sample(b: &mut Bencher) {
 
 #[bench]
 fn test_sample_f32(b: &mut Bencher) {
-    let mut random_vec = gen_random_f64_vec(NUMBER).iter().map(|x| *x as f32).collect::<Vec<f32>>();
+    let mut random_vec = gen_random_f64_vec(NUMBER)
+        .iter()
+        .map(|x| *x as f32)
+        .collect::<Vec<f32>>();
     b.iter(|| {
         for _ in 0..ITERS {
             let _ = sample_f32(&mut random_vec, 0xBad53eed);
@@ -37,10 +40,13 @@ fn test_sample_f32(b: &mut Bencher) {
 
 #[bench]
 fn test_sample_f32_adapt(b: &mut Bencher) {
-    let mut random_vec = gen_random_f64_vec(NUMBER).iter().map(|x| *x as f32).collect::<Vec<f32>>();
+    let mut random_vec = gen_random_f64_vec(NUMBER)
+        .iter()
+        .map(|x| *x as f32)
+        .collect::<Vec<f32>>();
     b.iter(|| {
         for _ in 0..ITERS {
-            let _ =sample_f32_adapt(&mut random_vec, 0xBad53eed);
+            let _ = sample_f32_adapt(&mut random_vec, 0xBad53eed);
         }
     });
 }
@@ -50,7 +56,7 @@ fn test_sample(b: &mut Bencher) {
     let mut random_vec = gen_random_f64_vec(NUMBER);
     b.iter(|| {
         for _ in 0..ITERS {
-            let _ =sample(&mut random_vec, 0xBad53eed);
+            let _ = sample(&mut random_vec, 0xBad53eed);
         }
     });
 }

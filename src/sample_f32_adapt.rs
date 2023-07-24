@@ -3,8 +3,8 @@ use crate::cumsum;
 use super::random_f32;
 use ::core::cmp::Ordering;
 use core::intrinsics::unlikely;
-use core::result::Result::*;
 use core::panic;
+use core::result::Result::*;
 
 /// Given a vector of scores (non-zero positive values), convert it to a
 /// probability distribution and extract a random indices accodringly.`
@@ -12,7 +12,7 @@ use core::panic;
 /// It useses cumsum_f64
 #[inline]
 pub fn sample_f32_adapt(weights: &mut [f32], seed: u64) -> usize {
-    if unlikely(weights.len() == 0) {
+    if unlikely(weights.is_empty()) {
         panic!("Called sample_f32 on a empty vector!!!");
     }
     if unlikely(weights.len() == 1) {

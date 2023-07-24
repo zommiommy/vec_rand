@@ -1,6 +1,5 @@
-
 #[cfg(target_arch = "x86_64")]
-use super::{random_f64, cumsum_f64_sse_modifing};
+use super::{cumsum_f64_sse_modifing, random_f64};
 
 #[cfg(target_arch = "x86_64")]
 use core::cmp::Ordering;

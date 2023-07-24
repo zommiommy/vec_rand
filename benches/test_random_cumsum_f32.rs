@@ -24,7 +24,7 @@ macro_rules! unroll_value {
                     for i in 1..$val {
                         $data[i] += $data[i - 1];
                     }
-                }   
+                }
             )*
             _ => {
                 cumsum_f32(&mut $data);
@@ -38,15 +38,18 @@ fn test_dispatching_small(b: &mut Bencher) {
     b.iter(|| {
         for _ in 0..ITER_SMALL {
             let mut values = gen_random_f32_vec_random_len(SMALL);
-            unroll_value!(values, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23);
+            unroll_value!(
+                values, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
+                23
+            );
         }
     });
 }
 
 #[bench]
 fn test_naive_small(b: &mut Bencher) {
-    b.iter(|| { 
-        for _ in 0..ITER_SMALL{
+    b.iter(|| {
+        for _ in 0..ITER_SMALL {
             let mut values = gen_random_f32_vec_random_len(SMALL);
             cumsum_f32(&mut values);
         }
@@ -58,33 +61,35 @@ fn test_dispatching_big(b: &mut Bencher) {
     b.iter(|| {
         for _ in 0..ITER_BIG {
             let mut values = gen_random_f32_vec_random_len(BIG);
-            unroll_value!(values, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23);
+            unroll_value!(
+                values, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
+                23
+            );
         }
     });
 }
 
 #[bench]
 fn test_naive_big(b: &mut Bencher) {
-    b.iter(|| { 
-        for _ in 0..ITER_BIG{
+    b.iter(|| {
+        for _ in 0..ITER_BIG {
             let mut values = gen_random_f32_vec_random_len(BIG);
             cumsum_f32(&mut values);
         }
     })
 }
 
-
 fn overhead() -> (Vec<u64>, u64) {
     let mut values = gen_random_u64_vec_random_len(SEARCH);
     values.sort();
-    
+
     let mut rng = rand::thread_rng();
     let val_to_find = rng.gen_range(0, SEARCH);
 
     (values, val_to_find)
 }
 
-fn linear() -> usize{
+fn linear() -> usize {
     let (values, val_to_find) = overhead();
     for (i, value) in values.iter().enumerate() {
         if *value == val_to_find {
@@ -99,11 +104,10 @@ fn binary_search() -> Result<usize, usize> {
     values.binary_search(&val_to_find)
 }
 
-
 #[bench]
 fn bench_overhead(b: &mut Bencher) {
-    b.iter(|| { 
-        for _ in 0..ITER_SEARCH{
+    b.iter(|| {
+        for _ in 0..ITER_SEARCH {
             let _ = overhead();
         }
     })
@@ -111,8 +115,8 @@ fn bench_overhead(b: &mut Bencher) {
 
 #[bench]
 fn bench_linear_scan(b: &mut Bencher) {
-    b.iter(|| { 
-        for _ in 0..ITER_SEARCH{
+    b.iter(|| {
+        for _ in 0..ITER_SEARCH {
             let _ = linear();
         }
     })
@@ -120,9 +124,9 @@ fn bench_linear_scan(b: &mut Bencher) {
 
 #[bench]
 fn bench_binary_search(b: &mut Bencher) {
-    b.iter(|| { 
-        for _ in 0..ITER_SEARCH{
-            let _  = binary_search();
+    b.iter(|| {
+        for _ in 0..ITER_SEARCH {
+            let _ = binary_search();
         }
     })
 }

@@ -1,4 +1,4 @@
-#[cfg(feature="alloc")]
+#[cfg(feature = "alloc")]
 #[inline]
 pub fn cumsum_f32_plain(random_vec: &[f32]) -> alloc::vec::Vec<f32> {
     let mut cumulative_sum = alloc::vec::Vec::with_capacity(random_vec.len());

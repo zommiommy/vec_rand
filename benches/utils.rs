@@ -39,6 +39,8 @@ pub fn gen_random_f32_vec_random_len(max: u64) -> Vec<f32> {
 
 pub fn gen_random_u64_vec_random_len(max: u64) -> Vec<u64> {
     let mut rng = rand::thread_rng();
-    let vals: Vec<u64> = (0..rng.gen_range(0, max)).map(|_| rng.gen_range(0, max)).collect();
+    let vals: Vec<u64> = (0..rng.gen_range(0, max))
+        .map(|_| rng.gen_range(0, max))
+        .collect();
     vals
 }

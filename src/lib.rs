@@ -76,7 +76,7 @@
 //! 16 u64 in 4 ns which means 250ps per u64 and 31.125ps per byte.
 //!
 
-#[cfg(feature="alloc")]
+#[cfg(feature = "alloc")]
 extern crate alloc;
 
 pub mod cumsum_f32;
@@ -116,12 +116,12 @@ mod sample;
 pub use sample::sample;
 mod sample_plain;
 pub use sample_plain::sample_plain;
-#[cfg(all(target_arch = "x86_64"))]
+#[cfg(target_arch = "x86_64")]
 mod sample_avx;
-#[cfg(all(target_arch = "x86_64"))]
+#[cfg(target_arch = "x86_64")]
 pub use sample_avx::sample_avx;
 mod sample_modifing;
-#[cfg(all(target_arch = "x86_64"))]
+#[cfg(target_arch = "x86_64")]
 pub use sample_modifing::sample_modifing;
 
 mod sample_f32;
@@ -141,15 +141,14 @@ pub use sample_uniform_unbiased::sample_uniform_unbiased_simple as sample_unifor
 mod sample_k_distinct_uniform;
 pub use sample_k_distinct_uniform::*;
 
-#[cfg(feature="alloc")]
+#[cfg(feature = "alloc")]
 pub use gen_random_vec::gen_random_vec_1;
 
-#[cfg(feature="alloc")]
+#[cfg(feature = "alloc")]
 #[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
 pub use gen_random_vec::gen_random_vec_4_1;
 
-
-#[cfg(feature="std")]
+#[cfg(feature = "std")]
 pub fn gen_random_vec(size: usize, seed: u64) -> alloc::vec::Vec<u64> {
     extern crate std;
 

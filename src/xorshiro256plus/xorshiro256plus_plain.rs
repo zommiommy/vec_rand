@@ -1,9 +1,4 @@
 #[inline(always)]
-fn rotl(x: u64, k: u64) -> u64 {
-    return (x << k) | (x >> (64 - k));
-}
-
-#[inline(always)]
 /// Generate a random u64 by using xorshift256plus with the [reference implementation](http://prng.di.unimi.it/xoshiro256plus.c) translated to rust.
 ///
 /// Example:
@@ -29,7 +24,7 @@ pub fn xorshiro256plus_plain(s: &mut [u64; 4]) -> u64 {
 
     s[2] ^= t;
 
-    s[3] = rotl(s[3], 45);
+    s[3] = s[3].rotate_left(45);
 
     result
 }

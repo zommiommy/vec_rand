@@ -3,10 +3,10 @@ use core::iter::Iterator;
 use core::result::Result;
 use core::result::Result::*;
 
-#[cfg(feature="alloc")]
-use alloc::{vec::Vec, collections::BTreeSet, format};
+#[cfg(feature = "alloc")]
+use alloc::{collections::BTreeSet, format, vec::Vec};
 
-#[cfg(feature="alloc")]
+#[cfg(feature = "alloc")]
 #[inline]
 pub fn sample_k_not_distinct_uniform_naive(
     min_value: u64,
@@ -25,7 +25,7 @@ pub fn sample_k_not_distinct_uniform_naive(
     result
 }
 
-#[cfg(feature="alloc")]
+#[cfg(feature = "alloc")]
 #[inline]
 pub fn sample_k_distinct_uniform_naive(
     min_value: u64,
@@ -39,7 +39,7 @@ pub fn sample_k_distinct_uniform_naive(
         'inner: loop {
             seed = xorshift::xorshift(seed);
             let rnd = min_value + seed % delta;
-            if !result.iter().any(|&i| i==rnd) {
+            if !result.iter().any(|&i| i == rnd) {
                 result.push(rnd);
                 break 'inner;
             }
@@ -49,8 +49,7 @@ pub fn sample_k_distinct_uniform_naive(
     result
 }
 
-
-#[cfg(feature="alloc")]
+#[cfg(feature = "alloc")]
 #[inline]
 pub fn sample_k_distinct_uniform_btreeset(
     min_value: u64,
@@ -73,12 +72,11 @@ pub fn sample_k_distinct_uniform_btreeset(
     result.iter().cloned().collect::<Vec<u64>>()
 }
 
-
-/// Returns a sampled vector of `quantity` sorted unique integer values 
+/// Returns a sampled vector of `quantity` sorted unique integer values
 /// in [`min_value`, `max_value`).
-/// 
+///
 /// # The Algorithm, its limitations and biases
-/// This algorithm uses a simple approximation, the domain is divied in 
+/// This algorithm uses a simple approximation, the domain is divied in
 /// `quantity` buckets of equal size (except the last one) and a random value
 /// is sampled from each bucket, this way we can extract sorted and distincted values.
 /// Since `max_value - min_value` might not be a multiple of `quantity` we add any
@@ -89,10 +87,10 @@ pub fn sample_k_distinct_uniform_btreeset(
 /// entroy compared to a true vector of sorted values.
 ///
 /// Thus this cannot be used for any cryptografically robust application (also because
-/// it's based on xorshift which is not a crypto-safe PRNGt) but it's meant for 
+/// it's based on xorshift which is not a crypto-safe PRNGt) but it's meant for
 /// applications such as monte-carlo.
 ///
-/// In particular it's great for extracting sets of values, since sets can be 
+/// In particular it's great for extracting sets of values, since sets can be
 /// represented as a sorted list of integers (like in roaring bitmaps).
 ///
 /// # Arguments
@@ -102,7 +100,7 @@ pub fn sample_k_distinct_uniform_btreeset(
 /// * quantity: u64 - Number of values to be sampled.
 /// * mut seed: u64 - Seed to reproduce the sampling.
 ///
-#[cfg(feature="alloc")]
+#[cfg(feature = "alloc")]
 #[inline]
 pub fn sorted_unique_sub_sampling(
     min_value: u64,
@@ -120,27 +118,27 @@ pub fn sorted_unique_sub_sampling(
     }
     // allocate the result vector
     let mut extracted = Vec::with_capacity(quantity as usize);
-    
+
     // Compute the size of the buckets
     let step = delta / quantity;
-    
+
     // From each bucket extract a random value
     for i in 0..quantity.saturating_sub(1) {
         // in release build the step * i should be replaced
-        // by an accumulator register and thus don't actually 
+        // by an accumulator register and thus don't actually
         extracted.push(min_value + step * i + seed % step);
         seed = xorshift::xorshift(seed);
     }
-    
+
     // Extract the random value from the last bucket
     // here we add any spare range (step is floor(delta / quantity)
     // Therefore the last values will be slightly less probable
     // and thus there is a slight bias.
     //
     // TODO (NOT PRIORITY): figure out if the compiler actually does the multiplication or
-    // is smart enough to figure it out from the accumulator register 
+    // is smart enough to figure it out from the accumulator register
     // or it actually does the multiplication.
     extracted.push(max_value - seed % (delta - step * (quantity - 1)) - 1);
-    
+
     Ok(extracted)
 }

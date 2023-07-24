@@ -1,7 +1,7 @@
-use super::random_f64;
 use super::cumsum_f64;
-use core::result::Result::*;
+use super::random_f64;
 use ::core::cmp::Ordering;
+use core::result::Result::*;
 
 /// Given a vector of scores (non-zero positive values), convert it to a
 /// probability distribution and extract a random indices accodringly.`
@@ -35,7 +35,7 @@ pub fn sample(weights: &mut [f64], seed: u64) -> usize {
             // weights.len() - 1. The following code does this in a brenchless
             // way to reduce the brench missprediction penality
             let cond = g > weights.len() - 1;
-            return (1 - cond as usize) * g + (cond as usize * (weights.len() - 1));
+            (1 - cond as usize) * g + (cond as usize * (weights.len() - 1))
         }
     }
 }

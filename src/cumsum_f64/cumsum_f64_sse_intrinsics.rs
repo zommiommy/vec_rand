@@ -1,4 +1,3 @@
-
 #[cfg(target_arch = "x86_64")]
 use core::arch::x86_64::{
     // info can be found at https://software.intel.com/sites/landingpage/IntrinsicsGuide
@@ -23,7 +22,6 @@ use core::arch::x86_64::{
     _mm_storeu_pd,
 };
 
-
 #[cfg(target_arch = "x86_64")]
 #[inline(always)]
 fn scan_sse(mut x: __m128d) -> __m128d {
@@ -40,11 +38,10 @@ fn scan_sse(mut x: __m128d) -> __m128d {
     x
 }
 
-
 #[cfg(target_arch = "x86_64")]
 #[inline]
 pub fn cumsum_f64_sse_intrinsics(random_vec: &mut [f64]) {
-    if random_vec.len() <= 1{
+    if random_vec.len() <= 1 {
         return;
     }
     let max = (random_vec.len() >> 1) << 1;
@@ -55,7 +52,7 @@ pub fn cumsum_f64_sse_intrinsics(random_vec: &mut [f64]) {
             // raises a seg-fault so we use the slower _mm_loadu_ps until we figure
             // out how to ensure the alignmenet of the vector
             // loat the 4 values
-            let x: __m128d = _mm_loadu_pd(random_vec.as_ptr().wrapping_offset(i as isize));
+            let x: __m128d = _mm_loadu_pd(random_vec.as_ptr().wrapping_add(i));
             // compute the local cumulative sum
             let mut out: __m128d = scan_sse(x);
             // add the local cumulative sum to the current offset
@@ -63,13 +60,13 @@ pub fn cumsum_f64_sse_intrinsics(random_vec: &mut [f64]) {
             // get the internal floats array of the result vec
             let ptr: *mut f64 = random_vec.as_mut_ptr();
             // store the value in the vector
-            _mm_storeu_pd(ptr.offset(i as isize), out);
+            _mm_storeu_pd(ptr.add(i), out);
             // Update the current offset (aka the last value of out)
             offset = _mm_shuffle_pd(out, out, 3);
         }
     }
 
     if random_vec.len() % 2 == 1 {
-            random_vec[max] = random_vec[max] + random_vec[max-1];
+        random_vec[max] += random_vec[max - 1];
     };
 }
