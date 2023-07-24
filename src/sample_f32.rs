@@ -1,10 +1,10 @@
+use crate::cumsum;
+
 use super::random_f32;
 use ::core::cmp::Ordering;
 use core::intrinsics::unlikely;
 use core::panic;
 use core::result::Result::*;
-
-use super::cumsum_f32::cumsum_f32;
 
 /// Given a vector of scores (non-zero positive values), convert it to a
 /// probability distribution and extract a random indices accodringly.`
@@ -19,7 +19,7 @@ pub fn sample_f32(weights: &mut [f32], seed: u64) -> usize {
         return 0;
     }
 
-    cumsum_f32(weights);
+    cumsum(weights);
 
     sample_from_cumsum(&weights, seed)
 }
@@ -82,7 +82,7 @@ impl Primitive<f32> for u32 {
     }
 }
 
-/// Given a comulative sum of vector of scores (non-zero positive values), extracts a random indices accodringly.`
+/// Given a comulative sum of vector of scores (non-zero positive values), extracts a random indices accodringly.
 #[inline]
 pub fn sample_from_cumsum<F: PartialOrd<F> + Primitive<f32> + Copy>(
     comulative_sum: &[F],

@@ -1,9 +1,10 @@
+use crate::cumsum;
+
 use super::random_f32;
 use ::core::cmp::Ordering;
 use core::intrinsics::unlikely;
 use core::result::Result::*;
 use core::panic;
-use super::cumsum_f32::cumsum_f32;
 
 /// Given a vector of scores (non-zero positive values), convert it to a
 /// probability distribution and extract a random indices accodringly.`
@@ -18,7 +19,7 @@ pub fn sample_f32_adapt(weights: &mut [f32], seed: u64) -> usize {
         return 0;
     }
 
-    cumsum_f32(weights);
+    cumsum(weights);
 
     let rnd: f32 = random_f32(seed) * weights[weights.len().saturating_sub(1)];
 

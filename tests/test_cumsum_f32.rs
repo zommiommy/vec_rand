@@ -21,13 +21,13 @@ fn test_cumsum_f32_scan() {
 }
 
 #[test]
-fn test_cumsum_f32_unrolled() {
+fn test_cumsum_unrolled() {
     for _ in 0..ITER {
         for size in START..END {
             let mut weights = vec_rand::gen_random_vec_f32(size, 0xBAD5eed);
 
             let truth = vec_rand::cumsum_f32::cumsum_f32_plain(&weights);
-            vec_rand::cumsum_f32::cumsum_f32_unrolled(&mut weights);
+            vec_rand::cumsum_f32::cumsum_unrolled(&mut weights);
 
             for (a, b) in truth.iter().zip(weights.iter()) {
                 assert!((a - b).abs() < 0.001);
@@ -58,7 +58,7 @@ fn test_cumsum_f32() {
             let mut weights = vec_rand::gen_random_vec_f32(size, 0xBAD5eed);
 
             let truth = vec_rand::cumsum_f32::cumsum_f32_plain(&weights);
-            vec_rand::cumsum_f32::cumsum_f32(&mut weights);
+            vec_rand::cumsum(&mut weights);
             for (a, b) in truth.iter().zip(weights.iter()) {
                 assert!((a - b).abs() < 0.001);
             }
