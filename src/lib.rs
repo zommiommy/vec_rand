@@ -88,6 +88,9 @@ pub use cumsum_f64::*;
 pub mod xorshift;
 pub use xorshift::*;
 
+pub mod xorshift_small;
+pub use xorshift_small::*;
+
 pub mod xorshiro256plus;
 pub use xorshiro256plus::*;
 

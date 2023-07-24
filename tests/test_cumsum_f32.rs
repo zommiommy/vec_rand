@@ -36,7 +36,7 @@ fn test_cumsum_unrolled() {
     }
 }
 
-//#[test]
+#[test]
 fn test_cumsum_f32_sse_intrinsics() {
     for _ in 0..ITER {
         for size in START..END {

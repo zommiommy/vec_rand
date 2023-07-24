@@ -14,10 +14,10 @@ fn test_sample() {
         assert!(i < weights.len());
         values[i] += 1;
     }
-    let M = values.iter().max().unwrap();
-    let m = values.iter().min().unwrap();
-    println!("max {}, min{}", M, m);
-    assert!((M - m) < 10);
+    let max = values.iter().max().unwrap();
+    let min = values.iter().min().unwrap();
+    println!("max {}, min{}", max, min);
+    assert!((max - min) < 10);
 }
 
 #[test]
@@ -36,10 +36,10 @@ fn test_sample_plain() {
         assert!(i < weights.len());
         values[i] += 1;
     }
-    let M = values.iter().max().unwrap();
-    let m = values.iter().min().unwrap();
-    println!("max {}, min{}", M, m);
-    assert!((M - m) < 10);
+    let max = values.iter().max().unwrap();
+    let min = values.iter().min().unwrap();
+    println!("max {}, min{}", max, min);
+    assert!((max - min) < 10);
 }
 
 #[cfg(all(target_arch = "x86_64", target_feature = "avx2"))]
@@ -52,8 +52,8 @@ fn test_sample_avx() {
         assert!(i < weights.len());
         values[i] += 1;
     }
-    let M = values.iter().max().unwrap();
-    let m = values.iter().min().unwrap();
-    println!("max {}, min{}", M, m);
-    assert!((M - m) < 10);
+    let max = values.iter().max().unwrap();
+    let min = values.iter().min().unwrap();
+    println!("max {}, min{}", max, min);
+    assert!((max - min) < 10);
 }
