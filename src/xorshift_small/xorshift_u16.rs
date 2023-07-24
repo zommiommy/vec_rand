@@ -1,14 +1,14 @@
-pub fn xorshift_u16(mut x: u16) -> u16 {
-    const SHIFT_INDEX: usize = 0;
-
-    x ^= x << SHIFTS[SHIFT_INDEX].0;
-    x ^= x >> SHIFTS[SHIFT_INDEX].1;
-    x ^= x << SHIFTS[SHIFT_INDEX].2;
+/// A xorshift generator with a period of 2^16 - 1, SHIFT_INDEX selects which
+/// shift coeffcients to use of the 60 available
+pub fn xorshift_u16<const SHIFT_INDEX: usize>(mut x: u16) -> u16 {
+    x ^= x << XORSHIFT_U16_SHIFTS[SHIFT_INDEX].0;
+    x ^= x >> XORSHIFT_U16_SHIFTS[SHIFT_INDEX].1;
+    x ^= x << XORSHIFT_U16_SHIFTS[SHIFT_INDEX].2;
     x
 }
 
 /// List of all the full-period shifts for 16-bit xorshift
-const SHIFTS: [(u16, u16, u16); 60] = [
+pub const XORSHIFT_U16_SHIFTS: [(u16, u16, u16); 60] = [
     (1, 11, 3),
     (1, 1, 14),
     (1, 1, 15),
