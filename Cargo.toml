@@ -9,7 +9,7 @@ name = "vec_rand"
 path = "src/lib.rs"
 
 [dependencies]
-common_traits = "0.10"
+common_traits = "0.12"
 
 [dev-dependencies]
 itertools = "0.8.0"
